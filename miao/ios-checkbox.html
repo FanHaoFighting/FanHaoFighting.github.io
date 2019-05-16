@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+  <style>
+    .ios-switch {
+      width: 50px;
+      height: 30px;
+      border-radius: 25px;
+      -webkit-appearance: none;
+      outline: none;
+      background-color: #e0e0e0;
+      position: relative;
+      transition: .4s;
+    }
+
+    .ios-switch::before {
+      content: '';
+      width: 28px;
+      height: 28px;
+      border-radius: 100%;
+      background-color: #fff;
+      position: absolute;
+      left: 1px;
+      top: 1px;
+      transition: .4s;
+    }
+
+    .ios-switch:checked {
+      background-color: #81d480;
+    }
+
+    .ios-switch:checked:before {
+      left: 21px;
+    }
+  </style>
+</head>
+
+<body>
+  <label for=""><input type="checkbox" class="ios-switch"></label>
+</body>
+
+</html>
