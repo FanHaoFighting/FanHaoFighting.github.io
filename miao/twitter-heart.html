@@ -1,0 +1,30 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>twitter-heart</title>
+  <style>
+    input {
+      display: none;
+    }
+    input + label {
+      /*将点赞形状变为手形状*/
+      cursor: pointer;
+      display: block;
+      width: 100px;
+      height: 100px;
+      border: 1px solid;
+      background-image: url(https://abs.twimg.com/a/1557861269/img/animations/web_heart_animation_edge.png);
+    }
+    input:checked + label {
+      background-position: -2800px 0;
+      transition: background-position .8s steps(28);
+    }
+  </style>
+</head>
+<body>
+  <input type="checkbox" name="" id="ck">
+  <label for="ck"></label>
+</body>
+</html>
