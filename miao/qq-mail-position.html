@@ -1,81 +1,79 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
 
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <title>qq-mail</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
   <style>
+    * {
+      background-color: rgba(0, 0, 0, 0.08);
+      /*3  为了不让header和其他元素边框可能超出设置*/
+      box-sizing: border-box;
+    }
+
+    html,
     body {
-      position: relative;
-      width: 100%;
-      height: 100vh;
+      /*2  div中height生效要进行如下设置*/
+      margin: 0;
+      height: 100%;
+    }
+
+    div {
+      /*1  整个元素占据浏览器窗口的高度*/
+      height: 100%;
     }
 
     header {
-      padding: 1px;
-      box-sizing: border-box;
-      height: 68px;
-      width: 100%;
-      position: absolute;
-      left: 0;
-      right: 0;
-      top: 0;
+      height: 100px;
+      background-color: tan;
+      border-bottom: 3px solid;
     }
 
-    .nav {
-      position: absolute;
-      top: 68px;
-      height: calc(100% - 66px);
-      width: 15%;
-      padding: 0px;
-      min-width: 45px;
-      border-width: 4px;
-      border-style: solid;
-      border-radius: 5px;
-      border-color: aquamarine;
+    section {
+      /*减号两边注意加空格*/
+      height: calc(100% - 100px);
+      /*给section设置字号为0,取出两个块之间的空格*/
+      font-size: 0;
     }
 
-    .content {
-      position: absolute;
-      height: calc(100% - 66px);
-      top: 68px;
-      left: calc(15% + 8px);
-      width: 85%;
-      background-color: green;
+    section * {
+      /*讲font-size调回默认值*/
+      font-size: 16px;
     }
 
-    ul li {
-      list-style-type: none;
+    /*行内元素折行会有空格*/
+    aside {
+      width: 200px;
+      height: 100%;
+      border-right: 3px solid;
+      background-color: aqua;
+      display: inline-block;
+      /*不加vertical-align, aside中写入元素会与mian基线对其, 造成错位*/
+      vertical-align: bottom;
+    }
+
+    main {
+      /*main和asdie排在一排的话必须要求两个都是行内块*/
+      /*行内元素布局达到效果目前只能用calc*/
+      width: calc(100% - 200px);
+      height: 100%;
+      background-color: olive;
+      display: inline-block;
+      /*下方间隙通过vertical-align设置*/
+      vertical-align: bottom;
     }
   </style>
 </head>
 
 <body>
-  <header>
-    <img
-      src="https://timgsa.baidu.com/timg?image&quality=80&size=b9999_10000&sec=1558196079937&di=a8fc72c4f6f09334f73ca394b41ae6ac&imgtype=0&src=http%3A%2F%2Fwx2.sinaimg.cn%2Fcrop.0.0.640.359.1000%2F6a0ba317gy1fc1qs3pronj20hs0crdfy.jpg"
-      height=68px>
-  </header>
-  <div class="nav">
-    <ul>测试
-      <li>收件箱</li>
-      <li>星标邮件</li>
-      <li>群邮件</li>
-      <li>草稿箱</li>
-      <li>已发送</li>
-      <li>已删除</li>
-      <li>垃圾箱</li>
-      <li>QQ邮件订阅</li>
-      <li>其他邮箱</li>
-      <li>漂流瓶子</li>
-    </ul>
+  <div>
+    <header></header>
+    <section>
+      <aside>aaa</aside>
+      <main></main>
+    </section>
   </div>
-  <div class="content">
-    <span>123</span>
-  </div>
-
 </body>
 
 </html>
