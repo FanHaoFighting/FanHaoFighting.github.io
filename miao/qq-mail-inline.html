@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    * {
+      background-color: rgba(0, 0, 0, 0.08);
+      /*3  为了不让header和其他元素边框可能超出设置*/
+      box-sizing: border-box;
+    }
+
+    html,
+    body {
+      /*2  div中height生效要进行如下设置*/
+      margin: 0;
+      height: 100%;
+    }
+
+    div {
+      /*1  整个元素占据浏览器窗口的高度*/
+      height: 100%;
+    }
+
+    header {
+      height: 100px;
+      background-color: tan;
+      border-bottom: 3px solid;
+    }
+
+    section {
+      /*减号两边注意加空格*/
+      height: calc(100% - 100px);
+      /*给section设置字号为0,取出两个块之间的空格*/
+      font-size: 0;
+    }
+
+    section * {
+      /*讲font-size调回默认值*/
+      font-size: 16px;
+    }
+
+    /*行内元素折行会有空格*/
+    aside {
+      width: 200px;
+      height: 100%;
+      border-right: 3px solid;
+      background-color: aqua;
+      display: inline-block;
+      /*不加vertical-align, aside中写入元素会与mian基线对其, 造成错位*/
+      vertical-align: bottom;
+    }
+
+    main {
+      /*main和asdie排在一排的话必须要求两个都是行内块*/
+      /*行内元素布局达到效果目前只能用calc*/
+      width: calc(100% - 200px);
+      height: 100%;
+      background-color: olive;
+      display: inline-block;
+      /*下方间隙通过vertical-align设置*/
+      vertical-align: bottom;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <header></header>
+    <section>
+      <aside>aaa</aside>
+      <main></main>
+    </section>
+  </div>
+</body>
+
+</html>

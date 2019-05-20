@@ -8,8 +8,6 @@
   <style>
     * {
       background-color: rgba(0, 0, 0, 0.08);
-      /*3  为了不让header和其他元素边框可能超出设置*/
-      box-sizing: border-box;
     }
 
     html,
@@ -21,58 +19,46 @@
 
     div {
       /*1  整个元素占据浏览器窗口的高度*/
+      /*div的宽度本来就是100%,所以可以省略*/
       height: 100%;
+      position: relative;
     }
 
-    header {
+    div header {
+      /*定位后的元素不再是常规流的元素, 所以宽度不会占满*/
+      position: absolute;
       height: 100px;
+      width: 100%;
       background-color: tan;
-      border-bottom: 3px solid;
     }
 
-    section {
-      /*减号两边注意加空格*/
-      height: calc(100% - 100px);
-      /*给section设置字号为0,取出两个块之间的空格*/
-      font-size: 0;
-    }
-
-    section * {
-      /*讲font-size调回默认值*/
-      font-size: 16px;
-    }
-
-    /*行内元素折行会有空格*/
-    aside {
+    div aside {
       width: 200px;
-      height: 100%;
-      border-right: 3px solid;
-      background-color: aqua;
-      display: inline-block;
-      /*不加vertical-align, aside中写入元素会与mian基线对其, 造成错位*/
-      vertical-align: bottom;
+      position: absolute;
+      top: 100px;
+      bottom: 0;
+      background-color: red;
     }
 
-    main {
-      /*main和asdie排在一排的话必须要求两个都是行内块*/
-      /*行内元素布局达到效果目前只能用calc*/
-      width: calc(100% - 200px);
-      height: 100%;
+    div main {
+      /*宽高都通过上下左右的定位给拉大*/
       background-color: olive;
-      display: inline-block;
-      /*下方间隙通过vertical-align设置*/
-      vertical-align: bottom;
+      position: absolute;
+      top: 100px;
+      right: 0;
+      bottom: 0;
+      left: 200px;
+      /*不设宽高时margin auto被设为0*/
+      margin: auto;
     }
   </style>
 </head>
 
 <body>
   <div>
-    <header></header>
-    <section>
-      <aside>aaa</aside>
-      <main></main>
-    </section>
+    <header>header</header>
+    <aside>aaa</aside>
+    <main>晚上好</main>
   </div>
 </body>
 
