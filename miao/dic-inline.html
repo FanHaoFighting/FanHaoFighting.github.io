@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    * {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    html,
+    body {
+      height: 100%;
+      margin: 0;
+    }
+
+    div {
+      height: 100%;
+      /*为了去除div与div之间的空格把字号调为0*/
+      font-size: 0;
+    }
+
+    div * {
+      /*为了正常显示再恢复字号*/
+      font-size: 16px;
+    }
+
+    div>aside {
+      width: 20%;
+      height: 100%;
+      /*水平排列, 接下把字号调成0*/
+      display: inline-block;
+    }
+
+    div>main {
+      width: 40%;
+      height: 100%;
+      display: inline-block;
+      background-color: tan;
+
+      position: relative;
+    }
+
+    .a {
+      background-color: red;
+    }
+
+    .b {
+      background-color: lightgreen;
+    }
+
+    .c {
+      background-color: lightblue;
+    }
+
+    header {
+      background-color: blue;
+      xposition: absolute;
+      width: 100%;
+    }
+
+    header .placeholder {
+      /*当margin/padding取形式为百分比的值时，无论是left/right，还是top/bottom，都是以父元素的width为参照物的*/
+      padding-top: 20%;
+    }
+
+    main .content {
+      top: 0;
+      position: absolute;
+      margin-top: 20%;
+      background-color: olive;
+      bottom: 0;
+      left: 0;
+      width: 100%;
+    }
+  </style>
+</head>
+
+<body>
+  <div>
+    <aside class="a"></aside>
+    <main>
+      <header>
+        <!--为了让元素等比放入placeholder-->
+        <div class="placeholder"></div>
+      </header>
+      <div class="content">aaa</div>
+    </main>
+    <aside class="b"></aside>
+    <aside class="c"></aside>
+  </div>
+</body>
+
+</html>
