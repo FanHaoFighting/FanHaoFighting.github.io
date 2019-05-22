@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>9-grid</title>
+  <style>
+    * {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    table {
+      border-collapse: collapse;
+    }
+
+    td {
+      width: 50px;
+      height: 50px;
+      text-align: center;
+    }
+
+    /*行边框的优先级高于列*/
+    tr {
+      /*表格中的tr并非单一的边框，这样便需要属性border-collapse，border-collapse 属性设置表格的边框是否被合并为一个单一的边框;*/
+      border: 5px blue solid;
+    }
+
+    col {
+      /*只有在设置border-collapse: collapse才能为列设置边框;*/
+      border: 5px blue solid;
+    }
+
+    td:hover {
+      border: 5px red solid;
+    }
+  </style>
+</head>
+
+<body>
+  <table>
+    <col>
+    <col>
+    <col>
+    <tr>
+      <td>1</td>
+      <td>2</td>
+      <td>3</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td>5</td>
+      <td>6</td>
+    </tr>
+    <tr>
+      <td>7</td>
+      <td>8</td>
+      <td>9</td>
+    </tr>
+  </table>
+</body>
+
+</html>
