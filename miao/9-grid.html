@@ -6,59 +6,149 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
   <title>9-grid</title>
-  <style>
+  <style type="text/less">
     * {
       background-color: rgba(0, 0, 0, 0.08);
     }
+    /*表格实现九宫格*/
+    .table-nine-grid {
+      table {
+        border-collapse: collapse;
+      }
+      td {
+        width: 50px;
+        height: 50px;
+        text-align: center;
+      }
 
-    table {
-      border-collapse: collapse;
+      /*行边框的优先级高于列*/
+      tr {
+        /*表格中的tr并非单一的边框，这样便需要属性border-collapse，border-collapse 属性设置表格的边框是否被合并为一个单一的边框;*/
+        border: 5px blue solid;
+      }
+
+      col {
+        /*只有在设置border-collapse: collapse才能为列设置边框;*/
+        border: 5px blue solid;
+      }
+
+      td:hover {
+        border: 5px red solid;
+      }
     }
+    /*行内元素实现九宫格*/
+    .inline-nine-gird {
+      div {
+        width: 170px;
+        /*增大div的高度, 不让789超出布局盒子*/
+        padding-bottom: 5px;
+        /*去除行内元素块与块之间的空格*/
+        font-size: 0;
+      }
+      /*权重一样, 但是后定义的优先级高于前面的*/
+      div * {
+        /*css4里引入的,还原字体初始值*/
+        xfont-size: initial;
+        /*还原所有从上层继承下来的属性*/
+        all: initial;
+      }
+      span {
+        display: inline-block;
+        width: 50px;
+        height: 50px;
+        margin-right: -5px;
+        margin-bottom: -5px;
+        border: 5px solid blue;
+        /*配合z-index使用*/
+        position: relative;
+      }
 
-    td {
-      width: 50px;
-      height: 50px;
-      text-align: center;
+      span:hover{
+        border-color: red;
+        z-index: 1;
+      }
     }
-
-    /*行边框的优先级高于列*/
-    tr {
-      /*表格中的tr并非单一的边框，这样便需要属性border-collapse，border-collapse 属性设置表格的边框是否被合并为一个单一的边框;*/
-      border: 5px blue solid;
-    }
-
-    col {
-      /*只有在设置border-collapse: collapse才能为列设置边框;*/
-      border: 5px blue solid;
-    }
-
-    td:hover {
-      border: 5px red solid;
+    .float-nine-gird {
+      div {
+        width: 170px;
+        padding-bottom: 5px;
+        /*生成一个块级容器框, 为里面的内容创建新的块级格式化上下文*/
+        /*可以防止包含块坍塌*/
+        display: flow-root;
+      }
+      span {
+        /*块元素感知不到浮动元素的存在*/
+        float: left;
+        width: 50px;
+        height: 50px;
+        border: 5px solid blue;
+        margin: 0 -5px -5px 0;
+        position: relative;
+      }
+      span:hover {
+        border-color: red;
+        z-index: 1;
+      }
     }
   </style>
 </head>
 
 <body>
-  <table>
-    <col>
-    <col>
-    <col>
-    <tr>
-      <td>1</td>
-      <td>2</td>
-      <td>3</td>
-    </tr>
-    <tr>
-      <td>4</td>
-      <td>5</td>
-      <td>6</td>
-    </tr>
-    <tr>
-      <td>7</td>
-      <td>8</td>
-      <td>9</td>
-    </tr>
-  </table>
+  <fieldset class="table-nine-grid">
+    <legend>表格实现九宫格</legend>
+    <table>
+      <col>
+      <col>
+      <col>
+      <tr>
+        <td>1</td>
+        <td>2</td>
+        <td>3</td>
+      </tr>
+      <tr>
+        <td>4</td>
+        <td>5</td>
+        <td>6</td>
+      </tr>
+      <tr>
+        <td>7</td>
+        <td>8</td>
+        <td>9</td>
+      </tr>
+    </table>
+  </fieldset>
+
+  <fieldset class="inline-nine-gird">
+    <legend>行内元素实现九宫格</legend>
+    <div>
+        <span>1</span>
+        <span>2</span>
+        <span>3</span>
+        <span>4</span>
+        <span>5</span>
+        <span>6</span>
+        <span>7</span>
+        <span>8</span>
+        <span>9</span>
+      </div>
+  </fieldset>
+
+  <fieldset class="float-nine-gird">
+      <legend>浮动实现九宫格</legend>
+      <div>
+          <span>1</span>
+          <span>2</span>
+          <span>3</span>
+          <span>4</span>
+          <span>5</span>
+          <span>6</span>
+          <span>7</span>
+          <span>8</span>
+          <span>9</span>
+        </div>
+    </fieldset>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/less.js/3.9.0/less.min.js"></script>
 </body>
 
 </html>
