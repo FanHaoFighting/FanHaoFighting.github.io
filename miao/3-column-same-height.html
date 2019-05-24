@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>三栏等高自适应布局</title>
+  <style>
+    section {
+      /*设置overflow: hidden闭合浮动*/
+      overflow: hidden;
+    }
+
+    /*section元素的直接子节点*/
+    section>* {
+      /*重点!!让较短的元素的可是范围覆盖于较长元素的高度差处的空白*/
+      padding-bottom: 800px;
+      margin-bottom: -800px;
+    }
+
+    div {
+      width: 100px;
+      float: left;
+      background-color: red;
+    }
+
+    main {
+      overflow: hidden;
+      background-color: green;
+    }
+
+    aside {
+      width: 150px;
+      float: right;
+      background-color: yellow;
+    }
+  </style>
+</head>
+
+<body>
+  <section>
+    <div>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Odio corporis quo magnam quidem distinctio, </div>
+    <aside>Lorem ipsum dolor sit amet, consectetur adipisicing elit. A, iste omnis vitae nihil eos, quidem, tenetur quia
+      optio natus doloremque molestias incidunt voluptatibus est recusandae illum facilis culpa voluptatum quas.</aside>
+    <main>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ad architecto voluptatibus, totam consequuntur
+      voluptatum in vitae maiores fugiat, dignissimos doloremque nisi similique, commodi recusandae autem eligendi esse
+      quos dolorem.inventore cum, voluptates, impedit earum perferendis quam incidunt adipisci. Illum earum distinctio
+      debitis, obcaecati voluptatum cupiditate?Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quam, magni,
+      necessitatibus. Sapiente provident repudiandae ipsam excepturi aliquam eveniet vero omnis, facere fugit incidunt
+      natus non molestias dolor alias repellendus, numquam!</main>
+
+  </section>
+</body>
+
+</html>
