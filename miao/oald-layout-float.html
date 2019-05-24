@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    .wrap {
+      height: 100%;
+    }
+
+    .a,
+    .b,
+    .c {
+      float: left;
+      width: 100px;
+      background-color: red;
+      height: 100%;
+    }
+
+    .b,
+    .c {
+      float: right;
+      background-color: lime;
+    }
+
+    .c {
+      background-color: tan;
+    }
+
+    main {
+      box-shadow: 0 0 15px black inset;
+      height: 100%;
+      /*触动BFC, 把自己*/
+      overflow: hidden;
+    }
+
+    header {
+      height: 100px;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="wrap">
+    <aside class="a"></aside>
+    <aside class="c">.b .c同时浮动到右边,写在前面的先浮动到右边</aside>
+    <aside class="b"></aside>
+    <main>
+      <header>main放在前面的话会影响浮动元素,另外,行内元素可以看到浮动元素</header>
+      <div class="content"></div>
+    </main>
+  </section>
+
+</body>
+
+</html>
