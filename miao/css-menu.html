@@ -11,17 +11,17 @@
             list-style: none;
             position: absolute;
         }
-
+        /* 将第一层菜单栏横着排列 */
         ul.menu>li {
             float: left;
             padding: 0px 20px;
         }
-
+        /* 第一层菜单子菜单的样式 */
         ul.menu>li>ul {
             top: 100%;
             left: 0;
         }
-
+        /* 去掉第一层菜单里的伪元素 */
         ul.menu>li>ul::before {
             content: none;
         }
@@ -36,7 +36,8 @@
         li:hover {
             background-color: orange;
         }
-
+        
+        /*3 hover时显示*/
         li:hover>ul>li {
             /*display: block;*/
             opacity: 1;
@@ -47,17 +48,19 @@
         ul ul::before {
             content: '>';
             position: absolute;
+            /*当li显示时, ul的right会发生变化, */
             left: -1em;
         }
-
+        /*1 ul里的li隐藏*/
         ul ul li {
             opacity: 0;
             pointer-events: none;
             /*visibility: hidden;*/
             /*display: none;*/
+            /*做鼠标移开后菜单栏的缓慢消失效果, display属性不能动画, 所以用opacit*/
             transition: opacity .6s;
         }
-
+        /*2 ul本身展示, 但内部li隐藏*/
         ul ul {
             xdisplay: none;
             position: absolute;
