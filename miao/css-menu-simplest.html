@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width">
+  <title>JS Bin</title>
+  <style>
+    * {
+      background-color: rgba(0, 0, 0, 0.08);
+    }
+
+    ul {
+      /*第一步就是把padding和list-style去掉了*/
+      padding: 0;
+      list-style: none;
+      /*第七步float: left是为了ul尽量地窄,紧接着被注释掉*/
+      xfloat: left;
+      /*第八步用absolute也可以让元素尽可能窄,同时注释掉第三步里的代码*/
+      position: absolute;
+    }
+
+
+    ul ul {
+      /*第二步把ul里的ul给隐藏*/
+      display: none;
+      /*第五步,ul在常规流里会把别的元素顶走,所以ul要定位*/
+      position: absolute;
+      /*第七步,相对于包含块的百分比*/
+      top: 0;
+      left: 100%;
+    }
+
+    ul li {
+      /*第三步调了ul里的li的宽度*/
+      xwidth: 50px;
+      /*第六步, 因为"文件"子菜单相对于"文件"定位, 所以文件要relative*/
+      position: relative;
+      /*第九步,让ul里的元素不要折行, 撑起内容*/
+      white-space: nowrap;
+    }
+
+    li:hover>ul {
+      /*第四步li hover时里面的ul展示*/
+      display: block;
+    }
+
+    li:hover {
+      /*第十步, 让它hover的时候有底色*/
+      background-color: orange;
+    }
+
+    /*背景所有属性不继承*/
+  </style>
+</head>
+
+<body>
+  <ul class="menu">
+    <li>文件
+      <ul>
+        <li>打开</li>
+        <li>保存
+          <ul>
+            <li>UTF-8
+              <ul>
+                <li>With BOM
+                  <ul>
+                    <li>aaa</li>
+                    <li>bbbbb</li>
+                    <li>cccc</li>
+                  </ul>
+                </li>
+                <li>With Out BOM</li>
+              </ul>
+            </li>
+            <li>ANSI</li>
+            <li>UTF-8 with BOM</li>
+          </ul>
+        </li>
+        <li>另存为…</li>
+      </ul>
+    </li>
+    <li>编辑</li>
+    <li>查找</li>
+    <li>选择</li>
+  </ul>
+</body>
+
+</html>
