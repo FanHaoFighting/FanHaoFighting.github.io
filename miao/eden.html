@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=360">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>eden</title>
+  <style>
+    div {
+      width: 33vw;
+      /*希望宽高比是固定的, 所以高度和其他都用vw作为单位*/
+      height: 49.5vw;
+      position: absolute;
+    }
+    div:nth-child(1) {
+      left: 16.875vw;
+      top: 10vw;
+      background-color: red;
+    }
+    div:nth-child(2) {
+      /*在加上一张图片一半的宽度*/
+      left: calc(16.875vw + 16.5vw);
+      top: 20vw;
+      background-color: blue;
+    }
+    div:nth-child(3) {
+      left: calc(16.875vw + 33vw);
+      top: 30vw;
+      background-color: tan;
+    }
+  </style>
+</head>
+<body>
+  <div></div>
+  <div></div>
+  <div></div>
+</body>
+</html>
