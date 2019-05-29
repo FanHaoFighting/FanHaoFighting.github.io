@@ -14,9 +14,13 @@
     .hero {
       width: calc(100vw - 17px);
       height: 640px;
-      xborder: 2px solid white;
       background-image: url(https://mobike.com/cn/assets/themes/moby/img/landing/hero-bg-4.jpg);
       background-size: cover;
+    }
+
+    section {
+      /* section包裹div去除滚动条 */
+      overflow: hidden;
     }
 
     .pic-wrapper {
@@ -27,15 +31,7 @@
       margin-left: -2px;
       margin-right: -2px;
     }
-
-    /* .clearfix:after {
-      clear: both;
-      content: ".";
-      display: block;
-      height: 0;
-      visibility: hidden;
-    } */
-
+    
     .pic-wrapper span {
       /*为了让宽度方向上更好对齐*/
       box-sizing: border-box;
@@ -83,12 +79,15 @@
   <div class="hero">
     <nav></nav>
   </div>
-  <div class="pic-wrapper clearfix">
-    <span class="first-pic"></span>
-    <span class="second-pic"></span>
-    <span class="third-pic"></span>
-    <span class="fourth-pic"></span>
-  </div>
+  <!-- 用section包裹是为了去除滚动条 -->
+  <section>
+      <div class="pic-wrapper clearfix">
+          <span class="first-pic"></span>
+          <span class="second-pic"></span>
+          <span class="third-pic"></span>
+          <span class="fourth-pic"></span>
+        </div>
+  </section>
 </body>
 
 </html>
