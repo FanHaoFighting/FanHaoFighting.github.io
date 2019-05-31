@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>qq-mail-float</title>
+  <style>
+    html,
+    body {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+    .wrapper {
+      height: 100%;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      height: 100px;
+      background-color: red;
+    }
+    section {
+      /* flex-basis: calc(100% - 100px); */
+      flex-grow: 1;
+      display: flex;
+    }
+    aside {
+      width: 100px;
+      flex-shrink: 0;
+      background-color: green;
+    }
+    main {
+      flex-grow: 1;
+      /* flex-shrink: 0; */
+      background-color: yellow;
+    }
+  </style>
+</head>
+<body>
+  <div class="wrapper">
+      <header></header>
+      <section>
+        <aside></aside>
+        <main>
+          Lorem ipsum dolor sit amet, consectetur adipisicing elit. Atque nesciunt saepe, dignissimos quod culpa accusantium delectus vel vitae, ratione, ducimus aspernatur! Eum, culpa! Vero voluptates nulla explicabo necessitatibus odit exercitationem.
+        </main>
+      </section>
+  </div> 
+</body>
+</html>
