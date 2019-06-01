@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>oald-flex</title>
+  <style>
+    html,
+    body {
+      margin: 0;
+      padding: 0;
+      height: 100%;
+    }
+
+    .wrap {
+      display: flex;
+      height: 100%;
+    }
+
+    .a,
+    .b,
+    .c {
+      width: 100px;
+      background-color: red;
+      flex-shrink: 0;
+    }
+    .b {
+      background-color: lime;
+    }
+    .c {
+      background-color: yellow;
+    }
+    main {
+      flex-grow: 1;
+      display: flex;
+      flex-direction: column;
+    }
+    header {
+      background-color: tan;
+      flex-basis: 10%;
+      flex-shrink: 0;
+      overflow: hidden;
+    }
+    .content {
+      background-color: orange;
+      flex-grow: 1;
+    }
+  </style>
+</head>
+
+<body>
+  <section class="wrap">
+    <aside class="a">我是a里的内容</aside>
+    <main>
+      <header>头部Lorem ipsum dolor sit amet consectetur adipisicing elit. Eum quae fugit non nulla voluptates, qui in, neque, vitae atque accusantium animi? Maxime sit assumenda ipsa mollitia! Voluptatum omnis fugit provident?</header>
+      <div class="content">内容Lorem ipsum dolor sit, amet consectetur adipisicing elit. Dolores corporis adipisci facilis dicta ipsa minima voluptates quasi repellat obcaecati explicabo similique est, ad laborum qui. Magnam, quam corporis. Repellendus, maxime?</div>
+    </main>
+    <aside class="b">我是b里的内容</aside>
+    <aside class="c">我是c里的笔记</aside>
+
+  </section>
+</body>
+
+</html>
