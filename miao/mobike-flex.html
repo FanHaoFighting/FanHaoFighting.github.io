@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>Document</title>
+  <style>
+    html, body {
+      margin: 0;
+    }
+    .wrapper {
+      display: flex;
+      justify-content: space-between;
+    }
+    span {
+      height: 260px;
+      flex-basis: calc((100% - 6px)/4);
+      margin-top: 1px;
+      justify-content: space-between;
+    }
+   .first-pic {
+      background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-01.jpg);
+      background-size: cover;
+    }
+
+    .second-pic {
+      background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-02.jpg);
+      background-size: cover;
+    }
+
+    .third-pic {
+      background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-03.jpg);
+      background-size: cover;
+    }
+
+    .fourth-pic {
+      background-image: url(https://mobike.com/cn/assets/themes/moby/img/promo-04.jpg);
+      background-size: cover;
+    }
+
+    @media (max-width: 1080px) {
+      .wrapper {
+        flex-wrap: wrap;
+      }
+      span {
+        flex-basis: calc((100% - 2px)/2);;
+        margin-top: 1px;
+        justify-content: space-between;
+      }
+    }
+
+    @media (max-width: 640px) {
+      span {
+        flex-basis: 100%;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="wrapper">
+    <span class="first-pic"></span>
+    <span class="second-pic"></span>
+    <span class="third-pic"></span>
+    <span class="fourth-pic"></span>
+  </div>
+</body>
+
+</html>
