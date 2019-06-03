@@ -1,3 +1,9 @@
+
+body {
+  /*网站的字体与颜色*/
+  font: 14px/1.5 "Helvetica Neue",Helvetica,Arial,"Microsoft Yahei","Hiragino Sans GB","Heiti SC","WenQuanYi Micro Hei",sans-serif;
+  color: #333;
+}
 /*顶部栏的样式汇总*/
 .site-topbar {
   position: relative;
@@ -5,15 +11,19 @@
   z-index: 30;
   height: 40px;
   font-size: 12px;
-  xcolor: #b0b0b0;
+  color: #b0b0b0;
   background: #333;
 
   .container {
     width: 1226px;
-    margin-left: auto;
-    margin-right: auto;
+    height: 100%;
+    margin: 0 auto;
   }
 
+  span {
+    /*字体大小这算大概7px*/
+    margin: .5em;
+  }
   /*顶部栏间隔号样式*/
   .sep {
     margin: 0 .5em;
@@ -22,10 +32,14 @@
 
   /*顶部栏字体样式*/
   a {
+    /*将a内的行内元素转成行内块*/
     line-height: 40px;
     display: inline-block;
     color: #b0b0b0;
     text-decoration: none;
+  }
+  a:hover{
+    color: #fff;
   }
 
   /*为导航栏左侧元素设置位置*/
@@ -45,25 +59,133 @@
   /*购物车样式*/
   .topbar-cart {
     width: 120px;
-    margin-left: 25px;
-    color: #b0b0b0;
+    float: right;
+    height: 40px;
+    line-height: 40px;
+    text-align: center;
+    background-color: RGB(66, 66, 66);
+    color: #b0b0b0; 
+    margin-left: 30px;
   }
 }
+/*小米顶部end*/
 
+/*导航栏样式*/
 .site-header {
   position: relative;
-  z-index: 20;
-  height: 100px;
+  width: 100%;
+  height: 104px;
 
-  .nav-list {
+  .nav-wrapper {
+    width: 1230px;
+    height: 104px;
+    /*让元素居中*/
+    margin: 0 auto;
+
+    .nav-logo {
+      float: left;
+      width: 50px;
+      height: 50px;
+      background: url(mi/mi-logo.png) no-repeat center #ff6700;
+      margin-top: 26px;
+    }
+    ul {
+      float: left;
+      width: 850px;
+      height: 88px;
+      padding: 16px 0 0 30px;
+      font-size: 16px;
+      .site-category a{
+        padding: 0;
+        display: block;
+        width: 50px;
+        height: 50px;
+      }
+      li {
+        float: left;
+        a {
+          display: block;
+          padding: 26px 10px 38px;
+          color: #333;
+        } 
+        a:hover{
+          color:#ff6700;
+        }
+      }
+    }
+    .site-search {
+      float: right;
+      width: 296px;
+      margin-top: 25px;
+    }
+    .site-search form {
+      width: 296px;
+      height: 50px;
+      position: relative;
+    }
+    .site-search form .search-text {
+      // 245px
+      width: 223px;
+      height: 48px;
+      border: 1px solid #e0e0e0;
+      font-size: 14px;
+      padding: 0 10px;
+      // 去除两个input之间的空格(或者直接在代码里把两个写在一行)
+      float: left;
+    }
+    .site-search form .search-btn {
+      margin-left: -1px;
+      width: 50px;
+      height: 50px;
+      border: 1px solid #e0e0e0;
+      float: left;
+      background: url(mi/search-normal.png) no-repeat center;
+      background-size: 50%;
+    }
+    .site-search form .hot {
+      position: absolute;
+      font-size: 12px;
+      top: 14px;
+      right: 60px;
+    }
+    .site-search form .hot a {
+      display: inline-block;
+      margin-left: 5px;
+      color: #757575;
+      padding: 0 5px;
+      background-color: #eee;
+    }
+    .site-search form .hot a:hover{
+      background-color: #ff6700;
+      color: #fff;
+    }
+  }
+}
+/*菜单和轮播图片*/
+main {
+  width: 1230px;
+  margin: 0 auto;
+  margin-top: 104px;
+  .slider {
+    width: 100%;
+    height: 460px;
     position: relative;
-    z-index: 10;
-    float: left;
-    width: 820px;
-    height: 88px;
-    margin: 0;
-    padding: 12px 0 0 30px;
-    list-style-type: none;
-    font-size: 16px;
+    xoverflow: hidden;
+    .menu {
+      width: 234px;
+      height: 420px;
+      background-color:rgba(0, 0, 0, 0.5);
+      position: absolute;
+      xz-index: 10;
+      xpadding: 20px 0;
+      li {
+        width: calc(100% - 50px);
+        height: 42px;
+        padding-left: 30px;
+        padding-right: 20px;
+        cursor: pointer;
+        xline-height: 42px;
+      }
+    }
   }
 }
