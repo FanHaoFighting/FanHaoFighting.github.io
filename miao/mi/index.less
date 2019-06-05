@@ -89,26 +89,63 @@ body {
       background: url(mi/mi-logo.png) no-repeat center #ff6700;
       margin-top: 26px;
     }
-    ul {
+    .nav-list {
       float: left;
       width: 850px;
       height: 88px;
       padding: 16px 0 0 30px;
       font-size: 16px;
-      .site-category a{
+      .site-category {
+        position: relative;
+        z-index: 3;
+      }
+      // 活动图标的大小
+      .site-category>a{
         padding: 0;
         display: block;
-        width: 50px;
-        height: 50px;
+        width: 163px;
+        height: 66px;
       }
-      li {
+      .site-category .category-list {
+        position: absolute;
+        top: 88px;
+        left: -78px;
+        width: 234px;
+        height: 460px;
+        background-color: rgba(0, 0, 0, 0.6);
+      }
+      .category-list>ul {
+        width: 234px;
+        height: 420px;
+        padding: 20px 0;
+      }
+      .category-list>ul>li {
+        height: 42px;
+      }
+      .category-list>ul>li>a {
+        padding-left: 30px;
+        display: block;
+        height: 42px;
+        line-height: 42px;
+        font-size: 12px;
+        color: #fff;
+        position: relative;
+        >span {
+          position: absolute;
+          right: 8px;
+          font-size: 16px;
+          line-height: 42px;
+          vertical-align: middle;
+        }
+      }
+      >li {
         float: left;
-        a {
+        >a {
           display: block;
           padding: 26px 10px 38px;
           color: #333;
         } 
-        a:hover{
+        >a:hover{
           color:#ff6700;
         }
       }
@@ -161,31 +198,118 @@ body {
     }
   }
 }
-/*菜单和轮播图片*/
-main {
-  width: 1230px;
-  margin: 0 auto;
-  margin-top: 104px;
-  .slider {
-    width: 100%;
-    height: 460px;
+/*导航栏样式结束end*/
+/*菜单和轮播图片start*/
+.site-content {
+  .container {
+    width: 1226px;
+    /*让元素居中*/
+    margin: 0 auto;
     position: relative;
-    xoverflow: hidden;
-    .menu {
-      width: 234px;
-      height: 420px;
-      background-color:rgba(0, 0, 0, 0.5);
-      position: absolute;
-      xz-index: 10;
-      xpadding: 20px 0;
-      li {
-        width: calc(100% - 50px);
-        height: 42px;
-        padding-left: 30px;
-        padding-right: 20px;
-        cursor: pointer;
-        xline-height: 42px;
-      }
-    }
   }
+  .site-slider {
+    position: relative;
+    height: 460px;
+    // z-index: 2;
+  }
+  .site-slider a {
+    display: block;
+    width: 1226px;
+    position: absolute;
+  }
+  .site-slider a img{
+    width: 1226px;
+    height: 460px;
+    opacity: 0;
+    //transiton属性设在checked状态下和设置在此处显示不同
+    transition: 1s;
+  }
+  // 图片播放选择右下角小圆圈包含块位置这顶
+  .slider-label {
+    position: absolute;
+    bottom: 20px;
+    right: 20px;
+  }
+  .site-slider input {
+    display: none;
+  }
+  // 具体的图片选择小圆圈的样式
+  .slider-label>label {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    margin-left: 2px;
+    background-color: rgba(0, 0, 0, 0.2);
+    border-radius: 15px;
+    cursor: pointer;
+  }
+  .slider-label>label:hover{
+    background-color: #fff;
+  }
+  // 将label的选中状态与小圆圈的样式相关联
+  .site-slider input:nth-of-type(1):checked ~ .slider-label label:nth-of-type(1), 
+  .site-slider input:nth-of-type(2):checked ~ .slider-label label:nth-of-type(2),
+  .site-slider input:nth-of-type(3):checked ~ .slider-label label:nth-of-type(3),
+  .site-slider input:nth-of-type(4):checked ~ .slider-label label:nth-of-type(4){
+    background-color: #fff;
+  }
+  // input在checked状态下对应图片的显示
+  .site-slider input:checked + a img {
+    opacity: 1;
+  }
+
+
+  // 上一个下一个样式
+  .site-slider .prev-group>label>.prev {
+    position: absolute;
+    width: 41px;
+    height: 69px;
+    left: 234px;
+    bottom: calc(50% - 35px);
+    background: url(mi/arrow-left-normal.png);
+    background-position: center;
+    cursor: pointer;
+    // 默认不显示, 只要当对应图片展示时才显示
+    visibility:hidden
+  }
+  .site-slider .prev-group>label>.prev:hover {
+    background: url(mi/arrow-left-hover.png);
+    // background属性会覆盖掉background-position属性, 所以要重设
+    background-position: center;
+  }
+  // next图标的样式
+  .site-slider .next-group>label>.next {
+    position: absolute;
+    width: 41px;
+    height: 69px;
+    bottom: calc(50% - 35px);
+    right: 0px;
+    background: url(mi/arrow-right-normal.png);
+    background-position: center;
+    cursor: pointer;
+    // 默认不显示, 只要当对应图片展示时才显示
+    visibility:hidden
+  }
+  .site-slider .next-group>label>.next:hover {
+    background: url(mi/arrow-right-hover.png);
+    background-position: center;
+  }
+  // 当对应的radio被选中, 让对应的上一个下一个按钮显示
+  .site-slider input:nth-of-type(1):checked ~ .next-group>label:nth-of-type(2)>.next,
+  .site-slider input:nth-of-type(2):checked ~ .next-group>label:nth-of-type(3)>.next,
+  .site-slider input:nth-of-type(3):checked ~ .next-group>label:nth-of-type(4)>.next,
+  .site-slider input:nth-of-type(4):checked ~ .next-group>label:nth-of-type(1)>.next {
+    visibility: visible;
+  }
+  .site-slider input:nth-of-type(1):checked ~ .prev-group>label:nth-of-type(4)>.prev, 
+  .site-slider input:nth-of-type(2):checked ~ .prev-group>label:nth-of-type(1)>.prev, 
+  .site-slider input:nth-of-type(3):checked ~ .prev-group>label:nth-of-type(2)>.prev,
+  .site-slider input:nth-of-type(4):checked ~ .prev-group>label:nth-of-type(3)>.prev {
+    visibility: visible;
+  }
+
+ 
+
 }
+
+/*小米站点内容end*/
