@@ -1,0 +1,190 @@
+* {
+  background-color: rgba(0,0,0,0.08);
+}
+
+body {
+  border: 2px solid;
+}
+
+button {
+  display: block;
+  margin: 100px auto;
+  background-color: #ff3d2e;
+  color: white;
+  width: 160px;
+  height: 50px;
+  border: none;
+}
+[data-balloon] {
+  position: relative;
+}
+
+
+/*属性选择器*/
+[data-balloon]::before {
+  /*把属性值写到伪元素中*/
+  content: attr(data-balloon);
+  position: absolute;
+  /*外部引用时气泡的颜色*/
+  color: white;
+  background-color: black;
+  padding: 0.3em 0.6em;
+  border-radius: 0.3em;
+  background-color: black;
+  transition: .6s;
+  opacity: 0;
+}
+
+[data-balloon]::after {
+  content: '';
+  position: absolute;
+  width: 0;
+  height: 0;
+  border: 5px solid black;
+  transition: .6s;
+  opacity: 0;
+}
+[data-balloon]:hover::before {
+  opacity: 1;
+}
+[data-balloon]:hover::after {
+  opacity: 1;
+}
+
+
+
+[data-balloon-pos="up"]::before {
+  left: 50%;
+  bottom: 100%;
+  transform: translatex(-50%) translatey(8px);
+}
+[data-balloon-pos="up"]::after {
+  left: 50%;
+  top: 0;
+  /*将border组成的方形展现成三角形*/
+  border-color: black transparent transparent;
+  transform: translatex(-50%) translatey(8px);
+}
+
+[data-balloon-pos="up"]:hover::before {
+  transform: translatex(-50%) translatey(-8px);
+}
+[data-balloon-pos="up"]:hover::after {
+  transform: translatex(-50%) translatey(-8px);
+}
+
+
+[data-balloon-pos="down"]::before {
+  left: 50%;
+  top: 100%;
+  /*将默认情况下设定的值还原*/
+  bottom: auto;
+  transform: translatex(-50%) translatey(-8px);
+}
+[data-balloon-pos="down"]::after {
+  left: 50%;
+  bottom: 0;
+  
+  top: auto;
+  border-color: transparent transparent black;
+  transform: translatex(-50%) translatey(-8px);
+}
+[data-balloon-pos="down"]:hover::before {
+  transform: translatex(-50%) translatey(8px);
+}
+[data-balloon-pos="down"]:hover::after {
+  transform: translatex(-50%) translatey(8px);
+}
+
+
+
+[data-balloon-pos="left"]::before {
+  top: 50%;
+  right: 100%;
+  transform: translatex(8px) translatey(-50%);
+}
+[data-balloon-pos="left"]::after {
+  left: 0;
+  border-color: transparent transparent transparent black;
+  transform: translatex(8px) translatey(0);
+}
+[data-balloon-pos="left"]:hover::before {
+  transform: translatex(-8px) translatey(-50%);
+}
+[data-balloon-pos="left"]:hover::after {
+  transform: translatex(-8px) translatey(0);
+}
+
+[data-balloon-pos="right"]::before {
+  top: 50%;
+  left: 100%;
+  transform: translatex(-8px) translatey(-50%);
+}
+[data-balloon-pos="right"]::after {
+  right: 0px;
+  border-color: transparent black transparent transparent;
+  transform: translatex(-8px) translatey(0);
+}
+[data-balloon-pos="right"]:hover::before {
+  transform: translatex(8px) translatey(-50%);
+}
+[data-balloon-pos="right"]:hover::after {
+  transform: translatex(8px) translatey(0);
+}
+
+/*不同大小属性*/
+[data-balloon-size="small"]::before {
+  width: 80px;
+}
+[data-balloon-size="medium"]::before {
+  width: 160px;
+}
+[data-balloon-size="large"]::before {
+  width: 240px;
+}
+[data-balloon-size="xlarge"]::before {
+  width: 380px;
+}
+[data-balloon-size="fit"]::before {
+  /*和父元素一样宽*/
+  width: 100%;
+}
+
+/* 无pos属性时默认使用up属性*/
+[data-balloon]:not([data-balloon-pos])::before {
+  left: 50%;
+  bottom: 100%;
+  transform: translatex(-50%) translatey(8px);
+}
+[data-balloon]:not([data-balloon-pos]):hover::before {
+  transform: translatex(-50%) translatey(-8px);
+}
+[data-balloon]:not([data-balloon-pos]):after {
+  left: 50%;
+  top: 0;
+  border-color: black transparent transparent;
+  transform: translatex(-50%) translatey(8px);
+}
+[data-balloon]:not([data-balloon-pos]):hover::after {
+  transform: translatex(-50%) translatey(-8px);
+} 
+/*无pos属性样式结束 */
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
