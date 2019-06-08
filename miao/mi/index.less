@@ -257,8 +257,6 @@ body {
   .site-slider input:checked + a img {
     opacity: 1;
   }
-
-
   // 上一个下一个样式
   .site-slider .prev-group>label>.prev {
     position: absolute;
@@ -308,8 +306,28 @@ body {
     visibility: visible;
   }
 
- 
-
+  // 轮播图下主选择框内容
+  .home-hero-sub {
+    display: flex;
+  }
+  .home-hero-sub .first-section {
+    display: flex;
+    flex-flow: row wrap;
+    width: 228px;
+    height: 164px;
+    font-size: 12px;
+  }
+  .home-hero-sub>ul>li {
+    background-color: rgb(95, 87, 80);
+    color: rgb(219, 213, 206);
+    
+  }
+  .home-hero-sub>ul>li>i {
+    display: block;
+    text-align: center;
+  }
+  .home-hero-sub>ul>li>a {
+    color: inherit;
+  }
 }
 
-/*小米站点内容end*/
