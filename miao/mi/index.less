@@ -173,6 +173,10 @@ body {
             }
           }
         }
+        // 让下拉的最后一张图片不出现边框
+        >li:not(:last-of-type) > a> img{
+          border-right: 1px solid #dddddd;
+        }
       }
       /*父元素ul被hover时高度变高, 出现边框*/
       &:hover .item-list  {
