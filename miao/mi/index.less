@@ -58,6 +58,7 @@ body {
 
   /*购物车样式*/
   .topbar-cart {
+    position: relative;
     width: 120px;
     float: right;
     height: 40px;
@@ -66,6 +67,27 @@ body {
     background-color: RGB(66, 66, 66);
     color: #b0b0b0; 
     margin-left: 30px;
+  }
+
+  .topbar-cart a{
+    width: 100%;
+  }
+
+  .topbar-cart>a:hover {
+    color: rgb(255, 177, 125);
+    background-color: #fff;
+  }
+  .topbar-cart>a .cart-outer {
+    position: absolute;
+    right: 0;
+    height: 0;
+    width: 315px;
+    background-color: #ffffff;
+    box-shadow: 0 3px 9px #dddddd;
+    transition: .2s;
+  }
+  .topbar-cart>a:hover .cart-outer {
+    height: 150px;
   }
 }
 /*小米顶部end*/
@@ -81,6 +103,7 @@ body {
     height: 104px;
     /*让元素居中*/
     margin: 0 auto;
+    position: relative;
 
     .nav-logo {
       float: left;
@@ -91,9 +114,10 @@ body {
     }
     .nav-list {
       float: left;
-      width: 850px;
+      width: 650px;
       height: 88px;
       padding: 16px 0 0 30px;
+      margin-left: 155px;
       font-size: 16px;
       .site-category {
         position: relative;
@@ -106,38 +130,8 @@ body {
         width: 163px;
         height: 66px;
       }
-      .site-category .category-list {
-        position: absolute;
-        top: 88px;
-        left: -78px;
-        width: 234px;
-        height: 460px;
-        background-color: rgba(0, 0, 0, 0.6);
-      }
-      .category-list>ul {
-        width: 234px;
-        height: 420px;
-        padding: 20px 0;
-      }
-      .category-list>ul>li {
-        height: 42px;
-      }
-      .category-list>ul>li>a {
-        padding-left: 30px;
-        display: block;
-        height: 42px;
-        line-height: 42px;
-        font-size: 12px;
-        color: #fff;
-        position: relative;
-        >span {
-          position: absolute;
-          right: 8px;
-          font-size: 16px;
-          line-height: 42px;
-          vertical-align: middle;
-        }
-      }
+     
+      /*导航栏目li的样式*/
       >li {
         float: left;
         >a {
@@ -148,6 +142,47 @@ body {
         >a:hover{
           color:#ff6700;
         }
+      }
+      .nav-item .item-list {
+        position: absolute;
+        width: 1226px;
+        height: 0;
+        left: 0;
+        right: 0;
+        top: 104px;
+        z-index: 0;
+        /*让元素的宽度为整个页面的宽度*/
+        margin-left: -1000px;
+        margin-right: -1000px;
+        padding-left: 1000px;
+        padding-right: 1000px;
+        background-color: #ffffff;
+        overflow: hidden;
+        transition: .3s;
+        >li {
+          float: left;
+          width: 200px;
+          height: 230px;
+          font-size: 14px;
+          >a {
+            display: block;
+            text-align: center;
+            img {
+              margin-top: 30px;
+              width: 160px;
+            }
+          }
+        }
+      }
+      /*父元素ul被hover时高度变高, 出现边框*/
+      &:hover .item-list  {
+        height: 230px;
+        // border-top: 1px solid;
+        box-shadow: 0 3px 3px #dddddd;
+        border-top: 1px solid #dddddd;
+      }
+      .nav-item:hover ul {
+        z-index: 1000
       }
     }
     .site-search {
@@ -207,6 +242,41 @@ body {
     margin: 0 auto;
     position: relative;
   }
+   /*侧边栏样式start*/
+   .category-list {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 234px;
+    height: 460px;
+    background-color: rgba(0, 0, 0, 0.6);
+    z-index: 10;
+  }
+  .category-list>ul {
+    width: 234px;
+    height: 420px;
+    padding: 20px 0;
+  }
+  .category-list>ul>li {
+    height: 42px;
+  }
+  .category-list>ul>li>a {
+    padding-left: 30px;
+    display: block;
+    height: 42px;
+    line-height: 42px;
+    font-size: 12px;
+    color: #fff;
+    position: relative;
+    >span {
+      position: absolute;
+      right: 8px;
+      font-size: 16px;
+      line-height: 42px;
+      vertical-align: middle;
+    }
+  }
+  /*侧边栏样式end*/
   .site-slider {
     position: relative;
     height: 460px;
