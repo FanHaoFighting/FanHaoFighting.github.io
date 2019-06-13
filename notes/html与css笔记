@@ -295,6 +295,9 @@
     水平方向margin不会合并
   * 一个块元素没有内容时，默认margin padding border content都为0 
   * margin-left无法被计算为负值
+  * padding box是可视盒子，不影响布局 margin box是布局盒子
+    举例：两个float left的元素，第一个占满一行，第二个元素本来在第二行， 给它设定负margin使它的布局盒子变成零，它就会到上一行的右边
+    float元素不能高过自己前面的元素
 
 ## HTML行内元素、块状元素、行内块状元素的区别
   * 三种属性可以通过display:inline;display:block;display:inline-block;相互转换
@@ -680,6 +683,17 @@
       子元素设为行内元素
       父元素行内文字水平居中 text-align: center;
     ```
+   * 包含块的line-height=height时，实现文字的垂直居中。内容区和行高共用一条居中线，当行高等于行框高度时，行高的中点也就是行框的中点, line-height设置100%时不起作用, 百分比相对的字体大小；
+   * 包含块text-align=center，使其内容区水平居中。
+   * 包含块内容区margin=auto时，实现水平居中；
+   * 行内元素vertical-align=middle,加上font-size：0，可以实现垂直居中。
+     字符X在父元素中并不一定是垂直居中的，各个字体的字符X的高低位置不一致。所以，当字体大小较大时，这种差异就更明显。而当字体大小为0时，基线的位置就等于中线的位置，我们通过设置父元素的font-size:0来使图片达到完成垂直居中的效果 ；
+   * 绝对定位时，设置内容区的上下左右都为0，margin为auto时也可以实现水平垂直居中；margin在这种情况下会自动调整，上margin等于下margin。左margin等于右margin
+   * flex布局时，justify-content=center，align-items=center可以实现水平垂直居中
+   * 利用表格时，table-cell自带垂直居中属性，为table设置text-align为center可以水平垂直居中
+   * 利用translate平移属性
+      先绝对居中到父元素的中心（top：50%；left：50%）
+      再向上和向左平移自身的50%（ transform:translate（-50%, -50%））
 
 
 
@@ -690,7 +704,7 @@
     -moz-属性：值        火狐浏览器
   * 对于大型商业网站，pc端一个网站，移动端一个网站，两个团队开发
     对于简单的网站只用一个站点，配合media query 让站点在不同的设备上展示比较合适
-  * media query语法
+### media query语法
     - 使用link插入外部样式表
       <link  media="logic media and (expression)">
     - 使用@import指令调用外部样式表
@@ -731,6 +745,132 @@
       - 直接使用device-width且使用px以及流式布局（块元素自动占满宽度）
     3. 对于杂合形页面，即布局复杂，又有很多文字
       - 布局使用rem，文字使用px，width=device-width
+###  多列
+   * column-count:2/3; 设置文本分成多少列，和column-width一起用时表示最大多少列
+     column-width：150px； 每列的最小宽度
+     column-count，column-width一起使用时，先满足column-width的要求，
+   * column-gap：2em ;每列之间的间隙
+     column-rule: 2px solid red  ;  设置每列之间的垂直分隔线
+   * column-fill：balance（默认值）/auto  ;设置填充方式
+     balance表示每列平均填充文本；auto表示按照顺序填充，一列填满后再填下一列
+   * break-inside:avoid-column; 使同一个元素在一列中显示，不要左右断开显示
+   * column-span：1/all;
+     默认值为1，使行内元素可以分列；值为all时，行内元素占据整行不分列；
+   * 多列属性元素的行内子元素无法撑开其宽度，父元素的宽度为行内子元素不分列时的宽度。  
+
+### 边框及边框效果
+  * border-radius:x1 x2 x3 x4/y1 y2 y3 y4
+    border-top-left-radius:x1 y1
+    border-top-right-radius:x2 y2
+    border-bottom-left-radius:x3 y3
+    border-bottom-left-radius:x4 y4
+    表示正圆形时x和y的值一样，写一个值即可；border-radius：x1 x2 x3 x4
+    border-radius：9999px,   值足够大就是4个圆角（上下或者左右角半径之和大于边框长宽时会等比缩小）
+    border-radius：100%， border-box不为正方形时，为椭圆（百分比是以边框为基础的）
+  * box-shadow ：/* inset（向内扩散，不写就默认向外扩散） | x偏移量 | y偏移量 | 阴影模糊半径| 阴影扩散半径 | 阴影颜色 */
+
+### 颜色和透明度
+
+ * opacity ：0~1  透明度
+     *不能继承，父子元素都有透明度时，先将子元素透明好，再透明父元素，父子元素的透明度在子元素的位置会叠加
+     * 会通过触发图形加速，单独形成一个图层和当前图层重合，默认通过图形加速的图层会盖住常规流。比如浮动元素opacity属性触发图形加速后会盖住常规流。
+     * 通过触发图形加速单独形成一个图层在显卡中进行图形变换，这样工作效率高，效果好。
+
+### 渐变
+  * linear-gradient() 函数用于创建一个表示两种或多种颜色线性渐变的图片。其结果属于<gradient>数据类型，是一种特别的<image>数据类型。
+    background-image：linear-gradient(to left ,white,black)  由白到黑向左边渐变
+    linear-gradient(渐变方向，可以为弧度角度    ，   开始颜色 ，  结束颜色) 
+  * radial-gradient() 径向渐变；颜色值由一个中心点（原点）向外扩散并逐渐过渡到其他颜色值。
+  * 重复渐变; 重复多次渐变图案直到足够填满指定元素。由 repeating-linear-gradient()和repeating-radial-gradient()函数产生。
+
+### 2D变换
+  * 线性变换，有规律可循；默认x轴箭头向右，y轴箭头向下
+  * transform：function（value）function（value）function（value）
+     * 变换的元素会通过显卡(GPU)渲染，单独形成一个图层，覆盖常规流，但是常规流只能感受它变换之前的位置，无法感知现在的位置，不影响常规流布局
+     * 第一个函数变换后，以更新后的位置为基础进行下一次函数变换 
+  * transform-origin：不动点，元素围绕改点进行变换
+    * 默认值为元素水平垂直的中点，注意此时其坐标不是（0,0）
+    * （0,0）坐标在元素左上角
+    * 表达方式 
+      transform-origin：x, y
+      transform-origin：100%, 100%
+      transform-origin：left, top
+      transform-origin：center, center
+  * transform:rotate(度)  旋转 ；元素坐标系跟着旋转
+  * transform:translate（）平移;会把不动点一起平移
+    * transform:translate（x, y）
+      transform:translatex
+      transform:translatey
+    * 水平垂直居中
+      - 先绝对居中到父元素的中心（top：50%；left：50%）
+        再向上和向左平移自身的50%（ transform:translate（-50%, -50%））
+  * transform:scale() 缩放，会把自身的坐标缩放
+    * transform:scale(x,y)分别在水平垂直方向缩放
+      只有一个值时，x和y共用这一个值
+  * transform:skey()   倾斜坐标轴一定的角度
+    * transform:skey(x , y)
+  * transform：matrix()  矩阵变换
+    所有的变换最终都是综合为一个矩阵变换
+
+### 3D变换
+  * transform-origin：x,y,z;  设置不动点的位置
+  * transform-style：flat（默认值，平面拉伸）/preserve-3d(设置该值有3D深度感)
+  * Perspective景深，眼睛离平面的垂直距离，可以继承，近大远小；
+    transform：perspective（1000px/none），值为具体数值或者none；该函数只能写在最前面，写在后面会被忽略；
+    perspective-origin：x,y;  设置观察点相对于平面的位置
+  * transform:rotateX/Y/Z()
+    transform:rotate3d(x,y,z,度数);  (x,y,z)表示矢量坐标，元素围绕该矢量线旋转
+  * transform:translateX/Y/Z()
+    transform:translate3d(x,y,z)
+  * transform:scaleX/Y/Z()
+    transform:scale3d(x,y,z)
+    z的值默认为0，不设置Z的值就相当于进行2D变换
+  * transform：matrix3d()  3D矩阵变换
+    所有的3D变换最终都是综合为一个3D矩阵变换
+
+### 过度与动画
+   * transition  平滑的改变CSS的值 （可以简写，保证duration在delay前面即可）
+     - transition-property
+       指定过渡的属性值，比如transition-property:opacity就是只指定opacity属性参与这个过渡。默认值为all
+     - transition-duration
+       指定这个过渡的持续时间
+     - transition-delay
+       延迟过渡时间，双向的，开始动画之前和动画结束之后都是有delay时间
+     - transition-timing-function
+       指定过渡动画缓动类型，有ease | linear | ease-in | ease-out | ease-in-out | step | cubic-bezier()贝塞尔曲线
+       其中，linear线性过度，ease-in由慢到快，ease-out由快到慢，ease-in-out由慢到快在到慢。
+   * animation 动画（可以简写，保证duration在delay前面即可）
+     - @keyframes  name {关键帧（10%）{属性：值}  关键帧（10%）{属性：值} 关键帧（10%）{属性：值}}
+       —关键帧可以用百分比，也可以用to(100%)和from（0%）
+     - animation-name：关键帧前面定义的name
+     - animation-duration :持续时间
+     - animation-timing-function 关键帧的过度动画缓动类型
+     - animation-delay  动画延迟
+     - animation-iteration-count  动画执行次数  默认为1次，infinity表示无数次
+     - animation-direction:normal(默认值，1次播完突变回来)/alternate(表示动画会反着播放回来，1次结束后不会突变回来，并且回来的这次也算次数)
+     - animation-fill-mode:设置CSS动画在执行之前和之后如何将样式应用于其目标。
+        -none 当动画未执行时，动画将不会将任何样式应用于目标，而是已经赋予给该元素的 CSS 规则来显示该元素。这是默认值。
+        -forwards 目标将保留由执行期间遇到的最后一个关键帧计算值。
+        -backwards 动画将在应用于目标时立即应用第一个关键帧中定义的值，并在animation-delay期间保留此值。
+        -both 动画将遵循forwards和backwards的规则，从而在两个方向上扩展动画属性
+     - animation-play-state:动画播放状态  running(播放)/paused(暂停)
+
+ ### Blend Modes/Filter/Masking 
+   * background-blend-mide  设置背景的颜色混合方式
+     mix-blend-mide 设置多个元素的颜色混合方式
+     isolation：auto/isolate 该属性的主要作用是当和background-blend-mode属性一起使用时，可以只混合一个指定元素栈的背景
+    * filter滤镜 
+        filter: blur(5px);  模糊
+        filter: brightness(0.4); 亮度
+        filter: contrast(200%);  对比度
+        filter: drop-shadow(16px 16px 20px blue); 阴影效果
+        filter: grayscale(50%); 将图像转换为灰度图像
+        filter: hue-rotate(90deg); 给图像应用色相旋转
+        filter: invert(75%); 反转输入图像。值定义转换的比例。100%的价值是完全反转。值为0%则图像无变化。
+        filter: opacity(25%); 转化图像的透明程度
+        filter: saturate(30%); 转换图像饱和度。
+        filter: sepia(60%)  将图像转换为深褐色
+    * mask 允许使用者通过部分或者完全隐藏一个元素的可见区域。这种效果可以通过遮罩或者裁切特定区域的图片。
 
 ## flex布局
   * 阮一峰的文章链接: 
@@ -768,101 +908,53 @@
   * flex元素margin为auto, 大小不一的元素margin平分剩余空间
   * 心得: 固定宽度的要设为flex-shrink为0, 剩余占满空间的把flex-grow设为1, 
 ## css3字体
-  
+  - 1. @font-face @media  @import @supports @key-frames
+  - 2. @font-face 可用相同名字重复声明， 最多18种， 需要把font-style也一起声明
+         本地字体，自己就会挑选字型，不用重复声明
+         -资源：fonts google.com  挑选拉丁文
+         -字体文件格式  otf/ttft/wotf/
+         -小图标格式 svg  ---关联属性查询w3schools    svg-path可画出任何图形  ，M/L/D... 大写字母绝对定位
+  - 3. FOUC：flash of unstyled content  --> 解决方法：把第一屏的style直接写在html文件上
+  - 4. css的转义字符\最多可识别六位字符
+  - 5. unicode 6万（fooo）后面是供私人用的
+  - 6. &#X（f003）
+  - 7. aria-hidden="true" 读屏软件不读
+  - 8. sr-only  只有读屏软件可见
+  - 9. 推荐小图标用i标签， 定义之后需要把font-style重新定义normal
+  - 10. 小图标相关网址  FontAwesome，iconfont.cn , iconmoon
+  - 11. three dots（...）只适用在单行水平文本
+  - 12. resize： vertical/horizontal/none  任何元素可随意拉伸，需要跟over-flow：hidden一起用
+  - 13. background-img-position相关，图片的定位位置和元素的位置对齐
+  - 14. quotes:""" """ "'" "'"
+  - 15. 背景图多张重叠顺序，前面的覆盖后面的，其它属性按顺序反复
+
+    |充电大喵| 2019/5/31 15:24:56
+    @font-face {
+      font-family: 'FontAwesome';
+      src: url('../fonts/fontawesome-webfont.eot?v=4.7.0');
+      src: url('../fonts/fontawesome-webfont.eot?#iefix&v=4.7.0') format('embedded-opentype'), url('../fonts/fontawesome-webfont.woff2?v=4.7.0') format('woff2'), url('../fonts/fontawesome-webfont.woff?v=4.7.0') format('woff'), url('../fonts/fontawesome-webfont.ttf?v=4.7.0') format('truetype'), url('../fonts/fontawesome-webfont.svg?v=4.7.0#fontawesomeregular') format('svg');
+      font-weight: normal;
+      font-style: normal;
+    }
+    * fontawesome基本用法(https://fontawesome.com/v4.7.0/examples/)
+      - 1. <i class="fa fa-camera"></i>
+      - 2. fa-lg/fa-2x/fa-3x
+      - 3. fa-fw 定宽
+      - 4. fa-ul,fa-li 替换列表图标
+
+      <ul class="fa-ul"><li><i class="fa-li fa fa-check-square"></i>List icons</li>
+
+      - 5. fa-border 加边框  fa-pull-left/right
+      - 6. fa-spin   fa-pulse(分8步)  
+      - 7. <i class="fa fa-shield fa-rotate-270"></i> fa-rotate-270<br>
+          <i class="fa fa-shield fa-flip-horizontal"></i> fa-flip-horizontal<br>
+          <i class="fa fa-shield fa-flip-vertical"></i> fa-flip-vertical
+      - 8. 组合 <span class="fa-stack fa-lg">
+          <i class="fa fa-square-o fa-stack-2x"></i>
+          <i class="fa fa-twitter fa-stack-1x"></i>
+          </span>
     
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-# javascript笔记
-  ## 高阶函数
-
-   * forEach函数
-     array.forEach(function(){}) 方法从头至尾遍历数组，为每个元素调用指定的函数。ES6 的 => 语法可以让匿名函数更简洁，取代 function 关键词。
-     只有一个参数，及每个元素的处理函数。
-     <!--  var numbers = [1, 2, 3];      
-      numbers.forEach(x => console.log(x));
-      // 同等于
-      numbers.forEach(function (x) {
-          console.log(x); -->
-
-   * filter函数
-      array.filter(function(){})  filter函数的作用是遍历该集合，然后将该集合中符合某些特定条件的元素组成新的数组，并返回该新数组.
-      只有一个参数，及判断所有元素是否符合条件的处理函数。
-      <!--  var digits = [1, 4, 5, 10, 15]
-      var even = digits.filter(function (number) { return number % 2 == 0 })
-      console.log(even))
-      // [4, 10 -->]
-
-   * map函数
-     array.map(function(){})  对数组的每个元素调用定义的回调函数并返回包含结果的数组  
-     只有一个参数,及给出映射关系的处理函数
-      <!-- var array = [16,25,36];
-      array.map(Math.sqrt);
-      //array = [4,5,6]
-
-      var array = [11, 22, 33, 44, 55];
-      console.log(array.map(function (n) { return n % 10 }))
-      //array = [1,2,3,4,5] -->
-
-    * reduce函数
-      Array的reduce()把一个函数作用在这个Array的[x1, x2, x3...]上，这个函数必须接收两个参数，reduce()把结果继续和序列的下一个元素做累积计算，其效果就是：
-      [x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4)
-     <!--  var arr = [1, 3, 5, 7, 9];
-      arr.reduce(function (x, y) {
-      return x + y;
-      }); // 25 -->
-  
-  ## 对象原型
    
-    * 基本关系
-      构造函数Perser, function  Person(参数){}
-      Person的实例person1 ,var person1 = new Person(实参)
-      _proto__（隐式原型）与prototype（显式原型），隐式原型指向创建这个对象的函数(constructor)的prototype；
-      JavaScript中我们在定义构造函数的时候就会默认有一个prototype的属性。每个对象实例化后其实就是拷贝构造函数中除开prototype属性之外的所有方法和属性，其中会生成一个__proto__属性。
-      prototype是站在构造函数的角度讨论原型对象的，用来实现基于原型的继承与属性的共享。__proto__是站在实例对象的角度讨论原型对象，构成原型链，同样用于实现基于原型的继承。
-
-      person1的__prototype__属性等于构造函数Person的prototype属性， person1.__prototype__ == Person.prototype ,都指向了person1的原型；
-      person1的原型的原型等于Object的prototype属性，Person.prototype.__prototype__ == Object.prototype.
-      person1的原型的原型的原型是Null. Object.prototype__proto__ == Null
-
-      构造函数Person也是对象,也有__proto__属性,等于它的构造函数Function的prototype属性.Person.__prototype__ == Function.prototype.Function是所有函数的根构造函数.
-      构造函数Person的原型也是对象,也有__proto__属性,等于它的构造函数Object的prototype属性Function.prototype__prototype__ == Object.prototype. Object是所有对象的根构造函数。
-      Object里面的的原型对象没有原型了，所以 Object.prototype__proto__ == Null 
-
-     * Object.create(新创建对象的原型对象)  即为新创建的对象指定一个原型对象
-       <!-- var person2 = Object.create(person1);
-       person2.__proto__ ；
-       // person1 -->
-
-     * constructor 属性  每个实例对象都从原型中继承了一个constructor属性，该属性指向了用于构造此实例对象的构造函数。
-
-        原型对象有一个constructor属性，指向该原型对象对应的构造函数
-        function Foo(){};
-        console.log(Foo.prototype.constructor === Foo);//true
-
-        由于实例对象可以继承原型对象的属性，所以实例对象也拥有constructor属性，同样指向原型对象对应的构造函数
-        function Foo(){};
-        var f1 = new Foo;
-        console.log(f1.constructor === Foo);//true (f1中没有constructor属性，会到f1.__proto__ 中寻找，即f1.__proto__.constructor === Foo)
-
-
-
-      ..................................................................................................................................................0
-
 
 ## Tips
   * 0529
