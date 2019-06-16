@@ -1,4 +1,3 @@
-
 <script id="ch0103/01" type="xxx">
   var a = Number(prompt("请输入a的值"))
   var b = Number(prompt("请输入b的值"))
@@ -394,4 +393,254 @@
   var x = Number(prompt("请输入x"))
   var y = Number(prompt("请输入y"))
   console.log(n- Math.ceil(y/x))
+</script>
+
+
+<script id="ch0105/01" type="xxx">
+  var n = Number(prompt("请输入学生人数"))
+  var totalAge = 0;
+  for (var i = 1; i <= n; i++ ) {
+    var x = Number(prompt("请输入第" + i + "个人的年龄"))
+    totalAge = totalAge + x
+  }
+  console.log((totalAge/n).toFixed(2))
+</script>
+
+<script id="ch0105/02" type="xxx">
+  var total = 0
+  for (var i = 1; i <= 12; i++ ) {
+    var x = Number(prompt("请输入第" + i + "个月的收入"))
+    total = total + x
+  }
+  console.log("$" + (total/12).toFixed(2))
+</script>
+
+<script id="ch0105/03" type="xxx">
+  var n = Number(prompt("请输入整数n"))
+  var total = 0;
+  for (var i = 1; i <= n; i++ ) {
+    var x = Number(prompt("请输入第" + i + "个浮点数"))
+    total = total + x
+  }
+  console.log((total/n).toFixed(4))
+</script>
+
+<script id="ch0105/04" type="xxx">
+  var n = Number(prompt("请输入整数n"))
+  var total = 0;
+  for (var i = 1; i <= n; i++ ) {
+    var x = Number(prompt("请输入第" + i + "个数"))
+    total = total + x
+  }
+  console.log(total + + " " + (total/n).toFixed(5))
+</script>
+
+
+<script id="ch0105/05" type="xxx">
+  var n = Number(prompt("请输入人数n"))
+  var max = 0;
+  for (var i = 1; i <= n; i++ ) {
+    var x = Number(prompt("请输入第" + i + "个考生的分数"))
+    max = max > x ? max  : x
+  }
+  console.log(max)
+</script>
+
+<script id="ch0105/06" type="xxx">
+  var n = Number(prompt("请输入n"))
+  var max = 0;
+  var min = 0;
+  for (var i = 1; i <= n; i++ ) {
+    var x = Number(prompt("请输入第" + i + "个数"))
+    max = max > x ? max  : x
+    min = min < x ? min : x
+  }
+  console.log(max - min)
+</script>
+
+<script id="ch0105/07" type="xxx">
+  var n = Number(prompt("请输入天数n"))
+  var gold = 0;
+  var silver = 0;
+  var copper = 0;
+  for (var i = 1; i <= n; i++ ) {
+    var x = prompt("请输入第" + i + "天的各类奖牌数")
+    var arr = x.trim().split(/\s+/)
+    console.log(arr + "1111111")
+    arr2 = arr.map(Number)
+    gold = gold + arr2[0]
+    silver = silver + arr2[1]
+    copper = copper + arr2[2]
+  }
+  var total = gold + silver + copper
+  console.log(gold + " " + silver + " " + copper + " " + total)
+</script>
+
+<script id="ch0105/08" type="xxx">
+  var n = Number(prompt("请输入多边形边数n"))
+  var x = prompt("请输入各个已知边的度数")
+  var arr = x.trim().split(/\s+/)
+  arr2 = arr.map(Number)
+  var res = (n -2 ) * 180
+  for(var i = 0, len = arr2.length; i < len; i++){
+    res = res - arr[i]
+  }
+  console.log(res)
+</script>
+
+<script id="ch0105/09" type="xxx">
+  var x = prompt("请输入m和n")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var m = arr[0]
+  var n = arr[1]
+  var total = 0;
+  if (m % 2 == 0) {
+    m = m + 1;
+  }
+  for (m; m <= n; m = m + 2) {
+    total = total + m;
+  }
+  console.log(total)
+</script>
+
+<script id="ch0105/10" type="xxx">
+  var x = prompt("请输入m和n")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var m = arr[0]
+  var n = arr[1]
+  var res = 0;
+  for (m; m <= n; m++) {
+    if (m%17 == 0) {
+      res = res + m
+    }
+  }
+  console.log(res)
+</script>
+
+<script id="ch0105/11" type="xx">
+  var n = Number(prompt("请输入整数个数n"))
+  var x = prompt("请输入数组")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var res1 = 0;
+  var res5 = 0;
+  var res10 = 0;
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i]==1) {
+      res1++;
+    } else if (arr[i]==5) {
+      res5++;
+    } else if (arr[i]==10) {
+      res10++;
+    } 
+  }
+  console.log(res1)
+  console.log(res5)
+  console.log(res10)
+</script>
+
+<script id="ch0105/12" type="xxx">
+  var x = prompt("请输入第一行数组")
+  var y = prompt("请输入第二行数组")
+  var arr1 = x.trim().split(/\s+/)
+  var arr2 = arr1.map(Number)
+  debugger
+  var n = arr2[0]
+  var pointer = arr2[1]
+  var arr3 = y.trim().split(/\s+/)
+  var arr = arr3.map(Number)
+  var res = 0
+  for (var i = 0; i < arr.length; i++) {
+    if (arr[i] == pointer) {
+      res++;
+    }
+  }
+  console.log(res)
+</script>
+
+<script id="ch0105/13" type="xxx">
+  var x = prompt("请输入数组")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var base = arr[0]
+  var power = arr[1]
+  var res = 1
+  for (var i = 0; i < power; i++) {
+    res *= base
+  }
+  console.log(res)
+</script>
+
+<script id="ch0105/14" type="xxx">
+  var x = prompt("请输入数组")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var base = arr[0]
+  var year = arr[1]
+  var res = base
+  for (var i = 0; i < year; i++) {
+    res *= 1.001
+  }
+  console.log(res.toFixed(4))
+</script>
+
+<script id="ch0105/15" type="xxx">
+  var x = prompt("请输入数组")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var r = arr[0]
+  var money= arr[1]
+  var year = arr[2]
+  res = money
+  for (var i = 0; i < year; i++) {
+    res *= (1 + r/100)
+  }
+  console.log(Math.floor(res))
+</script>
+
+<script id="ch0105/16" type="xxx">
+  var x = prompt("请输入数组")
+  var arr1 = x.trim().split(/\s+/)
+  var arr = arr1.map(Number)
+  var salary= arr[0]
+  var money = 0
+  var rise = arr[1]
+  var price = 200
+  var res = 0
+  debugger
+  while (money < price) {
+    if (price*rise/100 > salary || res > 20) {
+      console.log("Impossible")
+      break
+    }
+    res++
+    money = money + salary
+    if (res == 1) {
+      price = 200
+    } else {
+      price *= (1 + rise/100)
+    }
+    if (money >= price) {
+      console.log(res)
+      break;
+    }
+  }
+</script>
+
+
+<script id="ch0105/17">
+  var n = Number(prompt("请输入数字n"))
+  if (n == 1 || n == 2) {
+    console.log(1)
+  } else {
+    var num1 = 1, num2 = 1, sum;
+    for (var i = 3; i <= n; i++) {
+      sum = num1 + num2
+      num1 = num2
+      num2 = sum
+    }
+    console.log(sum)
+  }
 </script>
