@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <title>画图</title>
+  <style>
+    canvas {
+      border: 2px solid #f0f;
+      display: block;
+      margin: auto;
+    }
+  </style>
+</head>
+
+<body>
+  <canvas width="400" height="300"></canvas>
+</body>
+<script>
+  var canvas = document.querySelector('canvas')
+  canvas.style.imageRendering = 'pixelated'
+  var ctx = canvas.getContext('2d')
+
+  function dot(x, y, color = 'black') {
+    ctx.fillStyle = color
+    ctx.fillRect(x, y, 1, 1)
+  }
+  /**
+   * YOUR TASK
+画图的题：
+画一条实线
+画一条一个实点一个空点的虚线
+画一条两个实点两个空点的虚线
+画一条三个实点两个空点的虚线
+画一条45度的斜线
+画一条跨越画布左上角和右下角的对角线
+画一个空心矩形
+画一个实心矩形
+画一个rgb色彩空间的某一面
+画一个空心的圆
+画一个实心的圆
+画一个大小合适的sin(x)的图像
+   */
+</script>
+<script>
+  // YOUR CODE GOES BELOW
+
+  // 实线
+  for (let i = 20; i < 300; i++) {
+    dot(i, 20, "black")
+  }
+  // 一个实点一个空点的虚线
+  for (let i = 20; i < 300; i++) {
+    dot(i++, 30, "black")
+  }
+  // 画一条两个实点两个空点的虚线
+  for (let i = 5; i < 75; i++) {
+    dot(4 * i, 40, "black")
+    dot(4 * i + 1, 40, "black")
+  }
+  // 三个实点两个空点的虚线
+  for (let i = 4; i < 60; i++) {
+    dot(5 * i, 50, "black")
+    dot(5 * i + 1, 50, "black")
+    dot(5 * i + 2, 50, "black")
+  }
+  // 画一条45度的斜线
+  for (let i = 0; i < 100; i++) {
+    dot(20 + i, 60 + i, "black")
+  }
+  //画一条跨越画布左上角和右下角的对角线
+  for (let i = 0; i < 400; i++) {
+    dot(i, 3 / 4 * i, "black")
+  }
+  for (let i = 0; i < 400; i++) {
+    dot(400 - i, 3 / 4 * i, "black")
+  }
+  // 空心矩形
+  for (let i = 10; i < 50; i++) {
+    dot(i, 140, "black")
+    dot(i, 180, "black")
+  }
+  for (let i = 140; i < 180; i++) {
+    dot(10, i, "black")
+    dot(50, i, "black")
+  }
+  // 实心矩形
+  for (let i = 10; i < 50; i++) {
+    for (let j = 190; j < 230; j++) {
+      dot(i, j, "red")
+    }
+  }
+
+  //画一个rgb色彩空间的某一面rgb(4*(i - 220), 4*(i - 160), 0)
+  for (let i = 220; i < 284; i++) {
+    for (let j = 160; j < 224; j++) {
+      let rColor = 4 * (i - 220)
+      let bColor = 4 * (i - 160)
+      let myColor = "rgb(" + rColor + ", 0, " + bColor + ")"
+
+      dot(i, j, myColor)
+    }
+  }
+  // 画一个空心的圆, 圆的半径为50, 圆心(100, 100) 半径40
+
+  for (let seta = 0; seta <= 2 * Math.PI; seta = seta + 0.001) {
+    let x = 20 * Math.cos(seta) + 100
+    let y = 20 * Math.sin(seta) + 100
+    dot(x, y, "green")
+  }
+  // 画一个实心圆
+  for (let r = 0; r < 20; r++) {
+    for (seta = 0; seta <= 2 * Math.PI; seta = seta + 0.001) {
+      x = r * Math.cos(seta) + 300
+      y = r * Math.sin(seta) + 100
+      dot(x, y, "green")
+    }
+  }
+  
+  // 画一个大小合适的sin(x)的图像
+  for (let x = 0; x < 400; x++) {
+    let y = 20 * Math.sin(x* Math.PI/50) + 100
+    dot(x, y, "lime")
+  }
+
+
+</script>
+
+</html>
