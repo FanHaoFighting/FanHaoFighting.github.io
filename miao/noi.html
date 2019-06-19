@@ -384,7 +384,7 @@
   } else if (b*b-4*a*c > 0) {
     x1 = (-b + Math.sqrt(b*b-4*a*c))/(2*a)
     x2 = (-b - Math.sqrt(b*b-4*a*c))/(2*a)
-    console.log ("x1 =" + x1.toFixed(5) + "x2 =" + x2.toFixed(5))
+    console.log ("x1=" + x1.toFixed(5) + "x2 =" + x2.toFixed(5))
   }
 </script>
 
@@ -941,7 +941,7 @@
 </script>
 
 
-<script id="ch0105/35" type="xxxx">
+<script id="ch0105/35" type="xxx">
   var n = Number(prompt("请输入n"))
   var res = 1
   var nth = 1
@@ -1105,24 +1105,20 @@
   }
 </script>
 
-<script id="ch0105/45" type="xxx">
-  var a = Number(prompt("请输入天数a"))
-  var n = 1
-  var count = 0
-  var money = 0
-  while (count < a) {
-    count = count + n
-    if (count >= a) {
-      break
+<script id="ch0105/45">
+  var a = +prompt("请输入天数a")
+  var sum = 0
+  // 一个循环中的天数
+  var day = 0
+  var give = 1
+  // debugger
+  for (let i = 1; i <= a; i++) {
+    day++
+    sum += give
+    if (day == give) {
+      day = 0
+      give++
     }
-    n++
   }
-  // 最后的一组天数可能为0~n天, 统一去除放最后运算
-  count = count - n
-  n = n - 1
-  for (var i = 1; i <= n; i++) {
-    money = money + i * i 
-  }
-  money = money + (a - count) * (n + 1)
-  console.log(money)
+  console.log(sum)
 </script>
