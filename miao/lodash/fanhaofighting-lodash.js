@@ -1,9 +1,13 @@
 var fanhaofighting = function () {
-  return { compact, chunk, difference, differenceBy, drop}
+  return { compact, chunk, difference, differenceBy, drop, dropRight }
 
-  
+  function dropRight(arr, n = 1) {
+    var length = arr.length
+    return n > arr.length ? [] : arr.slice(0, arr.length - n)
+  }
+
   function drop(arr, n = 1) {
-      return arr.slice(n)
+    return arr.slice(n)
   }
 
 
@@ -11,7 +15,7 @@ var fanhaofighting = function () {
   function differenceBy(arr, ...values) {
 
   }
-  
+
   function difference(arr, ...values) {
     return arr.filter(item => values.every(value => !value.includes(item)))
   }
