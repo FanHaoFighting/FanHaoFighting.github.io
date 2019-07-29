@@ -24,7 +24,7 @@ var fanhaofighting = function () {
 
     let index = 0
     let resIndex = 0
-    var resIndex = new Array(Math.ceil(length / size))
+    var result = new Array(Math.ceil(length / size))
 
     while (index < length) {
       result[resIndex++] = slice(array, index, (index += size))
