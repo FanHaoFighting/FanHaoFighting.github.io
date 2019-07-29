@@ -1,4 +1,3 @@
-
 var fanhaofighting = function () {
   return { compact, chunk }
 
