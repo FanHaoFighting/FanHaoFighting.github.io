@@ -12,9 +12,9 @@ var fanhaofighting = function () {
   /**
    * Creates an array of elements split into groups the length of `size`.
    * If `array` can't be split evenly, the final chunk will be the remaining elements
-   * @param {*} array 
+   * @param {*} arr
    */
-  function chunk(array, size = 1) {
+  function chunk(arr, size = 1) {
     let res = [];
     for (let i = 0; i < arr.length;) {
       if (i + size - 1 < arr.length && size > 1) {
