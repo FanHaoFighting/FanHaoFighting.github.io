@@ -663,7 +663,7 @@
     ```
       子元素设为行内元素(display: inline)
       子元素 line-height 等于父元素 content-area 高度(父元素内的匿名文本垂直居中)
-      todo 子元素 vertical-align: middle (设置子元素行内框的中间位置对齐匿名文本中 x 字符 baseline 向上 0.5ex 的位置)
+      子元素 vertical-align: middle (设置子元素行内框的中间位置对齐匿名文本中 x 字符 baseline 向上 0.5ex 的位置, 也就是x字符的中点)
     ```
     - flex居中: 略过不表(记得可以用margin设为auto来做)
   * 水平居中
@@ -970,6 +970,11 @@
   * 0530
   * 声明display: flex外面是一个块, 里面是flex(inline-flex不是).包含块是flex container, 内部元素为flex item
   * 存疑, 块内直接水平排列
+
+  * css是大小写不敏感的
+  * visited属性只能设置背景颜色和另外一个属性, 设置font-size之类无效
+  * 不同元素中的浮动元素也可以相互感知
+  * marquee标签看一下
 
 
 

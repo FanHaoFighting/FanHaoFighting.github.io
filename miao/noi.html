@@ -1105,13 +1105,12 @@
   }
 </script>
 
-<script id="ch0105/45">
+<script id="ch0105/45" type="xxx">
   var a = +prompt("请输入天数a")
   var sum = 0
   // 一个循环中的天数
   var day = 0
   var give = 1
-  // debugger
   for (let i = 1; i <= a; i++) {
     day++
     sum += give
@@ -1122,3 +1121,20 @@
   }
   console.log(sum)
 </script>
+
+<script id="isPrime" type="xxx">
+  var isPrime = function(n) {
+    if (n < 2) {
+      return false
+    }
+    // 约数是成对出现的
+    var sqrtN = Math.floor(Math.sqrt(n))
+    for (var i = 2; i < n/2; i ++) {
+      if (n % i == 0) {
+        return false
+      } 
+    }
+    return true
+  }
+</script>
+
