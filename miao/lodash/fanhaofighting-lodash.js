@@ -1,12 +1,9 @@
 var fanhaofighting = function () {
   return { compact, chunk }
 
-
   function compact(ary) {
     return ary.filter(it => it)
   }
-
-
 
   /**
    * Creates an array of elements split into groups the length of `size`.
@@ -33,5 +30,5 @@ var fanhaofighting = function () {
   }
 
 
-}
+}();
 
