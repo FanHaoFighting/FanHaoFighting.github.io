@@ -1,6 +1,6 @@
 
 var fanhaofighting = function () {
-  return {compact, chunk}
+  return { compact, chunk }
 
 
   function compact(ary) {
@@ -33,6 +33,6 @@ var fanhaofighting = function () {
     return res;
   }
 
-  
+
 }
 
