@@ -14,23 +14,23 @@ var fanhaofighting = function () {
    * If `array` can't be split evenly, the final chunk will be the remaining elements
    * @param {*} array 
    */
-  function chunk(array) {
-    size = Math.max(size, 0)
-    const length = array == null ? 0 : array.length
-
-    if (!length || size < 1) {
-      return []
+  function chunk(array, size = 1) {
+    let res = [];
+    for (let i = 0; i < arr.length;) {
+      if (i + size - 1 < arr.length && size > 1) {
+        let temp = [];
+        let count = size;
+        while (count--) {
+          temp.push(arr[i]);
+          i++;
+        }
+        res.push(temp)
+      } else {
+        res.push([arr[i]]);
+        i++
+      }
     }
-
-    let index = 0
-    let resultIndex = 0
-    var result = new Array(Math.ceil(length / size))
-
-    while (index < length) {
-      result[resultIndex++] = slice(array, index, (index += size))
-    }
-    
-    return result
+    return res;
   }
 
   
