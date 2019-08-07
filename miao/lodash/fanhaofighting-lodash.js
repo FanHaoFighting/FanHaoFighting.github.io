@@ -1,5 +1,35 @@
 var fanhaofighting = function () {
-  return { compact, chunk, difference, differenceBy, drop, dropRight }
+  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches}
+
+
+  function matches(src) {
+    return bind(isMatch, null, _, src)
+    // src是否是obj的子集
+    // return function(obj) {
+    //   return isMatch(obj, src)
+    // }
+  }
+  
+  /**
+   * 在objece和source进行部分深度对比
+   * @param {*} obj 
+   * @param {*} src 
+   */
+  function isMatch(obj, src) {
+    for (let key in src) {
+      // 分为数组和对象两种情况
+      if (typeof src[key] == 'object' && src[key] !== null) {
+        if (!isMatch(obj[key], src[key])) {
+          return false
+        }
+      } else {
+        if (obj[key] != src[key]) {
+          return false
+        }
+      }
+    }
+    return true 
+  }
 
   function dropRight(arr, n = 1) {
     var length = arr.length
@@ -54,6 +84,7 @@ var fanhaofighting = function () {
     }
     return res;
   }
+
 
 
 }();
