@@ -1,6 +1,11 @@
 var fanhaofighting = function () {
-  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches}
+  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last}
 
+  // 返回数组最后一个元素
+  function last(arr) {
+    const length = arr === null ? 0 : arr.length
+    return length ? arr[length - 1] : undefined
+  }
 
   function matches(src) {
     return bind(isMatch, null, _, src)
@@ -17,7 +22,7 @@ var fanhaofighting = function () {
    */
   function isMatch(obj, src) {
     for (let key in src) {
-      // 分为数组和对象两种情况
+      // 分为数组和对象两种情况, 注意null的情况
       if (typeof src[key] == 'object' && src[key] !== null) {
         if (!isMatch(obj[key], src[key])) {
           return false
