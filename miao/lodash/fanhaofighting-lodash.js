@@ -1,7 +1,47 @@
 var fanhaofighting = function () {
-  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last}
+  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, 
+    flatten, flattenDepth}
 
-  // 返回数组最后一个元素
+  /**
+   * 将数组一层展开
+   */
+  function flatten(arr) {
+    return flattenDepth(arr)
+  }
+
+  /**
+   * 将数组深层展开
+   * @param {*} arr 
+   */
+  function flattenDeep(arr) {
+    return flattenDepth(arr, Infinity)
+  }
+
+
+  /**
+   * 按照给定深度展开数组
+   * @param {*} arr 
+   * @param {*} depth 
+   */
+  function flattenDepth(arr, depth = 1) {
+    if (depth == 0) {
+      return arr.slice();
+    }
+    let res = []
+    arr.forEach(it => {
+      if (Array.isArray(it)) {
+        res.push(...flattenDepth(it, depth - 1))
+      } else {
+        res.push(it)
+      }
+    });
+    return res
+  }
+  
+  /**
+   * 
+  返回数组最后一个元素
+   */
   function last(arr) {
     const length = arr === null ? 0 : arr.length
     return length ? arr[length - 1] : undefined
