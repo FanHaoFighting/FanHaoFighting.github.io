@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, 
-    flatten, flattenDepth}
+    flatten, flattenDepth, flattenDeep}
 
   /**
    * 将数组一层展开
