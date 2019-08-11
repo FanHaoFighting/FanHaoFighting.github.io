@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, 
-    flatten, flattenDepth, flattenDeep}
+    flatten, flattenDepth, flattenDeep, identity}
 
   /**
    * 将数组一层展开
@@ -87,12 +87,30 @@ var fanhaofighting = function () {
 
 
   // todo
+  /**
+   * 
+   * @param {*} arr 
+   * @param  {...any} values 
+   */
   function differenceBy(arr, ...values) {
-
+    
   }
 
+  /**
+   * 
+   * @param {*} arr 
+   * @param  {...any} values 
+   */
   function difference(arr, ...values) {
     return arr.filter(item => values.every(value => !value.includes(item)))
+  }
+
+  /**
+   * 返回接收到的第一个参数
+   * @param  {...any} args 
+   */
+  function identity(...args) {
+    return arguments[0]
   }
 
 
