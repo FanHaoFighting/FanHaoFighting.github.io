@@ -49,7 +49,7 @@ var fanhaofighting = function () {
 
   function matches(src) {
     // return bind(isMatch, null, _, src)
-    src是否是obj的子集
+    // src是否是obj的子集
     return function(obj) {
       return isMatch(obj, src)
     }
