@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, 
-    flatten, flattenDepth, flattenDeep, identity}
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath}
 
   /**
    * 将数组一层展开
@@ -93,7 +93,7 @@ var fanhaofighting = function () {
    * @param  {...any} values 
    */
   function differenceBy(arr, ...values) {
-    
+    // let pridicate = 
   }
 
   /**
@@ -112,6 +112,33 @@ var fanhaofighting = function () {
   function identity(...args) {
     return arguments[0]
   }
+
+
+  // todo
+  function iteratee()
+
+  // todo
+  function property(path) {
+    let res
+    if (isArray(path)) {
+      
+    }
+  }
+
+  // todo
+  function get(object, path, defaultValue) {
+    
+  }
+
+  /**
+   * 将路径值如'a.b.c','a[0].b.c'转换为数组
+   * @param {*} val 
+   */
+  function toPath(val) {
+    // 正则模式要写全a[0][c]要考虑
+    return val.split(/\.|\[|\]\.|\]\[/g)
+  }
+
 
 
   /**
