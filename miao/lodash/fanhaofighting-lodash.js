@@ -115,7 +115,9 @@ var fanhaofighting = function () {
 
 
   // todo
-  function iteratee()
+  function iteratee() {
+    
+  }
 
   // todo
   function property(path) {
