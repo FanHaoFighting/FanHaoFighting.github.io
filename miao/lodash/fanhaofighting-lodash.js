@@ -136,17 +136,17 @@ var fanhaofighting = function () {
   function get(object, path, defaultValue) {
     let pathArr = toPath(path)
     for (key of pathArr) {
-      object = object[key]
       if (object === undefined) {
         return defaultValue
       }
+      object = object[key]
     }
     return object
   }
 
   // todo
   function sortBy() {
-    
+
   }
 
   /**
