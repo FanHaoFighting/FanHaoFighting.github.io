@@ -116,7 +116,7 @@ var fanhaofighting = function () {
 
   // todo
   function iteratee() {
-    
+
   }
 
   // todo
@@ -145,7 +145,9 @@ var fanhaofighting = function () {
   }
 
   // todo
-  function sortBy()
+  function sortBy() {
+    
+  }
 
   /**
    * 将路径值如'a.b.c','a[0].b.c'转换为数组
