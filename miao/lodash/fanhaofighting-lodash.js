@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, 
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath}
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy}
 
   /**
    * 将数组一层展开
@@ -125,10 +125,25 @@ var fanhaofighting = function () {
     }
   }
 
-  // todo
+  /**
+   * 根据给定属性路径返回对象的属性, 不存在则返回defaultValue
+   * @param {*} object 
+   * @param {*} path 
+   * @param {*} defaultValue 
+   */
   function get(object, path, defaultValue) {
-    
+    let pathArr = toPath(path)
+    for (key of pathArr) {
+      object = object[key]
+      if (object === undefined) {
+        return defaultValue
+      }
+    }
+    return object
   }
+
+  // todo
+  function sortBy()
 
   /**
    * 将路径值如'a.b.c','a[0].b.c'转换为数组
