@@ -134,7 +134,12 @@ var fanhaofighting = function () {
    * @param {*} defaultValue 
    */
   function get(object, path, defaultValue) {
-    let pathArr = toPath(path)
+    let pathArr
+    if (isArray(path)) {
+      pathArr = path.slice()
+    } else {
+      pathArr = toPath(path)
+    }
     for (key of pathArr) {
       if (object === undefined) {
         return defaultValue
@@ -150,7 +155,7 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 将路径值如'a.b.c','a[0].b.c'转换为数组
+   * 将字符串形式路径值如'a.b.c','a[0].b.c'转换为数组
    * @param {*} val 
    */
   function toPath(val) {
