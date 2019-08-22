@@ -1,5 +1,5 @@
 var fanhaofighting = function () {
-  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, 
+  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, bindAll, 
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy}
 
   /**
@@ -120,10 +120,24 @@ var fanhaofighting = function () {
   }
 
   // todo
+  /**
+   * 对于一个指定的对象, 返回指定路径的值
+   * @param {*} path 
+   */
   function property(path) {
     let res
+    let pathArr
     if (isArray(path)) {
-      
+      pathArr = path.slice()
+    } else {
+      pathArr = toPath(path)
+    }
+    for (key of pathArr) {
+      if (object == null) {
+        return null
+      } else {
+        return object.key
+      }
     }
   }
 
@@ -135,6 +149,7 @@ var fanhaofighting = function () {
    */
   function get(object, path, defaultValue) {
     let pathArr
+    // path可能为数组或者字符串
     if (isArray(path)) {
       pathArr = path.slice()
     } else {
@@ -199,7 +214,14 @@ var fanhaofighting = function () {
     return res;
   }
 
+  /**
+   * 
+   * @param {*} object 
+   * @param {*} names 
+   */
+  function bindAll(object, names) {
 
+  }
 
 }();
 
