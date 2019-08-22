@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, bindAll, 
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy}
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy, isArray}
 
   /**
    * 将数组一层展开
@@ -139,6 +139,14 @@ var fanhaofighting = function () {
         return object.key
       }
     }
+  }
+
+  /**
+   * 判断输入的对象是否是array
+   * @param {*} obj 
+   */
+  function isArray(obj) {
+    return Array.isArray(obj)
   }
 
   /**
