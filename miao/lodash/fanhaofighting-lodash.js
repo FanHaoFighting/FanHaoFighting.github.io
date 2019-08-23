@@ -121,23 +121,12 @@ var fanhaofighting = function () {
 
   // todo
   /**
-   * 对于一个指定的对象, 返回指定路径的值
+   * 创建一个返回给定对象的 path 的值的函数。
    * @param {*} path 
    */
   function property(path) {
-    let res
-    let pathArr
-    if (isArray(path)) {
-      pathArr = path.slice()
-    } else {
-      pathArr = toPath(path)
-    }
-    for (key of pathArr) {
-      if (object == null) {
-        return null
-      } else {
-        return object.key
-      }
+    return function(obj) {
+      return get(obj, path)
     }
   }
 
