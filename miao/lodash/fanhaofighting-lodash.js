@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, bindAll, 
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy, isArray}
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy, isArray, map}
 
   /**
    * 将数组一层展开
@@ -212,12 +212,16 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 
+   * 绑定一个对象的方法到对象本身，覆盖现有的方法。 
    * @param {*} object 
    * @param {*} names 
    */
-  function bindAll(object, names) {
-
+  function bindAll(object, methodNames) {
+    if (Array.isArray(methodNames)) {
+      methodNames.map(it => object.it = object.it.bind(object))
+    } else {
+      object.methodNames = object.it.bind(object)
+    }
   }
 
 }();
