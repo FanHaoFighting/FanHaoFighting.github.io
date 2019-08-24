@@ -98,7 +98,7 @@ var fanhaofighting = function () {
     if (Array.isArray(values)) {
       return difference(arguments)
     }
-    let pridicate = values.pop
+    let pridicate = values.pop()
     if (typeof(pridicate) == 'String') {
       return arr.filter(item => values.every(value => !value[pridicate].includes(item[pridicate])))
     } else {
