@@ -94,7 +94,11 @@ var fanhaofighting = function () {
    * @param {*} arr 
    * @param  {...any} values 
    */
-  function differenceBy(arr, ...values, pridicate) {
+  function differenceBy(arr, ...values) {
+    if (Array.isArray(values)) {
+      return difference(arguments)
+    }
+    let pridicate = values.pop
     if (typeof(pridicate) == 'String') {
       return arr.filter(item => values.every(value => !value[pridicate].includes(item[pridicate])))
     } else {
