@@ -162,7 +162,7 @@ var fanhaofighting = function () {
       return difference(arguments)
     }
     let pridicate = values.pop()
-    if (typeof(pridicate) == 'String') {
+    if (typeof pridicate == 'String') {
       return arr.filter(item => values.every(value => !value.map(it => it[pridicate]).includes(item[pridicate])))
     } else {
       return arr.filter(item => values.every(value => !value.map(it => pridicate(it)).includes(pridicate(item))))
