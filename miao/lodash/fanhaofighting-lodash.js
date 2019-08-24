@@ -218,9 +218,9 @@ var fanhaofighting = function () {
    */
   function bindAll(object, methodNames) {
     if (Array.isArray(methodNames)) {
-      methodNames.map(it => object.it = object.it.bind(object))
+      methodNames.map(it => object[it] = object[it].bind(object))
     } else {
-      object.methodNames = object.it.bind(object)
+      object[methodNames] = object[methodNames].bind(object)
     }
   }
 
