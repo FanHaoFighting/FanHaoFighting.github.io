@@ -2,7 +2,7 @@ var fanhaofighting = function () {
   return {
     compact, chunk, difference, differenceBy, drop, dropRight, isMatch, matches, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath,orderBy, sortBy, isArray,
-    differenceWith, isEqual, isObject, isObjectLike
+    differenceWith, isEqual, isObject, isObjectLike, negate
   }
 
   /**
@@ -77,6 +77,16 @@ var fanhaofighting = function () {
       }
     }
     return true
+  }
+
+  /**
+   * 创建一个针对断言函数 func 结果取反的函数。
+   * @param {*} pridicate 
+   */
+  function negate(pridicate) {
+    return function(...arg) {
+      return !pridicate(...arg)
+    }
   }
 
   function dropRight(arr, n = 1) {
@@ -245,7 +255,13 @@ var fanhaofighting = function () {
    */
   function orderBy(arr, funcs, orders = []) {
     // 利用归并排序的稳定性, 依次排序
-    return mergeSort(arr, func)
+    for (let i = 0; i < funcs.length; i++) {
+      if (orders.length == 0 || orders[i] == 'asc') {
+        mergeSort(arr, funcs)
+      } else {
+        mergeSort(arr, )
+      }
+    }
   }
 
   function toCompareFunc(funcs, orders) {
