@@ -94,14 +94,15 @@ var fanhaofighting = function () {
    * @param  {...any} values 
    */
   function differenceBy(arr, ...values) {
-    if (Array.isArray(...values)) {
+    // 判断values中是否含有iteratee
+    if (Array.isArray(values[values.length - 1])) {
       return difference(arguments)
     }
     let pridicate = values.pop()
     if (typeof(pridicate) == 'String') {
-      return arr.filter(item => values.every(value => !value[pridicate].includes(item[pridicate])))
+      return arr.filter(item => values.every(value => !value.map(it => it[pridicate]).includes(item[pridicate])))
     } else {
-      return arr.filter(item => values.every(value => !pridicate(value).includes(pridicate(item))))
+      return arr.filter(item => values.every(value => !value.map(it => pridicate(it)).includes(pridicate(item))))
     }
     
   }
