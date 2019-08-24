@@ -88,14 +88,13 @@ var fanhaofighting = function () {
   }
 
 
-  // todo
   /**
    * 
    * @param {*} arr 
    * @param  {...any} values 
    */
   function differenceBy(arr, ...values) {
-    if (Array.isArray(values)) {
+    if (Array.isArray(...values)) {
       return difference(arguments)
     }
     let pridicate = values.pop()
