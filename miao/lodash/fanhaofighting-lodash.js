@@ -256,12 +256,14 @@ var fanhaofighting = function () {
   function orderBy(arr, funcs, orders = []) {
     // 利用归并排序的稳定性, 依次排序
     for (let i = 0; i < funcs.length; i++) {
+      let func = funcs[i]
       if (orders.length == 0 || orders[i] == 'asc') {
-        mergeSort(arr, funcs)
+        mergeSort(arr, func)
       } else {
-        mergeSort(arr, )
+        mergeSort(arr, negate(func))
       }
     }
+    return arr
   }
 
   function toCompareFunc(funcs, orders) {
