@@ -1,6 +1,8 @@
 var fanhaofighting = function () {
-  return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, bindAll, 
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy, isArray}
+  return {
+    compact, chunk, difference, differenceBy, drop, dropRight, isMatch, matches, last, bindAll,
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath,orderBy, sortBy, isArray
+  }
 
   /**
    * 将数组一层展开
@@ -37,7 +39,7 @@ var fanhaofighting = function () {
     });
     return res
   }
-  
+
   /**
    * 
   返回数组最后一个元素
@@ -50,11 +52,11 @@ var fanhaofighting = function () {
   function matches(src) {
     // return bind(isMatch, null, _, src)
     // src是否是obj的子集
-    return function(obj) {
+    return function (obj) {
       return isMatch(obj, src)
     }
   }
-  
+
   /**
    * 在objecet和source进行部分深度对比
    * @param {*} obj 
@@ -73,7 +75,7 @@ var fanhaofighting = function () {
         }
       }
     }
-    return true 
+    return true
   }
 
   function dropRight(arr, n = 1) {
@@ -92,8 +94,13 @@ var fanhaofighting = function () {
    * @param {*} arr 
    * @param  {...any} values 
    */
-  function differenceBy(arr, ...values) {
-    // let pridicate = 
+  function differenceBy(arr, ...values, pridicate) {
+    if (typeof(pridicate) == 'String') {
+      return arr.filter(item => values.every(value => !value[pridicate].includes(item[pridicate])))
+    } else {
+      return arr.filter(item => values.every(value => !pridicate(value).includes(pridicate(item))))
+    }
+    
   }
 
   /**
@@ -113,21 +120,19 @@ var fanhaofighting = function () {
     return arguments[0]
   }
 
-
-  // todo
-  function iteratee() {
-
-  }
-
   // todo
   /**
    * 创建一个返回给定对象的 path 的值的函数。
    * @param {*} path 
    */
   function property(path) {
-    return function(obj) {
+    return function (obj) {
       return get(obj, path)
     }
+  }
+
+  function iteratee() {
+
   }
 
   /**
@@ -162,7 +167,21 @@ var fanhaofighting = function () {
   }
 
   // todo
-  function sortBy() {
+  function sortBy(arr, func) {
+
+  }
+
+  /**
+   * 
+   * @param {*} arr 
+   * @param {*} func 
+   */
+  function orderBy(arr, funcs, orders = []) {
+    // 利用归并排序的稳定性, 依次排序
+    return mergeSort(arr, func)
+  }
+
+  function toCompareFunc(funcs, orders) {
 
   }
 
@@ -222,6 +241,54 @@ var fanhaofighting = function () {
     } else {
       object[methodNames] = object[methodNames].bind(object)
     }
+  }
+
+  /**
+   * 归并排序, 稳定的排序
+   * @param {*} arr 
+   * @param {*} compare 
+   */
+  function mergeSort(arr, compare) {
+    if (compare == undefined) {
+      compare = function (a, b) {
+        if (a > b) {
+          return 1;
+        } else if (a < b) {
+          return 0;
+        } else {
+          return -1;
+        }
+      }
+    }
+
+    if (arr.length < 2) {
+      return arr.slice()
+    }
+
+    let mid = arr.length >> 1
+    let left = arr.slice(0, mid)
+    let right = arr.slice(mid)
+    mergeSort(left, compare)
+    mergeSort(right. compare)
+
+
+    let i = 0
+    let j = 0
+    let k = 0
+    while (i < left.length && j < right.length) {
+      if (compare(left[i], right[j]) < 0) {
+        arr[k++] = left[i++]
+      } else {
+        arr[k++] = right[j++]
+      }
+    }
+    while (i < left.length) {
+      arr[k++] = left[i++]
+    }
+    while (j < right.length) {
+      arr[k++] = right[i++]
+    }
+    return arr
   }
 
 }();
