@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return { compact, chunk, difference, differenceBy, drop, dropRight,isMatch, matches, last, bindAll, 
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy, isArray, map}
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, sortBy, isArray}
 
   /**
    * 将数组一层展开
