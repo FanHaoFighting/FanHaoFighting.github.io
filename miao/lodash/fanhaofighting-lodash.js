@@ -1,7 +1,8 @@
 var fanhaofighting = function () {
   return {
     compact, chunk, difference, differenceBy, drop, dropRight, isMatch, matches, last, bindAll,
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath,orderBy, sortBy, isArray
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath,orderBy, sortBy, isArray,
+    differenceWith, isEqual, isObject, isObjectLike
   }
 
   /**
@@ -87,9 +88,71 @@ var fanhaofighting = function () {
     return arr.slice(n)
   }
 
+  /**
+   * 判断两个对象是否相等
+   * @param {*} value 
+   * @param {*} other 
+   */
+  function isEqual(value, other) {
+    if (value == other) {
+      return true
+    } 
+    // NaN == NaN为false
+    if (isNaN(value) && isNaN(other)) {
+      return true
+    }
+    if (isObjectLike(value) && isObjectLike(other)) {
+      let keys1 = Object.keys(value)
+      let keys2 = Object.keys(other)
+      if (keys1.length != keys2.length) {
+        return false
+      }
+      for (const key of key1s) {
+        if (other[key] !== undefined && isEqual(value[key], other[key])) {
+          return true 
+        }
+      }
+      return false
+    }
+  }
+
 
   /**
-   * 
+   * 判断从参数是否为object
+   * @param {*} value 
+   */
+  function isObject(value) {
+    if ((typeof value === 'object' || typeof value == 'function')) {
+      return true
+    }
+    return false
+  }
+
+  /**
+   * 检查 value 是否是 类对象。 如果一个值是类对象，那么它不应该是 null，而且 typeof 后的结果是 "object"。
+   * @param {*} value 
+   */
+  function isObjectLike(value) {
+    if (typeof value === 'object' && object !== null) {
+      return true
+    }
+    return false
+  }
+
+
+  /**
+   * 这个方法类似 _.difference ，除了它接受一个 comparator （比较器），它调用比较array，values中的元素。
+   *  结果值是从第一数组中选择。comparator 调用参数有两个：(arrVal, othVal)。
+   * @param {*} arr 
+   * @param  {...any} values 
+   */
+  function differenceWith(arr, ...values) {
+    let pridicate = values.pop()
+    return  arr.filter(item => values.every(value => !value.map(it => pridicate(it)).includes(pridicate(item))))
+  }
+
+  /**
+   *  调用array 和 values 中的每个元素以产生比较的标准。 结果值是从第一数组中选择。
    * @param {*} arr 
    * @param  {...any} values 
    */
