@@ -118,11 +118,11 @@ var fanhaofighting = function () {
 
 
   /**
-   * 判断从参数是否为object
+   * 判断从参数是否为object, null不算
    * @param {*} value 
    */
   function isObject(value) {
-    if ((typeof value === 'object' || typeof value == 'function')) {
+    if ((typeof value === 'object' || typeof value == 'function') && value !== null) {
       return true
     }
     return false
@@ -133,7 +133,7 @@ var fanhaofighting = function () {
    * @param {*} value 
    */
   function isObjectLike(value) {
-    if (typeof value === 'object' && object !== null) {
+    if (typeof value === 'object' && value !== null) {
       return true
     }
     return false
