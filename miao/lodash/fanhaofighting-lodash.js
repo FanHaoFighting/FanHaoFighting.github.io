@@ -118,8 +118,10 @@ var fanhaofighting = function () {
         return false
       }
       for (const key of key1s) {
-        if (other[key] !== undefined && isEqual(value[key], other[key])) {
-          return true 
+        if (other[key] !== undefined) {
+          return isEqual(value[key], other[key])
+        } else {
+          return false
         }
       }
       return false
@@ -272,7 +274,7 @@ var fanhaofighting = function () {
   }
 
   function toCompareFunc(funcs, orders) {
-
+    return function 
   }
 
   /**
