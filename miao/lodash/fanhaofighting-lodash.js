@@ -187,7 +187,7 @@ var fanhaofighting = function () {
   function differenceBy(arr, ...values) {
     // 判断values中是否含有iteratee
     if (Array.isArray(values[values.length - 1])) {
-      return difference(arguments)
+      return difference(arr, ...values)
     }
     let pridicate = values.pop()
     if (typeof pridicate == 'string') {
