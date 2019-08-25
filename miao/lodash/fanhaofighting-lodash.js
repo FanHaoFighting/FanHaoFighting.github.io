@@ -175,8 +175,8 @@ var fanhaofighting = function () {
    * @param  {...any} values 
    */
   function differenceWith(arr, ...values) {
-    let pridicate = values.pop()
-    return arr.filter(item => values.every(value => !pridicate(value, item)))
+    let comparator = values.pop()
+    return arr.filter(arrVal => values.flatten().every(value => !comparator(value, item)))
   }
 
   /**
