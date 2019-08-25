@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return {
-    compact, chunk, difference, differenceBy, drop, dropRight, isMatch, matches, last, bindAll,
+    compact, chunk, difference, differenceBy, drop, dropRight, isMatch, matches,matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath,orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate
   }
@@ -50,6 +50,22 @@ var fanhaofighting = function () {
     return length ? arr[length - 1] : undefined
   }
 
+  /**
+   * 创建一个深比较的方法来比较给定对象的 path 的值是否是 srcValue 。 如果是返回 true ，否则返回 false 。
+   * @param {*} path 
+   * @param {*} srcValue 
+   */
+  function matchesProperty(path, srcValue) {
+    return function(obj) {
+      let func = property(path)
+      return isMatch(func(obj), src)
+    }
+  }
+
+  /**
+   * 创建一个深比较的方法来比较给定的对象和 source 对象。 如果给定的对象拥有相同的属性值返回 true，否则返回 false。
+   * @param {*} src 
+   */
   function matches(src) {
     // return bind(isMatch, null, _, src)
     // src是否是obj的子集
@@ -59,7 +75,7 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 在objecet和source进行部分深度对比
+   *执行一个深度比较，来确定 object 是否含有和 source 完全相等的属性值。 
    * @param {*} obj 
    * @param {*} src 
    */
@@ -274,7 +290,20 @@ var fanhaofighting = function () {
   }
 
   function toCompareFunc(funcs, orders) {
-    return function 
+    return function(obj1, obj2) {
+      let res1
+      let res2
+      for (let i = 0; i < funcs.length; i++) {
+        let func
+        if (typeof funcs[i] == 'function') {
+          func = funcs[i]
+        } else if (typeof funcs[i] == 'String') {
+          func = property(funcs[i])
+        }
+        obj1 = orders === "desc" ? negate(func)(obj1) : func(obj1)
+        obj2 = orders
+      }
+    }
   }
 
   /**
