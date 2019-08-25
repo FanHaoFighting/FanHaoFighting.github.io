@@ -176,7 +176,7 @@ var fanhaofighting = function () {
    */
   function differenceWith(arr, ...values) {
     let comparator = values.pop()
-    return arr.filter(arrVal => values.flatten().every(value => !comparator(value, item)))
+    return arr.filter(arrVal => values.flatten().every(value => !comparator(value, arrVal)))
   }
 
   /**
