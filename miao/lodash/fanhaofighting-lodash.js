@@ -2,7 +2,7 @@ var fanhaofighting = function () {
   return {
     compact, chunk, difference, differenceBy, drop, dropRight, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
-    differenceWith, isEqual, isObject, isObjectLike, negate, isString
+    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction
   }
 
   /**
@@ -263,6 +263,13 @@ var fanhaofighting = function () {
     if (typeof obj == 'string') {
       return true
     } 
+    return false
+  }
+
+  function isFunction(obj) {
+    if (typeof obj == 'function') {
+      return true
+    }
     return false
   }
 
