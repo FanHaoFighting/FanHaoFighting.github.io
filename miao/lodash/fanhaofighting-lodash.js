@@ -1,8 +1,8 @@
 var fanhaofighting = function () {
   return {
-    compact, chunk, difference, differenceBy, drop, dropRight, isMatch, matches,matchesProperty, last, bindAll,
-    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath,orderBy, sortBy, isArray,
-    differenceWith, isEqual, isObject, isObjectLike, negate
+    compact, chunk, difference, differenceBy, drop, dropRight, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
+    flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
+    differenceWith, isEqual, isObject, isObjectLike, negate, isString
   }
 
   /**
@@ -56,7 +56,7 @@ var fanhaofighting = function () {
    * @param {*} srcValue 
    */
   function matchesProperty(path, srcValue) {
-    return function(obj) {
+    return function (obj) {
       let func = property(path)
       return isMatch(func(obj), src)
     }
@@ -100,13 +100,31 @@ var fanhaofighting = function () {
    * @param {*} pridicate 
    */
   function negate(pridicate) {
-    return function(...arg) {
+    return function (...arg) {
       return !pridicate(...arg)
     }
   }
 
+  /**
+   * 创建一个切片数组，去除array中从 predicate 返回假值开始到尾部的部分。predicate 会传入3个参数： (value, index, array)。
+   * @param {*} arr 
+   * @param {*} pridicate 
+   */
+  function dropRightWhile(arr, pridicate) {
+    let length = arr.length
+    for (let i = 0; i < arr.length; i++) {
+      if (pridicate(arr[i]) === false) {
+
+      }
+    }
+  }
+
+  /**
+   * 创建一个切片数组，去除array尾部的n个元素。（n默认值为1。）
+   * @param {*} arr 
+   * @param {*} n 
+   */
   function dropRight(arr, n = 1) {
-    var length = arr.length
     return n > arr.length ? [] : arr.slice(0, arr.length - n)
   }
 
@@ -122,7 +140,7 @@ var fanhaofighting = function () {
   function isEqual(value, other) {
     if (value == other) {
       return true
-    } 
+    }
     // NaN == NaN为false
     if (isNaN(value) && isNaN(other)) {
       return true
@@ -176,6 +194,7 @@ var fanhaofighting = function () {
    */
   function differenceWith(arr, ...values) {
     let comparator = values.pop()
+    // 要比较的是多个数组, 每个数组都是筛选条件
     return arr.filter(arrVal => flatten(values).every(value => !comparator(value, arrVal)))
   }
 
@@ -195,7 +214,7 @@ var fanhaofighting = function () {
     } else {
       return arr.filter(item => values.every(value => !value.map(it => pridicate(it)).includes(pridicate(item))))
     }
-    
+
   }
 
   /**
@@ -226,8 +245,25 @@ var fanhaofighting = function () {
     }
   }
 
-  function iteratee() {
+  /**
+    * Creates a function that invokes func with the arguments of the created function. 
+    * 如果 func 是属性名, 返回一个 返回其属性值 的函数
+    * 如果 func 是对象或数组, 返回一个 判断对象/数组 成员是否包含于参数的 的函数
+    * func 数组的第一项被当成对象的 key 解析, 第二项被当成对象的值进行解析. 会忽略多余的参数
+    * @param {string|Array|object} func
+    * @returns {Function} 
+    */
+  function iteratee(func) {
+    return function (obj) {
 
+    }
+  }
+
+  function isString(obj) {
+    if (typeof obj == 'string') {
+      return true
+    } 
+    return false
   }
 
   /**
@@ -290,7 +326,7 @@ var fanhaofighting = function () {
   }
 
   function toCompareFunc(funcs, orders) {
-    return function(obj1, obj2) {
+    return function (obj1, obj2) {
       let res1
       let res2
       for (let i = 0; i < funcs.length; i++) {
@@ -390,7 +426,7 @@ var fanhaofighting = function () {
     let left = arr.slice(0, mid)
     let right = arr.slice(mid)
     mergeSort(left, compare)
-    mergeSort(right. compare)
+    mergeSort(right.compare)
 
 
     let i = 0
