@@ -141,7 +141,8 @@ var fanhaofighting = function () {
     for (let i = 0; i < arr.length; i++) {
       for (let i = 0; i < arr.length; i++) {
         if (pridicate(arr[i]) === false) {
-          return i === 0 ? arr.slice() : arr.slice(i - 1)
+          // 注意, 是去除!!
+          return arr.slice(i)
         }
       }
     }
