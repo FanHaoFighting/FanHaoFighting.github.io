@@ -328,7 +328,7 @@ var fanhaofighting = function () {
    * @param {*} path 
    * @param {*} defaultValue 
    */
-  function get(object, path, defaultValue) {
+  function get(object, path, defaultValue = undefined) {
     let pathArr
     // path可能为数组或者字符串
     if (isArray(path)) {
