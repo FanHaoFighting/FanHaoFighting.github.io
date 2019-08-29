@@ -1,6 +1,6 @@
 var fanhaofighting = function () {
   return {
-    compact, chunk, difference, differenceBy, drop, dropRight, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
+    compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction
   }
@@ -106,7 +106,8 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 创建一个切片数组，去除array中从 predicate 返回假值开始(这个值会被保留)到尾部的部分。predicate 会传入3个参数： (value, index, array)。
+   * 创建一个切片数组，去除array中从 predicate 返回假值开始到尾部的部分。predicate 会传入3个参数： (value, index, array)。
+   * 这个过程从右往左开始
    * @param {*} arr 
    * @param {*} pridicate 
    */
@@ -114,7 +115,7 @@ var fanhaofighting = function () {
     // pridicate不是函数的时候将pridicate转化为一个函数
     pridicate = iteratee(pridicate)
 
-    for (let i = 0; i < arr.length; i++) {
+    for (let i = arr.length - 1; i >= 0; i++) {
       if (pridicate(arr[i]) === false) {
         return arr.slice(0, i + 1)
       }
@@ -130,6 +131,27 @@ var fanhaofighting = function () {
     return n > arr.length ? [] : arr.slice(0, arr.length - n)
   }
 
+  /**
+   * 创建一个切片数组，去除array从起点开始到 predicate 返回假值结束部分。predicate 会传入3个参数： (value, index, array)。
+   * @param {*} arr 
+   * @param {*} pridicate 
+   */
+  function dropWhile(arr, pridicate) {
+    pridicate = iteratee(pridicate)
+    for (let i = 0; i < arr.length; i++) {
+      for (let i = 0; i < arr.length; i++) {
+        if (pridicate(arr[i]) === false) {
+          return i === 0 ? arr.slice() : arr.slice(i - 1)
+        }
+      }
+    }
+  }
+
+  /**
+   * 创建一个切片数组，去除array前面的n个元素。（n默认值为1。）
+   * @param {*} arr 
+   * @param {*} n 
+   */
   function drop(arr, n = 1) {
     return arr.slice(n)
   }
