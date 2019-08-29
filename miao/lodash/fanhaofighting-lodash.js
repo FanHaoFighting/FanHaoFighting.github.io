@@ -58,7 +58,7 @@ var fanhaofighting = function () {
   function matchesProperty(path, srcValue) {
     return function (obj) {
       let func = property(path)
-      return isMatch(func(obj), src)
+      return isMatch(func(obj), srcValue)
     }
   }
 
@@ -75,7 +75,7 @@ var fanhaofighting = function () {
   }
 
   /**
-   *执行一个深度比较，来确定 object 是否含有和 source 完全相等的属性值。 
+   *执行一个深度比较，判断 object 是否是 source 的超集。 
    * @param {*} obj 
    * @param {*} src 
    */
@@ -175,6 +175,15 @@ var fanhaofighting = function () {
   }
 
   /**
+   * 判断值是狭义上的对象, 即 字面量对象, Object 构造函数创建出的对象 或 __proto__ 为 null 的对象(object.create(null))
+   * @param {*} value 
+   */
+  function isPlainObject(value) {
+    let proto  = Object.getPrototypeOf(value)
+    return proto === null || proto.constructor === object
+  }
+
+  /**
    * 检查 value 是否是 类对象。 如果一个值是类对象，那么它不应该是 null，而且 typeof 后的结果是 "object"。
    * @param {*} value 
    */
@@ -254,9 +263,7 @@ var fanhaofighting = function () {
     * @returns {Function} 
     */
   function iteratee(func) {
-    return function (obj) {
-
-    }
+    
   }
 
   function isString(obj) {
