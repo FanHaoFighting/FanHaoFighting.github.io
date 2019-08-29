@@ -106,18 +106,17 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 创建一个切片数组，去除array中从 predicate 返回假值开始到尾部的部分。predicate 会传入3个参数： (value, index, array)。
+   * 创建一个切片数组，去除array中从 predicate 返回假值开始(这个值会被保留)到尾部的部分。predicate 会传入3个参数： (value, index, array)。
    * @param {*} arr 
    * @param {*} pridicate 
    */
   function dropRightWhile(arr, pridicate) {
     // pridicate不是函数的时候将pridicate转化为一个函数
-    if (typeof pridicate !== 'function') {
-      pridicate = iteratee(pridicate)
-    }
+    pridicate = iteratee(pridicate)
+
     for (let i = 0; i < arr.length; i++) {
       if (pridicate(arr[i]) === false) {
-        return arr.slice(0, i)
+        return arr.slice(0, i + 1)
       }
     }
   }
@@ -274,6 +273,8 @@ var fanhaofighting = function () {
     } else if (isArray(value)) {
       return matchesProperty(value[0], value[1])
     }
+
+    return value
   }
 
   function isString(obj) {
