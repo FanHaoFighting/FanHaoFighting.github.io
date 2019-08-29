@@ -111,14 +111,13 @@ var fanhaofighting = function () {
    * @param {*} pridicate 
    */
   function dropRightWhile(arr, pridicate) {
-    let length = arr.length
     // pridicate不是函数的时候将pridicate转化为一个函数
     if (typeof pridicate !== 'function') {
       pridicate = iteratee(pridicate)
     }
     for (let i = 0; i < arr.length; i++) {
       if (pridicate(arr[i]) === false) {
-        return dropRight(arr, i)
+        return arr.slice(0, i)
       }
     }
   }
