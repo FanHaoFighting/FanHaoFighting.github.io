@@ -63,7 +63,7 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 创建一个深比较的方法来比较给定的对象和 source 对象。 如果给定的对象拥有相同的属性值返回 true，否则返回 false。
+   * 返回一个深比较的方法, 比较给定的对象和 source 对象。 如果给定的对象拥有相同的属性值返回 true，否则返回 false。
    * @param {*} src 
    */
   function matches(src) {
@@ -259,11 +259,18 @@ var fanhaofighting = function () {
     * 如果 func 是属性名, 返回一个 返回其属性值 的函数
     * 如果 func 是对象或数组, 返回一个 判断对象/数组 成员是否包含于参数的 的函数
     * func 数组的第一项被当成对象的 key 解析, 第二项被当成对象的值进行解析. 会忽略多余的参数
-    * @param {string|Array|object} func
+    * @param {string|Array|object} value
     * @returns {Function} 
     */
-  function iteratee(func) {
-    
+  function iteratee(value) {
+    if (isString(value)) {
+      return property(value)
+      // 为object的情况(排除null和function)
+    } else if (isObjectLike(value)) {
+      return matches(value)
+    } else if (isArray(value)) {
+      return matchesProperty(value[0], value[1])
+    }
   }
 
   function isString(obj) {
