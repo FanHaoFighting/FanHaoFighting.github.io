@@ -290,11 +290,12 @@ var fanhaofighting = function () {
   function iteratee(value) {
     if (isString(value)) {
       return property(value)
+      // Array也是object对象, 所以在判断是否为object前判断
+    }  else if (isArray(value)) {
+      return matchesProperty(value[0], value[1])
       // 为object的情况(排除null和function)
     } else if (isObjectLike(value)) {
       return matches(value)
-    } else if (isArray(value)) {
-      return matchesProperty(value[0], value[1])
     }
 
     return value
