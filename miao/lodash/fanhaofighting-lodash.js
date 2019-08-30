@@ -115,7 +115,7 @@ var fanhaofighting = function () {
     // pridicate不是函数的时候将pridicate转化为一个函数
     pridicate = iteratee(pridicate)
 
-    for (let i = arr.length - 1; i >= 0; i++) {
+    for (let i = arr.length - 1; i >= 0; i--) {
       if (pridicate(arr[i]) === false) {
         return arr.slice(0, i + 1)
       }
@@ -302,7 +302,7 @@ var fanhaofighting = function () {
   }
 
   function isString(obj) {
-    if (typeof obj == 'string') {
+    if (typeof obj === 'string') {
       return true
     } 
     return false
