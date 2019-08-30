@@ -174,7 +174,7 @@ var fanhaofighting = function () {
       if (keys1.length !== keys2.length) {
         return false
       }
-      for (const key of key1s) {
+      for (const key of keys1) {
         if (other[key] !== undefined) {
           return isEqual(value[key], other[key])
         } else {
