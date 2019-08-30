@@ -14,7 +14,7 @@ var fanhaofighting = function () {
     let res = arrs[0]
     for (let i = 1; i < arrs.length; i++) {
       let compareArr = arrs[i]
-      res.filter(item => compareArr.includes(item))
+      res = res.filter(item => compareArr.includes(item))
     }
     return res
   }
@@ -37,13 +37,13 @@ var fanhaofighting = function () {
   function indexOf(arr, value, fromIndex = 0) {
     if (findIndex < 0) {
       for (let i = arr.length - 1; i >= 0; i--) {
-        if (arr[i] === value) {
+        if (isEqual(arr[i], value)) {
           return i
         }
       }
     } else {
       for (let i = fromIndex; i < arr.length; i++) {
-        if (arr[i] === value) {
+        if (isEqual(arr[i], value)) {
           return i
         }
       }
