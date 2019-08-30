@@ -183,6 +183,7 @@ var fanhaofighting = function () {
           return false
         }
       }
+      return true
     }
     return false
   }
