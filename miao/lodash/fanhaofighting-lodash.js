@@ -3,9 +3,31 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex,
-    findLastIndex
+    findLastIndex, fromPairs, toPairs
   }
 
+  /**
+   * 创建一个object对象自身可枚举属性的键值对数组。这个数组可以通过 _.fromPairs撤回。如果object 是 map 或 set，返回其条目。
+   */
+  function toPairs(obj) {
+    let res = []
+    for (let [key, val] of Object.entries(obj)) {
+      res.push([key, val])
+    }
+    return res
+  }
+  
+  /**
+   * 与 _.toPairs正好相反；这个方法返回一个由键值对pairs构成的对象
+   * @param {*} pairs 
+   */
+  function fromPairs(pairs) {
+    let obj = {}
+    for (let [key, val] of pairs) {
+      obj[key] = val
+    }
+    return obj
+  }
   /**
    * 将数组一层展开
    */
@@ -104,7 +126,7 @@ var fanhaofighting = function () {
    */
   function findLastIndex(arr, predicate, fromIndex = arr.length - 1) {
     predicate = iteratee(predicate)
-    for (let i = fromIndex; i >= 0;i++) {
+    for (let i = fromIndex; i >= 0;i--) {
       if (predicate(arr[i]) === true) {
         return i
       }
