@@ -58,7 +58,7 @@ var fanhaofighting = function () {
   function matchesProperty(path, srcValue) {
     return function (obj) {
       let func = property(path)
-      return isMatch(func(obj), srcValue)
+      return isEqual(func(obj), srcValue)
     }
   }
 
