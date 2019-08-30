@@ -2,7 +2,8 @@ var fanhaofighting = function () {
   return {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
-    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex
+    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex,
+    findLastIndex
   }
 
   /**
@@ -104,7 +105,7 @@ var fanhaofighting = function () {
   function findIndex(arr, predicate, fromIndex = 0) {
     predicate = iteratee(predicate)
     for (let i = fromIndex; i < arr.length;i++) {
-      if (predicate === true) {
+      if (predicate(arr[i]) === true) {
         return i
       }
     }
@@ -124,6 +125,7 @@ var fanhaofighting = function () {
     for (let i = start; i < end; i++) {
       arr[i] = value
     }
+    return arr
   }
 
   /**
