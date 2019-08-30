@@ -2,7 +2,7 @@ var fanhaofighting = function () {
   return {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
-    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill
+    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex
   }
 
   /**
@@ -93,6 +93,22 @@ var fanhaofighting = function () {
       }
     }
     return true
+  }
+
+  /**
+   * 该方法类似 _.find，区别是该方法返回第一个通过 predicate 判断为真值的元素的索引值（index），而不是元素本身。
+   * @param {*} arr 
+   * @param {*} predicate 
+   * @param {*} fromIndex 
+   */
+  function findIndex(arr, predicate, fromIndex = 0) {
+    predicate = iteratee(predicate)
+    for (let i = fromIndex; i < arr.length;i++) {
+      if (predicate === true) {
+        return i
+      }
+    }
+    return -1
   }
 
   /**
