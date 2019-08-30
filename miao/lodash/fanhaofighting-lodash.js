@@ -10,8 +10,8 @@ var fanhaofighting = function () {
    * 创建唯一值的数组，这个数组包含所有给定数组都包含的元素，使用 SameValueZero进行相等性比较。（可以理解为给定数组的交集）
    * @param {*} arrs 
    */
-  function intersection(...arrs) {
-    let arrs = [...arrs]
+  function intersection(...inputArrs) {
+    let arrs = [...inputArrs]
     let res = arrs[0]
     for (let i = 1; i < arrs.length; i++) {
       let compareArr = arrs[i]
