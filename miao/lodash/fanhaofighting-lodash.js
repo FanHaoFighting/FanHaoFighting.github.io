@@ -3,7 +3,28 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex,
-    findLastIndex, fromPairs, toPairs, head, indexOf
+    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection
+  }
+
+  /**
+   * 创建唯一值的数组，这个数组包含所有给定数组都包含的元素，使用 SameValueZero进行相等性比较。（可以理解为给定数组的交集）
+   * @param {*} arrs 
+   */
+  function intersection(arrs) {
+    let res = arrs[0]
+    for (let i = 1; i < arrs.length; i++) {
+      let compareArr = arrs[i]
+      res.filter(item => compareArr.includes(item))
+    }
+    return res
+  }
+
+  /**
+   * 获取数组array中除了最后一个元素之外的所有元素（去除数组array中的最后一个元素）。
+   * @param {*} arr 
+   */
+  function initial(arr) {
+    return arr.slice(0, arr.length - 1)
   }
 
 
