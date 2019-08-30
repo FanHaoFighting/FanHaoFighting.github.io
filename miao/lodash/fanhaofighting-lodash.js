@@ -3,9 +3,39 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex,
-    findLastIndex, fromPairs, toPairs
+    findLastIndex, fromPairs, toPairs, head, indexOf
   }
 
+
+  /**
+   * 返回首次 value 在数组array中被找到的 索引值， 如果 fromIndex 为负值，将从数组array尾端索引进行匹配。
+   * @param {*} arr 
+   * @param {*} value 
+   * @param {*} fromIndex 
+   */
+  function indexOf(arr, value, fromIndex = 0) {
+    if (findIndex < 0) {
+      for (let i = arr.length - 1; i >= 0; i--) {
+        if (arr[i] === value) {
+          return i
+        }
+      }
+    } else {
+      for (let i = fromIndex; i < arr.length; i++) {
+        if (arr[i] === value) {
+          return i
+        }
+      }
+    }
+    return -1
+  }
+  /**
+   * 返回数组的第一个元素
+   * @param {*} arr 
+   */
+  function head(arr) {
+    return arr[0]
+  }
   /**
    * 创建一个object对象自身可枚举属性的键值对数组。这个数组可以通过 _.fromPairs撤回。如果object 是 map 或 set，返回其条目。
    */
