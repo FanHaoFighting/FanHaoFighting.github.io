@@ -97,6 +97,22 @@ var fanhaofighting = function () {
   }
 
   /**
+   * 这个方式类似 _.findIndex， 区别是它是从右到左的迭代集合array中的元素。
+   * @param {*} arr 
+   * @param {*} predicate 
+   * @param {*} fromIndex 
+   */
+  function findLastIndex(arr, predicate, fromIndex = arr.length - 1) {
+    predicate = iteratee(predicate)
+    for (let i = fromIndex; i >= 0;i++) {
+      if (predicate(arr[i]) === true) {
+        return i
+      }
+    }
+    return -1
+  }
+
+  /**
    * 该方法类似 _.find，区别是该方法返回第一个通过 predicate 判断为真值的元素的索引值（index），而不是元素本身。
    * @param {*} arr 
    * @param {*} predicate 
