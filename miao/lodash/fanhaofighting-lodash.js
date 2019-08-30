@@ -2,7 +2,7 @@ var fanhaofighting = function () {
   return {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
-    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction
+    differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber
   }
 
   /**
@@ -139,11 +139,9 @@ var fanhaofighting = function () {
   function dropWhile(arr, pridicate) {
     pridicate = iteratee(pridicate)
     for (let i = 0; i < arr.length; i++) {
-      for (let i = 0; i < arr.length; i++) {
-        if (pridicate(arr[i]) === false) {
-          // 注意, 是去除!!
-          return arr.slice(i)
-        }
+      if (pridicate(arr[i]) === false) {
+        // 注意, 是去除!!
+        return arr.slice(i)
       }
     }
   }
@@ -173,7 +171,7 @@ var fanhaofighting = function () {
     if (isObjectLike(value) && isObjectLike(other)) {
       let keys1 = Object.keys(value)
       let keys2 = Object.keys(other)
-      if (keys1.length != keys2.length) {
+      if (keys1.length !== keys2.length) {
         return false
       }
       for (const key of key1s) {
@@ -187,6 +185,31 @@ var fanhaofighting = function () {
     }
   }
 
+  /**
+     * 判断一个值是否是 NaN
+     * @param {*} value
+     * @returns {boolean}
+     */
+  function isNaN(value) {
+    // 如果是 new Number()构造出的数字, 先将其转为原始类型的数字
+    return isNumber(value) && +value !== +value 
+  }
+
+  /**
+   * 判断一个值是否是 Number 类型. Infinity -Infinity NaN 都返回 true
+   * @param {*} value 
+   */
+  function isNumber(value) {
+    return typeof value === 'number' || (isObjectLike(value) && nativeToString(value) === '[object Number]')
+  }
+
+  /**
+   *  即原生的 ES 方法 Object.prototype.toString
+   * @param {*} val 
+   */
+  function nativeToString(value) {
+    return Object.prototype.toString.call(value);
+  }
 
   /**
    * 判断从参数是否为object, null不算
@@ -204,7 +227,7 @@ var fanhaofighting = function () {
    * @param {*} value 
    */
   function isPlainObject(value) {
-    let proto  = Object.getPrototypeOf(value)
+    let proto = Object.getPrototypeOf(value)
     return proto === null || proto.constructor === object
   }
 
@@ -291,7 +314,7 @@ var fanhaofighting = function () {
     if (isString(value)) {
       return property(value)
       // Array也是object对象, 所以在判断是否为object前判断
-    }  else if (isArray(value)) {
+    } else if (isArray(value)) {
       return matchesProperty(value[0], value[1])
       // 为object的情况(排除null和function)
     } else if (isObjectLike(value)) {
@@ -304,7 +327,7 @@ var fanhaofighting = function () {
   function isString(obj) {
     if (typeof obj === 'string') {
       return true
-    } 
+    }
     return false
   }
 
