@@ -161,7 +161,7 @@ var fanhaofighting = function () {
    * @param {*} other 
    */
   function isEqual(value, other) {
-    if (value == other) {
+    if (value === other) {
       return true
     }
     // NaN == NaN为false
@@ -181,8 +181,8 @@ var fanhaofighting = function () {
           return false
         }
       }
-      return false
     }
+    return false
   }
 
   /**
