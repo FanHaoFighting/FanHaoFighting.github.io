@@ -79,18 +79,14 @@ var fanhaofighting = function () {
    */
   function indexOf(arr, value, fromIndex = 0) {
     if (fromIndex < 0) {
-      for (let i = arr.length - 1; i >= 0; i--) {
-        if (isEqual(arr[i], value)) {
-          return i
-        }
-      }
-    } else {
-      for (let i = fromIndex; i < arr.length; i++) {
-        if (isEqual(arr[i], value)) {
-          return i
-        }
+      fromIndex = arr.length - 1 > -fromIndex ? arr.length - 1 -fromIndex : 0
+    }
+    for (let i = fromIndex; i < arr.length; i++) {
+      if (isEqual(arr[i], value)) {
+        return i
       }
     }
+    
     return -1
   }
   /**
