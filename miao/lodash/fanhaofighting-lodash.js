@@ -536,48 +536,51 @@ var fanhaofighting = function () {
     return object
   }
 
-  // todo
-  function sortBy(arr, func) {
-
+  /**
+   *创建一个元素数组。 以 iteratee 处理的结果升序排序。 这个方法执行稳定排序，也就是说相同元素会保持原始排序。 iteratees 调用1个参数： (value)。
+   * @param {} collection 
+   * @param {*} iteratees 
+   */
+  function sortBy(collection, iteratees) {
+    let arr = collection.slice()
+    let comapre = toCompareFunc(iteratees, [])
+    return mergeSort(arr, comapre)
   }
 
   /**
-   * 
+   * 此方法类似于 _.sortBy，除了它允许指定 iteratee（迭代函数）结果如何排序。 如果没指定 orders（排序），所有值以升序排序。 否则，指定为"desc" 降序，或者指定为 "asc" 升序，排序对应值。
    * @param {*} arr 
    * @param {*} func 
    */
-  function orderBy(arr, funcs, orders = []) {
+  function orderBy(collection, iteratees, orders = []) {
+    let arr = collection.slice()
     // 利用归并排序的稳定性, 依次排序
-    for (let i = 0; i < funcs.length; i++) {
-      let func
-      if (typeof funcs[i] == 'function') {
-        func = funcs[i]
-      } else if (typeof funcs[i] == 'String') {
-        func = property(funcs[i])
-      }
-      if (orders.length == 0 || orders[i] == 'asc') {
-        mergeSort(arr, func)
-      } else {
-        mergeSort(arr, negate(func))
-      }
-    }
-    return arr
+    let comapre = toCompareFunc(iteratees, orders)
+    return mergeSort(arr, comapre)
   }
 
-  function toCompareFunc(funcs, orders) {
+  function toCompareFunc(iteratees, orders) {
     return function (obj1, obj2) {
-      let res1
-      let res2
-      for (let i = 0; i < funcs.length; i++) {
-        let func
-        if (typeof funcs[i] == 'function') {
-          func = funcs[i]
-        } else if (typeof funcs[i] == 'String') {
-          func = property(funcs[i])
+      for (let i = 0; i < iteratees.length; i++) {
+        let func = iteratee(iteratees)
+        // orders数组里没有放值
+        if (orders.length == 0) {
+          // 等于的情况则不返回任何值
+          if (func(obj1) - func(obj2) > 0) {
+            return 1
+          } else if (func(obj1) - func(obj2) < 0) {
+            return -1
+          }
+          // orders数组里放了值
+        } else {
+          if (func(obj1) - func(obj2) > 0) {
+            return orders[i] === 'asc' ? 1 : -1
+          } else if (func(obj1) - func(obj2) < 0) {
+            return orders[i] === 'asc' ? -1 : 1
+          }
         }
-        obj1 = orders === "desc" ? negate(func)(obj1) : func(obj1)
-        obj2 = orders
       }
+      return 0
     }
   }
 
