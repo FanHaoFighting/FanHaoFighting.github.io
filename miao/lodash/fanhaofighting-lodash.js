@@ -14,7 +14,7 @@ var fanhaofighting = function () {
    * @param {*} value 
    * @param {*} fromIndex 
    */
-  function lastIndexOf(arr, value, fromIndex=array.length-1) {
+  function lastIndexOf(arr, value, fromIndex=arr.length-1) {
     for (let i = fromIndex; i >= 0; i--) {
       if(isEqual(arr[i], value)) {
         return i
@@ -42,9 +42,10 @@ var fanhaofighting = function () {
     let res = ''
     for (let i = 0; i < arr.length - 1; i++) {
       if (i < arr.length - 2) {
-        res += arr[i] + separator
+        // 防止出现数值计算
+        res += '' + arr[i] + separator
       } else {
-        res += arr[i]
+        res += '' + arr[i]
       }
     }
     return res
