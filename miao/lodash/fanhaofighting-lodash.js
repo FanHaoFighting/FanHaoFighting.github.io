@@ -395,7 +395,7 @@ var fanhaofighting = function () {
    */
   function isPlainObject(value) {
     let proto = Object.getPrototypeOf(value)
-    return proto === null || proto.constructor === object
+    return proto === null || proto.constructor === Object
   }
 
   /**
