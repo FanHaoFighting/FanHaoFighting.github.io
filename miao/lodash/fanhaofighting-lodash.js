@@ -40,8 +40,8 @@ var fanhaofighting = function () {
    */
   function join(arr, separator=',') {
     let res = ''
-    for (let i = 0; i < arr.length - 1; i++) {
-      if (i < arr.length - 2) {
+    for (let i = 0; i < arr.length; i++) {
+      if (i < arr.length - 1) {
         // 防止出现数值计算
         res += '' + arr[i] + separator
       } else {
