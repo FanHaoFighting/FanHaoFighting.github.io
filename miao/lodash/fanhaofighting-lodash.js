@@ -28,8 +28,9 @@ var fanhaofighting = function () {
    * @param {*} arr 
    * @param {*} values 
    */
-  function pull(arr, values) {
-    return arr.filter(item => !values.includes(item))
+  function pull(arr, ...values) {
+    let judgeValues = [...values]
+    return arr.filter(item => !judgeValues.includes(item))
   }
 
   /**
