@@ -562,7 +562,8 @@ var fanhaofighting = function () {
   function toCompareFunc(iteratees, orders) {
     return function (obj1, obj2) {
       for (let i = 0; i < iteratees.length; i++) {
-        let func = iteratee(iteratees)
+        let func = iteratee(iteratees[i])
+        
         // orders数组里没有放值
         if (orders.length == 0) {
           // 等于的情况则不返回任何值
