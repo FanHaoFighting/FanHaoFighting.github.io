@@ -3,7 +3,49 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, fill, findIndex,
-    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection
+    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull
+  }
+
+
+
+  /**
+   * 类似indexOf ，区别是它是从右到左遍历array的元素。
+   * @param {*} array 
+   * @param {*} value 
+   * @param {*} fromIndex 
+   */
+  function lastIndexOf(array, value, fromIndex=array.length-1) {
+    for (let i = fromIndex; i >= 0; i--) {
+      if(isEqual(arr[i], value)) {
+        return i
+      }
+    }
+    return -1
+  }
+
+  /**
+   * 移除数组array中所有和给定值相等的元素
+   * @param {*} arr 
+   * @param {*} values 
+   */
+  function pull(arr, values) {
+    return arr.filter(item => !values.includes(item))
+  }
+
+  /**
+   * 将 array 中的所有元素转换为由 separator 分隔的字符串。
+   * @param {*} arr 
+   * @param {*} separator 
+   */
+  function join(arr, separator=',') {
+    let res = ''
+    for (let i = 0; i < arr.length - 1; i++) {
+      if (i < arr.length - 2) {
+        res += arr[i] + separator
+      } else {
+        res += arr[i]
+      }
+    }
   }
 
   /**
@@ -36,7 +78,7 @@ var fanhaofighting = function () {
    * @param {*} fromIndex 
    */
   function indexOf(arr, value, fromIndex = 0) {
-    if (findIndex < 0) {
+    if (fromIndex < 0) {
       for (let i = arr.length - 1; i >= 0; i--) {
         if (isEqual(arr[i], value)) {
           return i
