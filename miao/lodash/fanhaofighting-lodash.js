@@ -46,6 +46,7 @@ var fanhaofighting = function () {
         res += arr[i]
       }
     }
+    return res
   }
 
   /**
