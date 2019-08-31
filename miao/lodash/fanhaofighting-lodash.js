@@ -648,6 +648,10 @@ var fanhaofighting = function () {
    * @param {*} compare 
    */
   function mergeSort(arr, compare) {
+    
+    if (arr.length < 2) {
+      return arr.slice()
+    }
     if (compare == undefined) {
       compare = function (a, b) {
         if (a > b) {
@@ -660,15 +664,12 @@ var fanhaofighting = function () {
       }
     }
 
-    if (arr.length < 2) {
-      return arr.slice()
-    }
 
     let mid = arr.length >> 1
     let left = arr.slice(0, mid)
     let right = arr.slice(mid)
     mergeSort(left, compare)
-    mergeSort(right.compare)
+    mergeSort(right, compare)
 
 
     let i = 0
