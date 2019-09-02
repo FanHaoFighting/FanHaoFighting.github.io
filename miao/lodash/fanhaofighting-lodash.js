@@ -3,9 +3,29 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
-    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry
+    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
+    sortedIndex
   }
 
+
+  /**
+   * 使用二分查找来决定 value值 应该插入到数组中 尽可能小的索引位置，以保证array的排序。
+   * @param {*} arr 
+   * @param {*} value 
+   */
+  function sortedIndex(arr, value) {
+    let left = 0
+    let right = arr.length - 1
+    while (left < right) {
+      let mid = (left + right) / 2 | 0
+      if (arr[mid] >= value) {
+        right = mid
+      } else {
+        left = mid + 1
+      }
+    }
+    return left
+  }
 
   /**
    * 创建一个函数，该函数接收 func 的参数，要么调用func返回的结果，如果 func 所需参数已经提供，
