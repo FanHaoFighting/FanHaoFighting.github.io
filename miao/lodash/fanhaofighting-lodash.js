@@ -4,9 +4,24 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex
+    sortedIndex, zip, unzip
   }
 
+  /**
+   * 创建一个分组元素的数组，数组的第一个元素包含所有给定数组的第一个元素，数组的第二个元素包含所有给定数组的第二个元素，以此类推。
+   * @param {*} arr 
+   */
+  function zip(...arrs) {
+    // 输入的字数组可能长度不一, 取最大长度的子数组
+    let maxLen = arrs.reduce((prev, curArr) => Math.max(prev, curArr.length), 0)
+    let res = new Array(maxLen).fill(0).map(it => it = new Array(arrs.length))
+    for (let i = 0; i < res.length; i++) {
+      for (let j = 0; j < res[0].length; j++) {
+        res[i][j] = arrs[j][i]
+      }
+    }
+    return res
+  }
 
   /**
    * 使用二分查找来决定 value值 应该插入到数组中 尽可能小的索引位置，以保证array的排序。
