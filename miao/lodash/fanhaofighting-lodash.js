@@ -3,7 +3,7 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
-    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn
+    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse
   }
 
   /**
@@ -19,6 +19,21 @@ var fanhaofighting = function () {
       }
     }
     return obj
+  }
+
+  /**
+   * 反转数组
+   * @param {} arr 
+   */
+  function reverse(arr) {
+    let i = 0
+    let j = arr.length - 1
+    while (i < j) {
+      let temp = arr[i]
+      arr[i++] = arr[j]
+      arr[j--] = temp
+    }
+    return arr
   }
 
   /**
