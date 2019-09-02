@@ -3,11 +3,30 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
-    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse
+    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry
   }
 
+
   /**
-   * 
+   * 创建一个函数，该函数接收 func 的参数，要么调用func返回的结果，如果 func 所需参数已经提供，
+   * 则直接返回 func 所执行的结果。或返回一个函数，接受余下的func 参数的函数，
+   * 可以使用 func.length 强制需要累积的参数个数。
+   * @param {*} func 
+   * @param {*} length 
+   */
+  function curry(func, length = func.length) {
+    return function(...args) {
+      if (args.length >= length) {
+        return func(...args)
+      } else {
+        return curry(f.bind(null, ...args), length - args.length)
+      }
+    }
+  }
+  /**
+   * 使用 iteratee 遍历自身的可枚举属性。 iteratee 会传入3个参数：(value, key, object)。 如果返回 false，iteratee 会提前退出遍历。
+   * @param {*} obj 
+   * @param {*} func 
    */
   function forOwn(obj, func) {
     func = iteratee(func)
