@@ -69,7 +69,7 @@ var fanhaofighting = function () {
       if (args.length >= length) {
         return func(...args)
       } else {
-        return curry(f.bind(null, ...args), length - args.length)
+        return curry(func.bind(null, ...args), length - args.length)
       }
     }
   }
