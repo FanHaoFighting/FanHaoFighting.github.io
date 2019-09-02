@@ -8,6 +8,21 @@ var fanhaofighting = function () {
   }
 
   /**
+   * 这个方法类似于 _.zip，除了它接收分组元素的数组，并且创建一个数组，分组元素到打包前的结构。
+   * （返回数组的第一个元素包含所有的输入数组的第一元素，第一个元素包含了所有的输入数组的第二元素，依此类推。）
+   * @param  {...any} arrs 
+   */
+  function unzip(...arrs) {
+    let res = new Array(arrs[0].length).fill(0).map(it => it = new Array(arrs.length))
+    for (let i = 0; i < res.length; i++) {
+      for (let j = 0; j < res[0].length; j++) {
+        res[i][j] = arrs[j][i]
+      }
+    }
+    return res
+  }
+
+  /**
    * 创建一个分组元素的数组，数组的第一个元素包含所有给定数组的第一个元素，数组的第二个元素包含所有给定数组的第二个元素，以此类推。
    * @param {*} arr 
    */
