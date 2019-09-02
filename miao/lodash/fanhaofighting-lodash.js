@@ -3,10 +3,23 @@ var fanhaofighting = function () {
     compact, chunk, difference, differenceBy, drop, dropRight, dropWhile, dropRightWhile, isMatch, matches, matchesProperty, last, bindAll,
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
-    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull
+    findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn
   }
 
-
+  /**
+   * 
+   */
+  function forOwn(obj, func) {
+    func = iteratee(func)
+    for (const key in obj) {
+      if (Object.prototype.hasOwnProperty.call(obj, key)) {
+        if (func(obj[key], key, obj) === false) {
+          break
+        }
+      }
+    }
+    return obj
+  }
 
   /**
    * 类似indexOf ，区别是它是从右到左遍历array的元素。
@@ -567,9 +580,9 @@ var fanhaofighting = function () {
         // orders数组里没有放值
         if (orders.length == 0) {
           // 等于的情况则不返回任何值
-          if (func(obj1) - func(obj2) > 0) {
+          if (func(obj1) > func(obj2)) {
             return 1
-          } else if (func(obj1) - func(obj2) < 0) {
+          } else if (func(obj1) < func(obj2)) {
             return -1
           }
           // orders数组里放了值
