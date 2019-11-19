@@ -23,15 +23,16 @@ var fanhaofighting = function () {
         return cacheMap.get(obj)
       }
       let ret
-      if (isObject(obj)) {
+      // isArray要在isObject前判断
+      if (isArray(obj)){
+        ret = obj.slice()
+        // obj为普通值
+      } else if (isObject(obj)) {
         ret = {}
         cacheMap.set(obj, ret)
         for (let key in obj) {
           ret[key] = clone(obj[key])
         }
-      } else if (isArray(obj)){
-        ret = obj.slice()
-        // obj为普通值
       } else {
         ret = obj
       }
