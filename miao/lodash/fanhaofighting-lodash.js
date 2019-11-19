@@ -20,13 +20,14 @@ var fanhaofighting = function () {
       if (cacheMap.has(obj)) {
         return cacheMap.get(obj)
       }
-      let ret = {}
-      cacheMap.set(obj, ret)
-      for (let key in obj) {
-        if (typeof obj[key] === 'object') {
-          ret = clone(obj[key])
-        } else {
-          ret[key] = obj[key]
+      let ret
+      if (typeof obj !== 'object') {
+        ret = obj
+      } else {
+        ret = {}
+        cacheMap.set(obj, ret)
+        for (let key in obj) {
+          ret[key] = clone(obj[key])
         }
       }
       return ret
