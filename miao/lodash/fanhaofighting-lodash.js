@@ -7,7 +7,31 @@ var fanhaofighting = function () {
     sortedIndex, zip, unzip, cloneDeep
   }
 
-  // function cloneDeep
+  /**
+   * 使用递归深度克隆一个对象
+   * @param {*} obj 
+   */
+  function cloneDeep(obj) {
+    let cacheMap = {}
+
+    return clone(obj)
+
+    function clone(obj) {
+      if (cacheMap.has(obj)) {
+        return cacheMap(obj)
+      }
+      let ret = {}
+      cacheMap.set(obj, ret)
+      for (let key in obj) {
+        if (typeof obj[key] === 'object') {
+          ret = clone(obj[key])
+        } else {
+          ret[key] = obj[key]
+        }
+      }
+      return ret
+    }
+  }
 
   /**
    * 这个方法类似于 _.zip，除了它接收分组元素的数组，并且创建一个数组，分组元素到打包前的结构。
