@@ -4,8 +4,10 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip
+    sortedIndex, zip, unzip, cloneDeep
   }
+
+  // function cloneDeep
 
   /**
    * 这个方法类似于 _.zip，除了它接收分组元素的数组，并且创建一个数组，分组元素到打包前的结构。
@@ -13,10 +15,10 @@ var fanhaofighting = function () {
    * @param  {...any} arr
    */
   function unzip(arr) {
-    let res = new Array(arr[0].length).fill(0).map(it => it = new Array(arr.length))
+    let res = new Array(arr[0].length).fill(0).map(item => item = new Array(arr.length))
     for (let i = 0; i < res.length; i++) {
       for (let j = 0; j < res[0].length; j++) {
-        res[i][j] = arrs[j][i]
+        res[i][j] = arr[j][i]
       }
     }
     return res
