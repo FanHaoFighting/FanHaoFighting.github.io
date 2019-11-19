@@ -12,7 +12,7 @@ var fanhaofighting = function () {
    * @param {*} obj 
    */
   function cloneDeep(obj) {
-    let cacheMap = {}
+    let cacheMap = new Map()
 
     return clone(obj)
 
