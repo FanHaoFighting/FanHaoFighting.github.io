@@ -9,9 +9,11 @@ var fanhaofighting = function () {
 
   /**
    * 使用递归深度克隆一个对象
+   * 测试集中对象有可能是一个值, 一个数组, 一个JSON对象
    * @param {*} obj 
    */
   function cloneDeep(obj) {
+    // 防止环形引用
     let cacheMap = new Map()
 
     return clone(obj)
@@ -21,14 +23,17 @@ var fanhaofighting = function () {
         return cacheMap.get(obj)
       }
       let ret
-      if (typeof obj !== 'object') {
-        ret = obj
-      } else {
+      if (isObject(obj)) {
         ret = {}
         cacheMap.set(obj, ret)
         for (let key in obj) {
           ret[key] = clone(obj[key])
         }
+      } else if (isArray(obj)){
+        ret = obj.slice()
+        // obj为普通值
+      } else {
+        ret = obj
       }
       return ret
     }
