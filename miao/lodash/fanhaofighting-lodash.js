@@ -18,7 +18,7 @@ var fanhaofighting = function () {
 
     function clone(obj) {
       if (cacheMap.has(obj)) {
-        return cacheMap(obj)
+        return cacheMap.get(obj)
       }
       let ret = {}
       cacheMap.set(obj, ret)
