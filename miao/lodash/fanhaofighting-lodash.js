@@ -9,10 +9,11 @@ var fanhaofighting = function () {
 
   /**
    * 使用递归深度克隆一个对象
-   * 测试集中对象有可能是一个值, 一个数组, 一个JSON对象
+   * 测试集中对象有可能是一个值, 一个数组, 一个JSON对象, 一个正则
    * @param {*} obj 
    */
   function cloneDeep(obj) {
+    // todo 正则, date类没有考虑
     // 防止环形引用
     let cacheMap = new Map()
 
@@ -21,6 +22,14 @@ var fanhaofighting = function () {
     function clone(obj) {
       if (cacheMap.has(obj)) {
         return cacheMap.get(obj)
+      }
+      // 判断对象是否正则类
+      if (obj instanceof RegExp) {
+        return new RegExp(obj)
+      }
+      // 判断对象是否是Date类
+      if (obj instanceof Date) {
+        return new Date(obj)
       }
       let ret
       // isArray要在isObject前判断
