@@ -4,9 +4,23 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap
   }
 
+
+  /**
+   * 
+   * @param {*} collection 
+   * @param {*} predicate 
+   */
+  function flatMap (collection, predicate) {
+    predicate = iteratee(predicate)
+    let res = []
+    for (let key in Object.keys[collection]) {
+      res.push(predicate(collection[key]))
+    }
+    return flattenDeep(res)
+  }
 
   /**
    * 遍历 collection（集合）元素，返回 predicate（断言函数）第一个返回真值的第一个元素。
