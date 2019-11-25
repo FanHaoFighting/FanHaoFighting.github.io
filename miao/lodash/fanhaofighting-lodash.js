@@ -20,7 +20,7 @@ var fanhaofighting = function () {
     let keys = Object.keys(collection)
     for (let i = fromIndex; i < keys.length; i++) {
       if (predicate(collection[key])) {
-        return fromIndex
+        return collection[keys[i]]
       }
     }
     return undefined
