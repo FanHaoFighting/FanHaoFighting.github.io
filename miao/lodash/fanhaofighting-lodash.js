@@ -767,9 +767,8 @@ var fanhaofighting = function () {
    * @param {*} iteratees 
    */
   function sortBy(collection, iteratees) {
-    let arr = collection.slice()
     let comapre = toCompareFunc(iteratees, [])
-    return mergeSort(arr, comapre)
+    return mergeSort(collection, comapre)
   }
 
   /**
@@ -779,12 +778,16 @@ var fanhaofighting = function () {
    * @param {*} func 
    */
   function orderBy(collection, iteratees, orders = []) {
-    let arr = collection.slice()
     // 利用归并排序的稳定性, 依次排序
     let comapre = toCompareFunc(iteratees, orders)
-    return mergeSort(arr, comapre)
+    return mergeSort(collection, comapre)
   }
 
+  /**
+   * 返回一个函数, 讲一组比较函数iteratees和比较顺序order合并成一个函数返回, 用于sortBy和OrderBy方法的实现
+   * @param {} iteratees 
+   * @param {*} orders 
+   */
   function toCompareFunc(iteratees, orders) {
     return function compare (obj1, obj2) {
       // 在任意一个func处两个对象比较出了大小, 就返回结果
