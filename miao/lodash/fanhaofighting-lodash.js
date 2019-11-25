@@ -34,11 +34,17 @@ var fanhaofighting = function () {
    * 一旦 predicate（断言函数） 返回假值，迭代就马上停止。
    * predicate（断言函数）调用三个参数： (value, index|key, collection)。
 
-   * @param {*} obj 
+   * @param {*} collection 
    * @param {*} predicate 
    */
-  function every(obj, predicate) {
-
+  function every(collection, predicate) {
+    predicate = iteratee(predicate)
+    for (let obj in collection) {
+      if (predicate(obj) === false) {
+        return false
+      }
+    }
+    return true
   }
 
   /**
