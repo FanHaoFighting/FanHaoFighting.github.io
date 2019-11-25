@@ -8,12 +8,19 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 
+   * 创建一个数组， value（值） 是 iteratee（迭代函数）遍历 collection（集合）中的每个元素后返回的结果。 
+   * iteratee（迭代函数）调用3个参数：
    * @param {Array|Object} collection 
    * @param {*} predicate 
+   * @return {Array}
    */
   function map(collection, predicate) {
-
+    let res = [];
+    predicate = iteratee(predicate)
+    for (let key in Object.keys(collection)) {
+      res.push(predicate(collection[key], key, collection));
+    }
+    return res;
   }
 
   /**
