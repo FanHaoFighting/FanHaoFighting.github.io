@@ -4,7 +4,29 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep
+    sortedIndex, zip, unzip, cloneDeep, countBy, 
+  }
+
+
+  /**
+   * 创建一个组成对象，key（键）是经过 iteratee（迭代函数） 执行处理collection中每个元素后返回的结果，
+   * 每个key（键）对应的值是 iteratee（迭代函数）返回该key（键）的次数（迭代次数）。 
+   * iteratee 调用一个参数：(value)。
+   * @param {*} obj 
+   * @param {*} predicate 
+   */
+  function countBy(obj, predicate) {
+    let map = {}
+    let predicate = iteratee(predicate)
+    for (let key of obj) {
+      let mapKey = predicate(obj[key])
+      if (map[mapKey]) {
+        map[mapKey]++
+      } else {
+        map[mapKey] = 1
+      }
+    }
+    return map
   }
 
   /**
