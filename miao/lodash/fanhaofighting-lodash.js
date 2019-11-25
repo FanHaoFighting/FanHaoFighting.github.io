@@ -14,12 +14,13 @@ var fanhaofighting = function () {
    * @param {*} predicate 
    */
   function flatMap (collection, predicate) {
-    predicate = iteratee(predicate)
-    let res = []
-    for (let key in Object.keys[collection]) {
-      res.push(predicate(collection[key]))
+    predicate = iteratee(predicate);
+    let res = [];
+    let keys = Object.keys(collection);
+    for (let key of keys) {
+        res.push(...predicate(collection[key]));
     }
-    return flattenDeep(res)
+    return res;
   }
 
   /**
