@@ -4,9 +4,27 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep
   }
 
+
+
+  /**
+   * 该方法类似 _.flatMap，不同之处在于， 
+   * _.flatMapDepth 会根据指定的 depth（递归深度）继续扁平化递归映射结果。
+   * @param {*} collection 
+   * @param {*} predicate 
+   * @param {*} depth 
+   */
+  function flatMapDepth(collection, predicate, depth) {
+    predicate = iteratee(predicate);
+    let res = [];
+    let keys = Object.keys(collection);
+    for (let key of keys) {
+      res.push(predicate(collection[key]));
+    }
+    return flattenDepth(res, depth);
+  }
 
   /**
    * 
@@ -374,6 +392,7 @@ var fanhaofighting = function () {
     let res = []
     arr.forEach(it => {
       if (Array.isArray(it)) {
+        // 递归在这一层发生, 不是数组不用递归, 所以flattenDepth可以用depth为Infinity
         res.push(...flattenDepth(it, depth - 1))
       } else {
         res.push(it)
@@ -683,7 +702,6 @@ var fanhaofighting = function () {
     return arguments[0]
   }
 
-  // todo
   /**
    * 创建一个返回给定对象的 path 的值的函数。
    * @param {*} path 
