@@ -793,20 +793,22 @@ var fanhaofighting = function () {
       // 在任意一个func处两个对象比较出了大小, 就返回结果
       for (let i = 0; i < iteratees.length; i++) {
         let func = iteratee(iteratees[i])
-        
+        let res1 = func(obj1)
+        let res2 = func(obj2)
+
         // orders数组里没有放值
         if (orders.length == 0) {
           // 等于的情况则不返回任何值
-          if (func(obj1) > func(obj2)) {
+          if (res1 > res2) {
             return 1
-          } else if (func(obj1) < func(obj2)) {
+          } else if (res1 < res2) {
             return -1
           } 
           // orders数组里放了值
         } else {
-          if (func(obj1) - func(obj2) > 0) {
+          if (res1 > res2) {
             return orders[i] === 'asc' ? 1 : -1
-          } else if (func(obj1) - func(obj2) < 0) {
+          } else if (res1 < res2) {
             return orders[i] === 'asc' ? -1 : 1
           } 
         }
