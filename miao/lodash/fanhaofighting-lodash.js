@@ -18,9 +18,9 @@ var fanhaofighting = function () {
   function find(collection, predicate, fromIndex = 0) {
     predicate = iteratee(predicate)
     let keys = Object.keys(collection)
-    for (let i = 0; i < keys.length; i++) {
-      if (predicate(collection[key], key, collection)) {
-        return i
+    for (let i = fromIndex; i < keys.length; i++) {
+      if (predicate(collection[key])) {
+        return fromIndex
       }
     }
     return undefined
