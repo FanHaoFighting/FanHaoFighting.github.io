@@ -29,7 +29,14 @@ var fanhaofighting = function () {
   function map(collection, predicate) {
     let res = [];
     predicate = iteratee(predicate)
-    for (let key in Object.keys(collection)) {
+    // if (Array.isArray(collection)) {
+    //   return collection.map((value, index) => predicate(value, index, collection));
+    // } else {
+    //   return Object.keys(collection).map(key =>
+    //     predicate(collection[key], key, collection),
+    //   );
+    // }
+    for (let key of Object.keys(collection)) {
       res.push(predicate(collection[key], key, collection));
     }
     return res;
@@ -902,7 +909,7 @@ var fanhaofighting = function () {
    * @param {*} val 
    */
   function toPath(val) {
-    // 正则模式要写全a[0][c]要考虑
+    // 正则模式要写全, a.b.0.c[fooo][bar].d
     return val.split(/\.|\[|\]\.|\]\[/g)
   }
 
