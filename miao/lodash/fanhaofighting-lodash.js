@@ -19,7 +19,7 @@ var fanhaofighting = function () {
     predicate = iteratee(predicate)
     let keys = Object.keys(collection)
     for (let i = 0; i < keys.length; i++) {
-      if (predicate(collection[key])) {
+      if (predicate(collection[key], key, collection)) {
         return i
       }
     }
@@ -34,7 +34,7 @@ var fanhaofighting = function () {
     predicate = iteratee(predicate)
     let res = [];
     for (let key of Object.keys(collection)) {
-        if (predicate(collection[key])) {
+        if (predicate(collection[key], key, collection)) {
             res.push(collection[key]);
         }
     }
