@@ -884,8 +884,8 @@ var fanhaofighting = function () {
     return compare = (obj1, obj2) => {
       for (let i = 0; i < funcs.length; i++) {
           const flag = orders[i] === "desc" ? -1 : 1;
-          if (funcs[i](obj1) < funcs[i](obj2)) return -flag;
-          if (funcs[i](obj1) > funcs[i](obj2)) return flag;
+          // 只对大于和小于的两种情况返回值, 等于则继续进行for循环
+          return funcs[i](obj1) > funcs[i](obj2) ? flag : -flag; 
       }
       return 0;
     };
