@@ -4,7 +4,12 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find
+  }
+
+
+  function find() {
+
   }
 
   /**
@@ -14,9 +19,9 @@ var fanhaofighting = function () {
   function filter(collection, predicate) {
     predicate = iteratee(predicate)
     let res = [];
-    for (let key of Object.keys(obj)) {
-        if (predicate(obj[key])) {
-            res.push(obj[key]);
+    for (let key of Object.keys(collection)) {
+        if (predicate(collection[key])) {
+            res.push(collection[key]);
         }
     }
     
