@@ -881,12 +881,17 @@ var fanhaofighting = function () {
    */
   function toCompareFunc(iteratees, orders) {
     let funcs = iteratees.map(item => iteratee(item))
-    return compare = (obj1, obj2) => {
+    return (obj1, obj2) => {
       for (let i = 0; i < funcs.length; i++) {
           // orders为空数组, 则
           const flag = orders[i] === "desc" ? -1 : 1;
-          // 只对大于和小于的两种情况返回值, 等于则继续进行for循环
-          return funcs[i](obj1) > funcs[i](obj2) ? flag : -flag; 
+          // 只对大于和小于的两种情况返回值(所以不能用三目运算符), 等于则继续进行for循环
+          if (funcs[i](obj1) > funcs[i](obj2)) {
+            return flag
+          }
+          if (funcs[i](obj1) < funcs[i](obj2)) {
+            return -flag
+          }
       }
       return 0;
     };
