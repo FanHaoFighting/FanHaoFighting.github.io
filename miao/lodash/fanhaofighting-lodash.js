@@ -4,9 +4,21 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep, forEach, groupBy, map
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep, forEach, groupBy, map,
+    isBoolean
   }
 
+
+  /**
+   * 检查 value 是否是原始 boolean 类型或者对象。
+   * @param {*} value 
+   */
+  function isBoolean(value) {
+    if (value === true || value === false) {
+      return true
+    }
+    return false
+  } 
   /**
    * 创建一个数组， value（值） 是 iteratee（迭代函数）遍历 collection（集合）中的每个元素后返回的结果。 
    * iteratee（迭代函数）调用3个参数：
