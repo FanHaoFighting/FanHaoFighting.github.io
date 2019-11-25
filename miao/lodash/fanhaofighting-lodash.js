@@ -17,7 +17,7 @@ var fanhaofighting = function () {
    */
   function countBy(obj, predicate) {
     let map = {}
-    let predicate = iteratee(predicate)
+    predicate = iteratee(predicate)
     for (let key of obj) {
       let mapKey = predicate(obj[key])
       if (map[mapKey]) {
