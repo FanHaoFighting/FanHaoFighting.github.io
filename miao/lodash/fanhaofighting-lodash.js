@@ -38,7 +38,7 @@ var fanhaofighting = function () {
             res.push(collection[key]);
         }
     }
-    
+    return res
   }
 
   /**
