@@ -5,9 +5,28 @@ var fanhaofighting = function () {
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
     sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep, forEach, groupBy, map,
-    isBoolean
+    isBoolean, union, unionBy, uniq
   }
 
+  // todo
+  function uniqBy() {
+
+  }
+
+  // todo
+  function uniq() {
+
+  }
+
+  // todo
+  function unionBy() {
+
+  }
+
+  // todo
+  function union() {
+
+  }
 
   /**
    * 检查 value 是否是原始 boolean 类型或者对象。
@@ -863,8 +882,51 @@ var fanhaofighting = function () {
    * @param {} collection 
    * @param {*} iteratees 
    */
-  function sortBy(collection, iteratees) {
-    return orderBy(collection, iteratees)
+  // function sortBy(collection, iteratees) {
+  //   return orderBy(collection, iteratees)
+  // }
+
+  function sortBy(collection, predicate = [identity]) {
+    predicate = map(predicate, iteratee)
+    let values = Object.values(collection)
+    let compare = (a, b) => {
+      for(let i = 0; i < predicate.length; i++) {
+        if (predicate[i](a) < predicate[i](b)) return -1
+        else if (predicate[i](a) > predicate[i](b)) return 1
+      }
+      return 0
+    }
+    return quickSort(values, compare)
+    // return values.sort((a, b) => compare(a, b, predicate))
+  }
+
+  function quickSort(ary, compare, start = 0, end = ary.length - 1) {
+    if(end - start <= 0) return ary
+    let pivotIndex = Math.floor(Math.random() * (end - start + 1)) + start
+    let pivot = ary[pivotIndex]
+    swap(ary, pivotIndex, end)
+    let i = start - 1
+    for(let j = start; j < end; j++) {
+      if(compare(ary[j], pivot) < 0) {
+        i++
+        swap(ary, i, j)
+      }
+    }
+    i++
+    swap(ary, i, end)
+  
+    quickSort(ary, compare, start, i - 1)
+    quickSort(ary, compare, i + 1, end)
+  
+    return ary
+  
+  
+    function swap(ary, i, j) {
+      let t = ary[i]
+      ary[i] = ary[j]
+      ary[j] = t
+      return ary
+    }
   }
 
   /**
