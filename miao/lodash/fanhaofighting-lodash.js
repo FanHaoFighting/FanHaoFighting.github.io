@@ -4,9 +4,16 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, every, 
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter
   }
 
+  /**
+   * 遍历 collection（集合）元素，返回 predicate（断言函数）返回真值 的所有元素的数组。 
+   * predicate（断言函数）调用三个参数：(value, index|key, collection)。
+   */
+  function filter() {
+
+  }
 
   /**
    * 创建一个组成对象，key（键）是经过 iteratee（迭代函数） 执行处理collection中每个元素后返回的结果，
@@ -39,12 +46,10 @@ var fanhaofighting = function () {
    */
   function every(collection, predicate) {
     predicate = iteratee(predicate)
-    for (let obj in collection) {
-      if (predicate(obj) === false) {
-        return false
-      }
-    }
-    return true
+    let entries = Object.entries(collection);
+    return entries.reduce((res, entry) => {
+      return res && predicate(entry[1], entry[0], collection)
+    }, true)
   }
 
   /**
