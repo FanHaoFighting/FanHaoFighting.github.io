@@ -4,7 +4,7 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, 
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, 
   }
 
 
@@ -27,6 +27,18 @@ var fanhaofighting = function () {
       }
     }
     return map
+  }
+
+  /**
+   * 通过 predicate（断言函数） 检查 collection（集合）中的 所有 元素是否都返回真值。
+   * 一旦 predicate（断言函数） 返回假值，迭代就马上停止。
+   * predicate（断言函数）调用三个参数： (value, index|key, collection)。
+
+   * @param {*} obj 
+   * @param {*} predicate 
+   */
+  function every(obj, predicate) {
+
   }
 
   /**
@@ -732,17 +744,17 @@ var fanhaofighting = function () {
             return 1
           } else if (func(obj1) < func(obj2)) {
             return -1
-          }
+          } 
           // orders数组里放了值
         } else {
           if (func(obj1) - func(obj2) > 0) {
             return orders[i] === 'asc' ? 1 : -1
           } else if (func(obj1) - func(obj2) < 0) {
             return orders[i] === 'asc' ? -1 : 1
-          }
+          } 
         }
+        return 0
       }
-      return 0
     }
   }
 
