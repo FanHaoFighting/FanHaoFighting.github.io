@@ -8,8 +8,22 @@ var fanhaofighting = function () {
   }
 
 
-  function find() {
-
+  /**
+   * 遍历 collection（集合）元素，返回 predicate（断言函数）第一个返回真值的第一个元素。
+   * predicate（断言函数）调用3个参数： (value, index|key, collection)。
+   * @param {*} collection 
+   * @param {*} predicate 
+   * @param {*} fromIndex 
+   */
+  function find(collection, predicate, fromIndex = 0) {
+    predicate = iteratee(predicate)
+    let keys = Object.keys(collection)
+    for (let i = 0; i < keys.length; i++) {
+      if (predicate(collection[key])) {
+        return i
+      }
+    }
+    return undefined
   }
 
   /**
