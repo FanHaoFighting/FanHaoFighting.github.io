@@ -29,17 +29,14 @@ var fanhaofighting = function () {
   function map(collection, predicate) {
     let res = [];
     predicate = iteratee(predicate)
-    // if (Array.isArray(collection)) {
-    //   return collection.map((value, index) => predicate(value, index, collection));
-    // } else {
-    //   return Object.keys(collection).map(key =>
-    //     predicate(collection[key], key, collection),
-    //   );
-    // }
-    for (let key of Object.keys(collection)) {
-      res.push(predicate(collection[key], key, collection));
+    // Object.keys(collection)， collection 为数组时， 返回["0", "1"...]， 要单独讨论
+    if (Array.isArray(collection)) {
+      return collection.map((value, index) => predicate(value, index, collection));
+    } else {
+      return Object.keys(collection).map(key =>
+        predicate(collection[key], key, collection),
+      );
     }
-    return res;
   }
 
   /**
