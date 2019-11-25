@@ -4,7 +4,36 @@ var fanhaofighting = function () {
     flatten, flattenDepth, flattenDeep, identity, iteratee, property, get, toPath, orderBy, sortBy, isArray,
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
-    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep
+    sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep, forEach, groupBy, map
+  }
+
+  // todo
+  function map() {
+
+  }
+
+  // todo
+  function groupBy() {
+
+  }
+
+  // todo
+  /**
+   * 调用 iteratee 遍历 collection(集合) 中的每个元素， 
+   * iteratee 调用3个参数： (value, index|key, collection)。 
+   * 如果迭代函数（iteratee）显式的返回 false ，迭代会提前退出。
+   * @param {(Array|Object)} collection 
+   * @param {Function} predicate 
+   * @returns {Array|Object} 返回 `collection`.
+   */
+  function forEach(collection, predicate) {
+    predicate = iteratee(predicate)
+    for (let key in Object.keys(collection)) {
+      if (predicate(collection[key], key, collection) === false) {
+        break
+      }
+    }
+    return collection
   }
 
   /**
