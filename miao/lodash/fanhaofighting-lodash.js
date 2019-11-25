@@ -11,8 +11,15 @@ var fanhaofighting = function () {
    * 遍历 collection（集合）元素，返回 predicate（断言函数）返回真值 的所有元素的数组。 
    * predicate（断言函数）调用三个参数：(value, index|key, collection)。
    */
-  function filter() {
-
+  function filter(collection, predicate) {
+    predicate = iteratee(predicate)
+    let res = [];
+    for (let key of Object.keys(obj)) {
+        if (predicate(obj[key])) {
+            res.push(obj[key]);
+        }
+    }
+    
   }
 
   /**
