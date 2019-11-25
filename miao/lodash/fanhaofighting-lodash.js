@@ -7,13 +7,11 @@ var fanhaofighting = function () {
     sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep
   }
 
-
   /**
    * 这个方法类似 _.flatMap 不同之处在于， _.flatMapDeep 会继续扁平化递归映射的结果。
    * @param {*} collection 
    * @param {*} predicate 
    */
-
   function flatMapDeep(collection, predicate) {
     return flatMapDepth(collection,predicate, Infinity)
   }
