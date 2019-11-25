@@ -721,7 +721,8 @@ var fanhaofighting = function () {
   }
 
   /**
-   * 此方法类似于 _.sortBy，除了它允许指定 iteratee（迭代函数）结果如何排序。 如果没指定 orders（排序），所有值以升序排序。 否则，指定为"desc" 降序，或者指定为 "asc" 升序，排序对应值。
+   * 此方法类似于 _.sortBy，除了它允许指定 iteratee（迭代函数）结果如何排序。 
+   * 如果没指定 orders（排序），所有值以升序排序。 否则，指定为"desc" 降序，或者指定为 "asc" 升序，排序对应值。
    * @param {*} arr 
    * @param {*} func 
    */
@@ -733,7 +734,8 @@ var fanhaofighting = function () {
   }
 
   function toCompareFunc(iteratees, orders) {
-    return function (obj1, obj2) {
+    return function compare (obj1, obj2) {
+      // 在任意一个func处两个对象比较出了大小, 就返回结果
       for (let i = 0; i < iteratees.length; i++) {
         let func = iteratee(iteratees[i])
         
@@ -753,8 +755,9 @@ var fanhaofighting = function () {
             return orders[i] === 'asc' ? -1 : 1
           } 
         }
-        return 0
       }
+      // for循环执行完成才判断两个对象是相等的
+      return 0
     }
   }
 
