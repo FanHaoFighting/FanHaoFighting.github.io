@@ -5,12 +5,22 @@ var fanhaofighting = function () {
     differenceWith, isEqual, isObject, isObjectLike, negate, isString, isFunction, isNaN, isNumber, isPlainObject, fill, findIndex,
     findLastIndex, fromPairs, toPairs, head, indexOf, initial, intersection, join, lastIndexOf, pull, forOwn, reverse, curry,
     sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep, forEach, groupBy, map,
-    isBoolean, union, unionBy, uniq
+    isBoolean, union, unionBy, uniq, uniqBy, without, xor
+  }
+
+  // todo
+  function xor() {
+
+  }
+
+  // todo
+  function without() {
+
   }
 
   // todo
   function uniqBy() {
-
+    
   }
 
   // todo
@@ -23,9 +33,13 @@ var fanhaofighting = function () {
 
   }
 
-  // todo
-  function union() {
-
+  /**
+   * 创建一个按顺序排列的唯一值的数组。所有给定数组的元素值使用 SameValueZero做等值比较。
+   * （ arrays（数组）的并集，按顺序返回，返回数组的元素是唯一的）
+   * @param  {...any} arrays 
+   */
+  function union(...arrays) {
+    (...arrays) => [...new Set(arrays.flat())]
   }
 
   /**
@@ -882,51 +896,8 @@ var fanhaofighting = function () {
    * @param {} collection 
    * @param {*} iteratees 
    */
-  // function sortBy(collection, iteratees) {
-  //   return orderBy(collection, iteratees)
-  // }
-
-  function sortBy(collection, predicate = [identity]) {
-    predicate = map(predicate, iteratee)
-    let values = Object.values(collection)
-    let compare = (a, b) => {
-      for(let i = 0; i < predicate.length; i++) {
-        if (predicate[i](a) < predicate[i](b)) return -1
-        else if (predicate[i](a) > predicate[i](b)) return 1
-      }
-      return 0
-    }
-    return quickSort(values, compare)
-    // return values.sort((a, b) => compare(a, b, predicate))
-  }
-
-  function quickSort(ary, compare, start = 0, end = ary.length - 1) {
-    if(end - start <= 0) return ary
-    let pivotIndex = Math.floor(Math.random() * (end - start + 1)) + start
-    let pivot = ary[pivotIndex]
-    swap(ary, pivotIndex, end)
-    let i = start - 1
-    for(let j = start; j < end; j++) {
-      if(compare(ary[j], pivot) < 0) {
-        i++
-        swap(ary, i, j)
-      }
-    }
-    i++
-    swap(ary, i, end)
-  
-    quickSort(ary, compare, start, i - 1)
-    quickSort(ary, compare, i + 1, end)
-  
-    return ary
-  
-  
-    function swap(ary, i, j) {
-      let t = ary[i]
-      ary[i] = ary[j]
-      ary[j] = t
-      return ary
-    }
+  function sortBy(collection, iteratees) {
+    return orderBy(collection, iteratees)
   }
 
   /**
