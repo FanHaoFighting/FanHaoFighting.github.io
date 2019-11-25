@@ -7,8 +7,12 @@ var fanhaofighting = function () {
     sortedIndex, zip, unzip, cloneDeep, countBy, every, filter, find, flatMap, flatMapDepth, flatMapDeep, forEach, groupBy, map
   }
 
-  // todo
-  function map() {
+  /**
+   * 
+   * @param {Array|Object} collection 
+   * @param {*} predicate 
+   */
+  function map(collection, predicate) {
 
   }
 
@@ -24,7 +28,7 @@ var fanhaofighting = function () {
     let map = {}
     for (let key in Object.keys(collection)) {
       let mapKey = predicate(collection[key])
-      if (mapKey) {
+      if (map[mapKey]) {
         map[mapKey].push(collection[key])
       } else {
         map[mapKey] = []
