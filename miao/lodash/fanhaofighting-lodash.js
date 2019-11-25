@@ -50,7 +50,7 @@ var fanhaofighting = function () {
       if (map[mapKey]) {
         map[mapKey].push(collection[key])
       } else {
-        map[mapKey] = []
+        map[mapKey] = [collection[key]]
       }
     }
     return map
@@ -883,6 +883,7 @@ var fanhaofighting = function () {
     let funcs = iteratees.map(item => iteratee(item))
     return compare = (obj1, obj2) => {
       for (let i = 0; i < funcs.length; i++) {
+          // orders为空数组, 则
           const flag = orders[i] === "desc" ? -1 : 1;
           // 只对大于和小于的两种情况返回值, 等于则继续进行for循环
           return funcs[i](obj1) > funcs[i](obj2) ? flag : -flag; 
