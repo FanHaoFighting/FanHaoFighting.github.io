@@ -767,8 +767,7 @@ var fanhaofighting = function () {
    * @param {*} iteratees 
    */
   function sortBy(collection, iteratees) {
-    let comapre = toCompareFunc(iteratees, [])
-    return mergeSort(collection, comapre)
+    return orderBy(collection, iteratees)
   }
 
   /**
@@ -778,9 +777,8 @@ var fanhaofighting = function () {
    * @param {*} func 
    */
   function orderBy(collection, iteratees, orders = []) {
-    // 利用归并排序的稳定性, 依次排序
     let comapre = toCompareFunc(iteratees, orders)
-    return mergeSort(collection, comapre)
+    return collection.sort((obj1, obj2) => comapre(obj1, obj2))
   }
 
   /**
@@ -789,33 +787,15 @@ var fanhaofighting = function () {
    * @param {*} orders 
    */
   function toCompareFunc(iteratees, orders) {
-    return function compare (obj1, obj2) {
-      // 在任意一个func处两个对象比较出了大小, 就返回结果
-      for (let i = 0; i < iteratees.length; i++) {
-        let func = iteratee(iteratees[i])
-        let res1 = func(obj1)
-        let res2 = func(obj2)
-
-        // orders数组里没有放值
-        if (orders.length == 0) {
-          // 等于的情况则不返回任何值
-          if (res1 > res2) {
-            return 1
-          } else if (res1 < res2) {
-            return -1
-          } 
-          // orders数组里放了值
-        } else {
-          if (res1 > res2) {
-            return orders[i] === 'asc' ? 1 : -1
-          } else if (res1 < res2) {
-            return orders[i] === 'asc' ? -1 : 1
-          } 
-        }
+    let funcs = iteratees.map(item => iteratee(item))
+    return compare = (obj1, obj2) => {
+      for (let i = 0; i < funcs.length; i++) {
+          const flag = orders[i] === "desc" ? -1 : 1;
+          if (funcs[i](obj1) < funcs[i](obj2)) return -flag;
+          if (funcs[i](obj1) > funcs[i](obj2)) return flag;
       }
-      // for循环执行完成才判断两个对象是相等的
-      return 0
-    }
+      return 0;
+    };
   }
 
   /**
@@ -876,54 +856,6 @@ var fanhaofighting = function () {
     }
   }
 
-  /**
-   * 归并排序, 稳定的排序
-   * @param {*} arr 
-   * @param {*} compare 
-   */
-  function mergeSort(arr, compare) {
-    
-    if (arr.length < 2) {
-      return arr.slice()
-    }
-    if (compare == undefined) {
-      compare = function (a, b) {
-        if (a > b) {
-          return 1;
-        } else if (a < b) {
-          return 0;
-        } else {
-          return -1;
-        }
-      }
-    }
-
-
-    let mid = arr.length >> 1
-    let left = arr.slice(0, mid)
-    let right = arr.slice(mid)
-    mergeSort(left, compare)
-    mergeSort(right, compare)
-
-
-    let i = 0
-    let j = 0
-    let k = 0
-    while (i < left.length && j < right.length) {
-      if (compare(left[i], right[j]) < 0) {
-        arr[k++] = left[i++]
-      } else {
-        arr[k++] = right[j++]
-      }
-    }
-    while (i < left.length) {
-      arr[k++] = left[i++]
-    }
-    while (j < right.length) {
-      arr[k++] = right[i++]
-    }
-    return arr
-  }
 
 }();
 
