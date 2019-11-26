@@ -39,7 +39,7 @@ var fanhaofighting = function () {
    * @param  {...any} arrays 
    */
   function union(...arrays) {
-    (...arrays) => [...new Set(arrays.flat())]
+    return Array.from(new Set(arrays.flat()))
   }
 
   /**
