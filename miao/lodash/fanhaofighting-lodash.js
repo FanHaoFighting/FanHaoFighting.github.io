@@ -57,7 +57,6 @@ var fanhaofighting = function () {
    * @return {Array}
    */
   function map(collection, predicate) {
-    let res = [];
     predicate = iteratee(predicate)
     // Object.keys(collection)， collection 为数组时， 返回["0", "1"...]， 要单独讨论
     if (Array.isArray(collection)) {
