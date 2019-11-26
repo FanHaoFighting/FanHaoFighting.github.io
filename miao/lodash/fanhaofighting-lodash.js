@@ -29,7 +29,7 @@ var fanhaofighting = function () {
   }
 
   // todo
-  function unionBy(...Array, predicate) {
+  function unionBy() {
 
   }
 
