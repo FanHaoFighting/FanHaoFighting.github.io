@@ -29,7 +29,7 @@ var fanhaofighting = function () {
   }
 
   // todo
-  function unionBy() {
+  function unionBy(...Array, predicate) {
 
   }
 
@@ -47,10 +47,7 @@ var fanhaofighting = function () {
    * @param {*} value 
    */
   function isBoolean(value) {
-    if (value === true || value === false) {
-      return true
-    }
-    return false
+    return nativeToString(value) === "[object Boolean]"
   } 
   /**
    * 创建一个数组， value（值） 是 iteratee（迭代函数）遍历 collection（集合）中的每个元素后返回的结果。 
