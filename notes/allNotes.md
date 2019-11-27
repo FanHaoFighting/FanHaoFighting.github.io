@@ -171,6 +171,7 @@
 
    * <a href="#whoami">跳转本页的底部</a> <input id="whoami">  <!-- 指定跳转位置 -->
    * <img usemap="#somemap">
+
     <map name="somemap">
     <area shape="rect" coords="25,25,75,75" href="www.xiaomi.com">
    </map>
@@ -246,12 +247,16 @@
       * (0，4，4，29)
       * (0, 6, 1, 0)
   * id 选择器    #foo #bar #baz {}
+    
       * 0，1，0，0
   * 类选择器，属性选择器，伪类选择器
+    
       * 0，0，1，0
   * 元素选择器（标签选择器），伪元素选择器
+    
       * 0，0，0，1
   * 连接符如 > + ~ 等不参与优先级的计算
+    
       * 于是 p a 与 p > a 的优先级是一样的
   * 通配符 *
       * 优先级为 0，0，0，0
@@ -265,14 +270,15 @@
       * p {color: red !important;}
       * 有与 important 冲突的属性，important 都会占上风
   * 继承
-      * 没有优先级，比【*】的优先级还要小
-
+    
+* 没有优先级，比【*】的优先级还要小
+  
 * 层叠样式
             双方选择器优先级排序一样时，看 important 的来源
       * 第一：最终用户 important 样式
       * 第二：网站作者 important 样式 authored style
 
-            双方选择器优先级排序一样时，没有 important 时，看样式来源
+        双方选择器优先级排序一样时，没有 important 时，看样式来源
       * 第三：作者普通样式
       * 第四：用户普通样式 Custom.css
 
@@ -375,9 +381,9 @@
      * z-index  必须配合定位使用
        * 调节层叠覆盖关系，常规流默认值为 0
        * z-index: 值；   值大的盖住值小的，可以有负值，都为整数。
-    * 常用布局
+        * 常用布局
       * 元素明显重叠时，可用定位实现
-    * 元素的方位
+        * 元素的方位
       top left right bottom
       当不明确指定时，元素的从它在常规流中开始的位置开始。
       4 个方位的值表明的是离其定位对象四周的距离
@@ -529,7 +535,7 @@
       页面样式的变化涉及到重新计算布局
       在可能的情况下不要触发回流或把回流控制在一定的范围内
       因为回流速度更慢
-    * 重绘 repaint
+        * 重绘 repaint
       速度快
       页面样式的变化不涉及布局的计算，只变了颜色，背景，阴影等不影响布局样式
 
@@ -547,31 +553,31 @@
    * min-height/width   max-height/width  设置元素宽高的最大最小数值  ，浏览器的窗口不是 html 元素，浏览器的窗口大小不能由这两个属性控制，有浏览器默认控制。
    * clip-path CSS 属性可以创建一个只有元素的部分区域可以显示的剪切区域。区域内的部分显示，区域外的隐藏。
      clip-path: polygon(50% 0, 100% 50%, 50% 100%, 0 50%);  不规则图形，四个坐标对应 4 个点；
-    * 列表图标
+        * 列表图标
       list-style-image:url() 图片会原比例尺寸插入，无法调整大小和位置，几乎不用
       list-style-position:inside ：设置图标在 li`边框的内外部
       list-style-type:decimal：设置图标的样式，圆，方块，10 进制等
-    * <link  media="print"> 设置代码在哪种设备中生效
-    * 计数器 counter
+        * <link  media="print"> 设置代码在哪种设备中生效
+        * 计数器 counter
       counter-increment: 计数器名（遇到该计数器开始计数）  数字（加几，默认 1）
       counter-reset：计数器名（遇到该计数器重置）  数字（重置为几，默认 0）
-    * 打印断页
+        * 打印断页
       page-break-before：avoid/always    该标签前面不断页 / 断页
       page-break-after :avoid/always    该标签后面不断页 / 断页
       page-break-inside : avoid    该标签永远在一个页面里面
-    *  all:initial 所有属性回到初始值，即浏览器默认值
-    * 如何禁用 textarea 元素默认的可缩放行为？
+        *  all:initial 所有属性回到初始值，即浏览器默认值
+        * 如何禁用 textarea 元素默认的可缩放行为？
           textarea {
           resize: none;
-        }
-    * 为所有元素设置 box-sizing 较好的方法
+           }
+        * 为所有元素设置 box-sizing 较好的方法
       html {
       box-sizing: border-box;
       }
       *,::before,::after {
       box-sizing: inherit;
       }
-    * background-clip :border-box/padding-box/content-box
+        * background-clip :border-box/padding-box/content-box
       设置元素的背景（背景图片或颜色）是否延伸到边框下面。
       background-size：contain 缩放背景图片以完全装入背景区，可能背景区部分空白，保持图像的宽高比例（图像不会被压缩） /cover 缩放背景图片以完全装入背景区，保持图像的宽高比例，可能背景图片部分看不见
       background-color: 背景颜色
@@ -580,7 +586,7 @@
       backgrounf-origin: 定了指定背景图片 background-image 属性的原点位置的背景相对区域。
       background-position: 为每一个背景图片设置初始位置。 这个位置是相对于由 background-origin 定义的位置图层的。
       background-attachment ：决定背景图像的位置是在视口内固定，还是随着包含它的区块滚动。
-    * data*属性配合 js 的用法
+        * data*属性配合 js 的用法
       <table id="wosd" data-all="[['名字','年龄','性别'],['Jason','24','men'],['Bob','42','man'],['Merry','32','woman']]">
         <script>
             let res = document.getElementById("wosd").dataset.all
@@ -621,7 +627,7 @@
       font-family: 字体名字；
       src:local('相对地址')，url('绝对地址') format('字体格式')
     }
-   为了更好的兼容各大浏览器，我们一般做多次 @font-face 声明，并且每次声明至少写 3 种字体格式
+      为了更好的兼容各大浏览器，我们一般做多次 @font-face 声明，并且每次声明至少写 3 种字体格式
 
   * 防止页面加载时因为引入 CSS 延时产生的抖动
     - 把第一页的样式放在 html 里面
@@ -682,10 +688,10 @@
         html {font-size: calc(100vw / X * 100)}
         还有些浏览器不支持 calc/vw，所以这个值通过 js 读取出浏览器视口的宽度并自行算出，然后设置到 html 元素上
         之后从视觉稿量出来的尺寸将小数点移动两位后加 rem 单位即可用在代码里。
-
+    
     *. 页面较简单，希望页面在更大的手机上显示更多的内容（github 移动端）
         直接使用 device-width 且使用 px 以及流式布局（块元素自动占满宽度）
-
+    
     *. 对于杂合形页面，即布局复杂，又有很多文字
         布局使用 rem，文字使用 px，width=device-width
 
@@ -813,18 +819,18 @@
    * background-blend-mide  设置背景的颜色混合方式
      mix-blend-mide 设置多个元素的颜色混合方式
      isolation：auto/isolate 该属性的主要作用是当和 background-blend-mode 属性一起使用时，可以只混合一个指定元素栈的背景
-    * filter 滤镜
-        filter: blur(5px);  模糊
-        filter: brightness(0.4); 亮度
-        filter: contrast(200%);  对比度
-        filter: drop-shadow(16px 16px 20px blue); 阴影效果
-        filter: grayscale(50%); 将图像转换为灰度图像
-        filter: hue-rotate(90deg); 给图像应用色相旋转
-        filter: invert(75%); 反转输入图像。值定义转换的比例。100% 的价值是完全反转。值为 0% 则图像无变化。
-        filter: opacity(25%); 转化图像的透明程度
-        filter: saturate(30%); 转换图像饱和度。
-        filter: sepia(60%)  将图像转换为深褐色
-    * mask 允许使用者通过部分或者完全隐藏一个元素的可见区域。这种效果可以通过遮罩或者裁切特定区域的图片。
+        * filter 滤镜
+           filter: blur(5px);  模糊
+           filter: brightness(0.4); 亮度
+           filter: contrast(200%);  对比度
+           filter: drop-shadow(16px 16px 20px blue); 阴影效果
+           filter: grayscale(50%); 将图像转换为灰度图像
+           filter: hue-rotate(90deg); 给图像应用色相旋转
+           filter: invert(75%); 反转输入图像。值定义转换的比例。100% 的价值是完全反转。值为 0% 则图像无变化。
+           filter: opacity(25%); 转化图像的透明程度
+           filter: saturate(30%); 转换图像饱和度。
+           filter: sepia(60%)  将图像转换为深褐色
+        * mask 允许使用者通过部分或者完全隐藏一个元素的可见区域。这种效果可以通过遮罩或者裁切特定区域的图片。
 
 ### Flex 布局
 
@@ -845,7 +851,7 @@
         - column：主轴为垂直方向，起点在上沿。
         - column-reverse：主轴为垂直方向，起点在下沿。
         - 当主轴为垂直方向时，item 的 width 默认值为 100%；
-    * flex-wrap 属性定义，如果一条轴线排不下，如何换行。
+        * flex-wrap 属性定义，如果一条轴线排不下，如何换行。
         - nowrap（默认）：不换行。
         - wrap：换行，第一行在上方。
         - wrap-reverse：换行，第一行在下方。
@@ -910,26 +916,41 @@
    * 类似于根一样的嵌套规则，@import 命令，用来插入外部文件。如 @import "path/filename.scss";
    * & 符号表示父选择器，可直接使用
    * 变量 $ , 变量仅在它定义的选择器嵌套层级的范围内可用，加上！globle 就是全局属性；
+
     　　$blue : #1875e7;
     　　div {
     　　　color : $blue;
     　　}
    * 如果变量需要镶嵌在字符串之中，就必须需要写在#{}之中。
-      　$side : left;
-    　　.rounded {
-    　　　　border-#{$side}-radius: 5px;
-    　　}
-    * 循环语句编辑（through 包括最后一位，to 不包括）
-      下面表示子元素第 1 到第 9 个 span 的宽度为等差数列（20px, 40px, 60px....180px)
-        　@for $i from 1 to 10{
-            span:nth-child(#{$i}){
-                    width:$i * 20px;
-             }
-          }
+      　
+      　```css
+            　* $side : left;
+            　
+            　.rounded {
+            　    border-#{$side}-radius: 5px;
+            　}
+      ```
+
+* 循环语句编辑（through 包括最后一位，to 不包括）
+  下面表示子元素第 1 到第 9 个 span 的宽度为等差数列（20px, 40px, 60px....180px)
+  
+  ```css
+  @for $i from 1 to 10{
+      span:nth-child(#{$i}){
+         width:$i * 20px;
+      }
+  }
+  ```
 
 # Bootstrap(CSS 框架）
 
-   * 直接用 link 引入<link href="url" rel="stylesheet" type="text/css"   integrity="完整性验证码（HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu）" >
+   * 直接用 link 引入
+
+     ```html
+     <link href="url" rel="stylesheet" type="text/css"   integrity="完整性验证码（HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu）" >
+     ```
+
+     
 
 # 布尔代数与逻辑电路
 
@@ -1135,29 +1156,29 @@
      number>>>0 将结果以以无符号整数输出
    * js 运算结果以 32 位有符号整数理解，除了》>>运算符，它的运算结果以无符号整数理解
    * JS 中浮点数以 8 个字节储存，64 个 bit，以 2 进制的科学计数法储存（整数部分永远转化为 1），形式如下
-    * 1bit（符号位） + 11bit（指数位） + 52bit（底数位）
+        * 1bit（符号位） + 11bit（指数位） + 52bit（底数位）
       * （1 + 底数位）* 2**（指数位）
       * 符号位，占用 1 个 bit ，正数为 0，负数为 1
       * 指数位，占用 11 个 bit，指数大小分布 -1023~1024 之间，分别用 0~2047 来表达，用科学计数法算出的指数 +1023 得出的数值储存在这 11bit 里面，即 -1023 次方在 11bit 里面写作 0,1024 次方写作 2047
       * 底数位，底数小数部分直接填在 52bit 里面
         - 直接填在左边，右边多余的 bit 都填 0
         - 对于无限循环的小数部分（如 0.2），第 53 位如果为 1 就进 1 给第 52 位， 第 53 位如果为 0 直接舍去
-    * 这样表示的原因：当比较两个浮点数大小时 计算机从左往右读取数据，读到符号位时，谁是 0 谁大；读到指数位和底数位，谁先遇到 1 谁打大；这样计算机就可 4 以更快判断两个浮点数的大小
-    * 因为有的浮点数在计算机里面不够精确，所以一般比较浮点数的大小时用如下方法：
+        * 这样表示的原因：当比较两个浮点数大小时 计算机从左往右读取数据，读到符号位时，谁是 0 谁大；读到指数位和底数位，谁先遇到 1 谁打大；这样计算机就可 4 以更快判断两个浮点数的大小
+        * 因为有的浮点数在计算机里面不够精确，所以一般比较浮点数的大小时用如下方法：
       |a-b|《阈 yu 值 Number.EPSILON  为 true 时 ，我们可以认为 a 和 b 相等
-    * 计算机里面 10 进制小数后面的第 16 位开始不够精确，因为计算机的最大精度为 2 的 -52 次方，这个数值在 10^-15 ~ 10^-16 之间，比最大精度还小的数在计算机里面表示不精确
-    * number.toPrecision（位数）  浮点数精确到小数点后面多少位时的值
-    * 越接近 0 的浮点数越精确，因为底数位一共只有 52bit，转化为 2 进制科学计数法时，整数部分右移，整数部分越大，右移的 bit 位越多，表示小数位的 bit 位也就越少，越不精确
-    * NaN +0 -0 Infinity -Infinity 这几个特殊值不符合上面规律
-    * 几个常见的 Number 方法
+        * 计算机里面 10 进制小数后面的第 16 位开始不够精确，因为计算机的最大精度为 2 的 -52 次方，这个数值在 10^-15 ~ 10^-16 之间，比最大精度还小的数在计算机里面表示不精确
+        * number.toPrecision（位数）  浮点数精确到小数点后面多少位时的值
+        * 越接近 0 的浮点数越精确，因为底数位一共只有 52bit，转化为 2 进制科学计数法时，整数部分右移，整数部分越大，右移的 bit 位越多，表示小数位的 bit 位也就越少，越不精确
+        * NaN +0 -0 Infinity -Infinity 这几个特殊值不符合上面规律
+        * 几个常见的 Number 方法
       - Number.EPSILON == 2**(-52) 即 1 和大于 1 的最小浮点数之间的差值 ，<Buffer 3c b0 00 00 00 00 00 00> ， 如果|a-b|< Number.EPSILON，则 a 和 b 相等
         在 0~1 之间，也有比 Number.EPSILON 更小的精度值，比如 Number.Min_value, 但是计算机在此时已经失真，如果|a-b|< Number.EPSILON，也可以近似认为 a 和 b 相等
       - Number.MAX_SAFE_INTEGER == (1 + [1 - 2**(-52)])* 2**(52) == 2**53 - 1；<Buffer 43 3f ff ff ff ff ff ff>；
         计算机中表示的最大的精确整数，即整数位转化为科学计数法时右移占满 52 个 bit，且每个 bit 值都为 1；
       - Number.Max_value, 表示 js 中最大的正数，<Buffer 7f ef ff ff ff ff ff ff>；即 (1 + (1 - 2**(-52))* 2**(1023)
       -Number.MIn_value, 来表示 js 中最小的正数，<Buffer 00 00 00 00 00 00 00 01> ; 即 （1 + 2**(-52))*2**（-1023）, 这个值比 Number.EPSILON 还小，计算机也计算失真
-    * <Buffer 7f ff ff ff ff ff ff ff> 这个值没有确定的函数方法，计算是 Infinity
-    * 大于 Number.MAX_SAFE_INTEGER 的所有数字可以使用 BigInt 表达；BigInt(1321233123131313312321312n) == BigInt("1321233123131313312321312") ；BigInt(1321233123131313312321312n) * 2n
+        * <Buffer 7f ff ff ff ff ff ff ff> 这个值没有确定的函数方法，计算是 Infinity
+        * 大于 Number.MAX_SAFE_INTEGER 的所有数字可以使用 BigInt 表达；BigInt(1321233123131313312321312n) == BigInt("1321233123131313312321312") ；BigInt(1321233123131313312321312n) * 2n
       BigInt 可以和  +、`*`、`-`、`**`、`%` 一起使用；  BigInt 里面和外面是纯数字时数字后面加个 n
 
 ## js 编码规范及行业术语
@@ -1292,9 +1313,13 @@
      反序列化：比如链表结构在运行中就是反序列化的，不同的节点在不同的内存中，不连续储存
    * 利用 JAON 进行深拷贝 JSON.parse(JSON.stringfy())
      使用这种方法会有一些隐藏的坑：因为在序列化 JavaScript 对象时，所有函数和原型成员会被有意忽略。
+
     通俗点说，JSON.parse(JSON.stringfy(X))，其中 X 只能是 Number, String, Boolean, Array, 扁平对象，即那些能够被 JSON 直接表示的数据结构。
-   *  JSON.stringify(一个promise)=>{}
+   * JSON.stringify(一个promise)=>{}
+
    * 环形克隆
+     
+      ```js
       function cloneDeep(obj) {
         var cacheMap = new Map()
         return clone(obj)
@@ -1315,6 +1340,9 @@
           return ret
         }
       }
+      ```
+
+
 
 ## Debug
 
@@ -1324,18 +1352,26 @@
   * 在 sources 栏里面 snippet 选项里可以执行代码（Ctrl + enter），也可以格式化代码
   * try{throw }catch(e){}finally{}
     * 在一段代码可能有异常时使用
+    
     * try 是必要语句，后面两个至少需要一个
+    
     * 如果整体代码有语法错误，则所有的代码都不会执行
       因为 js 代码的启动有以步骤：
         词法解析
         语法解析
         执行
+      
     * try 语句：里面是填写 js 代码，
+      
        - 里面可以接 throw 语句，抛出自己填写的报错信息（一般抛出 throw new Error(""))，并且 try 里面的执行语句终止，catch 的变量 e 会接收这个错误；throw 会在离自己最近的 try 语句中生效
+       
     * catch: 如果 try 语句里面有错误，catch 会返回错误的具体信息；需要一个变量 e 来接收错误，e 只在自己的 catch 语句中生效
       变量 e 有几个属性，e.stack 调用栈信息；e.message 具体的错误原因；e.name: 错误类型函数
+      
     * finally：里面的代码永远可以运行，不管前面有没有错误
-    * function hasValue(root, val) {
+    
+        ```js
+        function hasValue(root, val) {
         try {
           traverse(root)
           return false
@@ -1347,15 +1383,18 @@
         }
         function traverse(root) {
           if (root) {
-            if (root.val == val) {
+        if (root.val == val) {
               throw true
             }
             traverse(root.left)
             traverse(root.right)
           }
         }
-      }
-
+        }
+        ```
+    
+        
+    
   * 严格模式：在作用域的顶部写上"use strict"  该作用域里面的代码就可以按照严格模式执行；但是并不能要求作用域里面嵌套的作用域按照严格模式执行；
     https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode
     在严格模式下，以纯函数形式调用函数时，this 不是 window，而是 undefined
@@ -1375,7 +1414,7 @@
  * 数组是值的有序集合
    对象是值的具有名字的集合
  * 对象的相关方法
-   - Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用  for...in 循环遍历该对象时返回的顺序一致。
+   - Object.keys() 方法会返回一个由一个给定对象的自身可枚举属性组成的数组，数组中属性名的排列顺序和使用  for...in 循环遍历该对象时返回的顺序一致。所以Object.keys() 对一个数组使用会得到字符串集合的数组下标。如['0', '1']。
    - for in 的迭代顺序
       - 先按照大小顺序迭代整数属性名
       - 之后迭代其它属性，按照添加顺序
@@ -1430,6 +1469,7 @@
     * reduceRight() 方法接受一个函数作为累加器（accumulator）和数组的每个值（从右到左）将其减少为单个值。
     * some() 方法测试是否至少有一个元素可以通过被提供的函数方法。该方法返回一个 Boolean 类型的值。
       every() 方法测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
+    * join([separator]), 如果没有传分隔符,  数组元素用逗号（`,`）分隔。  如果一个元素为 `undefined` 或 `null`，它会被转换为空字符串。 
     * 数组的toString方法[1,2,3].toString()=>'1,2,3'  
   *  ES6 数组去重的最佳实践：Set 结合 Array.from()
       var  a = [1,1,2,2,4,4]
@@ -1586,7 +1626,7 @@
 
       return ary
     }
-   }
+      }
 
 ## 循环
 
@@ -1714,18 +1754,18 @@
       return hummy.next
      }
      * 递归
-      var mergeTwoLists = function (l1, l2) {
-      if (!l1 || !l2) {
+        var mergeTwoLists = function (l1, l2) {
+        if (!l1 || !l2) {
           return l1 || l2
-      }
-      if (l1.val < l2.val) {
+        }
+        if (l1.val < l2.val) {
           l1.next = mergeTwoLists(l1.next, l2)
           return l1
-      } else {
+        } else {
           l2.next = mergeTwoLists(l1, l2.next)
           return l2
-      }
-      }
+        }
+        }
   * 链表的排序
     先递归二分再归并
     var sortList = function (head) {
@@ -1762,7 +1802,7 @@
           return hummy.next
       }
       return mergeTwoLists(left, right)
-  };
+    };
 
 ## 哈希表
 
@@ -1784,6 +1824,8 @@
    对于下标为 n 的节点，其对应的父节点为 Math.floor((n-1)/2)
 
 *  二叉树的排序插入
+   
+*  ```
    var insertIntoBST = function (root, val) {
     if (!root) {
         return new TreeNode(val)
@@ -1795,110 +1837,152 @@
     }
     return root
     };
+   ```
+   
+   
+   
 *  利用二叉树对数组排序
    向将数组转化为排序二叉树（左边的节点一定比右边小），再中序遍历二叉树，将值储存在数组中就是排序的结果
+   
+   ```js
    function bstSort(ary) {
-    var root = ary.reduce(insertIntoBST, null)
-    k = 0
-    inOrderTraverse(root, val => {
-      ary[k++] = val
-    })
-
+     var root = ary.reduce(insertIntoBST, null)
+     k = 0
+     inOrderTraverse(root, val => {
+    ary[k++] = val
+     })
     return ary
   }
+  ```
+  
 *  前中后序遍历
   前序遍历  根节点 左子数 右子数     看书看过的顺序
-    function preOrderTraverse(root, action) {
+  
+  ```js
+  function preOrderTraverse(root, action) {
     if (root) {
       action(root.val)
       preOrderTraverse(root.left, action)
       preOrderTraverse(root.right, action)
     }
   }
+  ```
+  
   中序遍历  左子数 根节点 右子数     看书看过一半的顺序   由左往右扫描
-     function inOrderTraverse(root, action) {
+  
+  ```js
+   function inOrderTraverse(root, action) {
     if (root) {
       inOrderTraverse(root.left, action)
       action(root.val)
       inOrderTraverse(root.right, action)
     }
   }
+  ```
+  
   后续遍历  左子数 右子数 根节点      看书看完的顺序
-     function postOrderTraverse(root, action) {
+  
+  ```js
+   function postOrderTraverse(root, action) {
     if (root) {
       postOrderTraverse(root.left, action)
       postOrderTraverse(root.right, action)
       action(root.val)
     }
   }
-
+  ```
+  
+  
+  
 * 将数组转化为二叉树
-  *方法一： 递归
-   function arrayToTree(array, rootPos = 0) {
-    if (array[rootPos] == null) {
-        return null
-    }
-    return {
-        val: array[rootPos],
-        left: arrayToTree(array, rootPos * 2 + 1),
-        right: arrayToTree(array, rootPos * 2 + 2)
-    }}
-   *方法二 队列  创造一个储存数组，先进先出，使用 shift 和 push 方法达到效果
-    function arrayToTree2(array) {
-    if (array.length == 0) { return null }
-    let root = new TreeNode(array[0])
-    let nodes = [root]
-    for (let i = 1; i < array.length; i++) {
-        let current = nodes.shift()
-        if (array[i] != null) {
-            let node = new TreeNode(array[i])
-            current.left = node
-            nodes.push(node)
-        } else {
-            current.left = null
-        }
-        i++
-        if (i == array.length) {
-            break
-        }
-        if (array[i] != null) {
-            let node = new TreeNode(array[i])
-            current.right = node
-            nodes.push(node)
-        } else {
-            current.right = null
-        }
+  
+  * 方法一： 递归
+  
+    ```js
+     function arrayToTree(array, rootPos = 0) {
+      if (array[rootPos] == null) {
+          return null
       }
-      return root}
-
+      return {
+          val: array[rootPos],
+          left: arrayToTree(array, rootPos * 2 + 1),
+          right: arrayToTree(array, rootPos * 2 + 2)
+      }}
+    ```
+  
+  * 方法二 队列  创造一个储存数组，先进先出，使用 shift 和 push 方法达到效果
+  
+    ```js
+     function arrayToTree2(array) {
+      if (array.length == 0) { return null }
+      let root = new TreeNode(array[0])
+      let nodes = [root]
+      for (let i = 1; i < array.length; i++) {
+          let current = nodes.shift()
+          if (array[i] != null) {
+              let node = new TreeNode(array[i])
+              current.left = node
+              nodes.push(node)
+          } else {
+              current.left = null
+          }
+          i++
+          if (i == array.length) {
+              break
+          }
+          if (array[i] != null) {
+              let node = new TreeNode(array[i])
+            current.right = node
+              nodes.push(node)
+          } else {
+              current.right = null
+          }
+        }
+        return root
+     }
+    ```
+  
+     
+  
 * 将二叉树转化为数组
   * 方法一  递归
+    
+    ```js
     function treeToArray(root, pos = 0, result = []) {
-    if (root) {
+      if (root) {
         result[pos] = root.val
         treeToArray(root.left, pos * 2 + 1, result)
         treeToArray(root.right, pos * 2 + 2, result)
-    }
+      }
     return result}
+    ```
+    
   * 方法二 层次遍历 队列   队列里面没有值时循环结束
+  
+    ```js
     function treeToArray2(root) {
-    if (root==null ) { return [] }
-    let result = []
-    let nodes = [root]
-    while (nodes.length) {
+      if (root==null ) { return [] }
+      let result = []
+      let nodes = [root]
+      while (nodes.length) {
         let current = nodes.shift()
         if(current){
-            result.push(current.val)
-            nodes.push(current.left,current.right)
+          result.push(current.val)
+          nodes.push(current.left,current.right)
         }else{
-            result.push(null)
+          result.push(null)
         }
-    }
-    while(result[result.length - 1] === null) {
+      }
+      while(result[result.length - 1] === null) {
         result.pop()
+      }
+      return result
     }
-    return result}
+    ```
+  
   * 方法三  层次遍历
+    
+    ```js
     function treeToArray3(root) {
       if (root) {
         var result = [root.val]
@@ -1924,6 +2008,7 @@
         return result
       }
     }
+    ```
 
 ## 堆（Heap）
 
@@ -2102,7 +2187,7 @@
       }
   * 递归下降，解析语法数
     leetcode 1106. 解析布尔表达式
-  var parseBoolExpr = function(expr) {
+    var parseBoolExpr = function(expr) {
     var i = 0
     return parse()
     function parse() {
@@ -2165,7 +2250,7 @@
         }
         return result
     }
-  }
+    }
 
 ## ES6 相关知识
 
@@ -2265,6 +2350,7 @@
     }
 
    * 解构语法
+
     [a,b]=[b,a]  a 和 b 互换位置
     {a，b} = {a:1,b:2} 拿到 a 和 b
    * 模板字符串 ``
@@ -2363,6 +2449,7 @@
 
    * map 函数  返回新数组
      *源代码
+
     function map(array, mapper) {
     let result = []
     for (let i = 0; i < array.length; i++) {
@@ -2375,11 +2462,11 @@
       <!-- var array = [16,25,36];
       array.map(Math.sqrt);
       //array = [4,5,6]
-
+    
       var array = [11, 22, 33, 44, 55];
       console.log(array.map(function (n) { return n % 10 }))
       //array = [1,2,3,4,5] -->
-
+    
     * reduce 函数 返回最终运算的结果
       * reduce 源函数
           function reduce(arr, reducer,initalVal=arr[0] ) {
@@ -2394,33 +2481,33 @@
           }
       * reduce 可以接受 3 个参数，数组（作为数组的方法时可以省去），reducer 函数，初始值（不设置时默认为数组第一项）； reducer 是必要参数，其它可选
       * 执行函数 reducer 接受 4 个参数，initalVal（上一次执行结果，第一次为初始值）arr[i] 数组的第 i 项，数组下标，数组本身（作为数组的方法时可以省去）；initalVal 和 arr[i] 是必要参数，其它可选
-
+    
       Array 的 reduce() 把一个函数作用在这个 Array 的 [x1, x2, x3...] 上，这个函数必须接收两个参数，reduce() 把结果继续和序列的下一个元素做累积计算，其效果就是：
       [x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4)
      <!--  var arr = [1, 3, 5, 7, 9];
       arr.reduce(function (x, y) {
       return x + y;
       }); // 25 -->
-
+    
     * sort 函数
       用于数组的排序，返回值大于 0 交换位置，其它位置不变
       array.sort(function(a,b){return a - b})  从小到大排序
       array.sort(function(a,b){return b - a})  从大到小排序
-
+    
     * bind: 绑定 this 和参数 ，参数传多了只接受前面的参数，后面的参数无效；且 this 只能绑定一次，多次绑定不生效
       apply: 设定 this 和参数，参数以数组形式传入
       call: 设定 this 和参数，参数不能以数组的形式传入
       如果只绑定参数而不指定 this, 通常将 this 设置为 null，新的绑定函数不使用 this 即可
-
+    
     function myBind(thisArg, ...fixedArgs){ <!-- thisArg 是 this 要绑定参数，fixedArgs 是其它的参数 -->
       let self = this <!-- 谁调用了这个函数谁就是 this -->
       return function bound(...arguments){
         fixedArgs.push(...arguments)<!-- 合并其它参数 -->
         if(new.target=== bound){
           return new self(...fixedArgs)
-
+    
         <!-- 如果是构造函数调用了 mybind 函数，提供的 this 就会被忽略，thisArg 会被忽略掉；其它的参数会参与绑定，并且返回一个新的构造函数 -->
-
+    
         }else{
         return self.apply(thisArg,fixedArgs)
         }
@@ -2430,7 +2517,7 @@
 ## 对象原型
 
   * 基本关系
-    几乎任何对象有原型的‘原型’指用来查找属性的 fallback 对象：obj.__proto__/Object.getPrototypeOf(obj)，称为“原型”
+    几乎任何对象有原型的‘原型’指用来查找属性的 fallback 对象：obj._proto_/Object.getPrototypeOf(obj)，称为“原型”
     每个函数（且一般只有函数才有）都有一个原型属性指的是 F.prototype（我的实例的原型），称为“原型属性”
 
     函数的原型是函数的构造函数的原型属性
@@ -2578,12 +2665,12 @@
         - "*" 号 出现任意次数
         -  "?" 出现 0 次或者 1 次
         -  {n}  出现 n 次  {2,4}  2 到 4 次  ； {4,}4 次及以上
-    * 贪婪匹配
+        * 贪婪匹配
       由于正则表达式的回溯机制，每个正则符号都会首先尝试匹配最多的内容然后再回头，这种模式就是贪婪匹配
-    * 非贪婪匹配
+        * 非贪婪匹配
       和贪婪匹配相反，每个正则符号尽可能匹配少的内容，只有在剩余部分没办法完成匹配时才会匹配更多的内容
       表示方法： 在重复操作符后面加上？即变为非贪婪匹配（+?;*?;??;{}?;）
-    * 匹配 unicode 码对应的字符（开启 16 进制 unicode 模式配合、u 使用）
+        * 匹配 unicode 码对应的字符（开启 16 进制 unicode 模式配合、u 使用）
        /\u{6211}/u.test("我")=>true
        /[\u{6211}-\u{7411}]/u.test("是")=>true
 
@@ -2625,28 +2712,28 @@
        单词边界是字符串的开始或者结束位置，也可以是任意单词（/w）和任意非单词字符（/W）之间的位置
       下面。号左右两边都是单词边界，因为"."是、W, 而其左右两边都是、w, 他们中间就是单词边界
       "bar.baz".match(/\b\.\b/)=>[".", index: 3, input: "bar.baz", groups: undefined]
-
+    
     * 字符串和正则表达式相关的方法
       -match, 不考虑正则表达式的 lastIndex 属性。
         当正则表达式有 g 标志的时候，匹配出所有能够满足整条正则表达式的内容，不会把分组捕获到的内容也放入结果数组
         当没 g 标志的时候，匹配出第一条能满足的内容，同时把分组捕获到的内容也放入结果数组
-
+    
       - replace(RegExp|String, String|Function)
         两个参数都是字符串：匹配第一次出现的内容为目标内容，不会修改原字符串
         首参为正则
         次参为字符串，里面的 $&,$1,$2~$9 是特殊内容，表示匹配到匹配到的内容以及各个分组捕获到的内容
         次参为函数，把整个匹配到的内容以及各分组捕获到的内容传给函数做为参数，把函数返回值插入被替换位置，有多少次匹配，函数就会调用多少次
-
+    
       -re.exec(str) 方法
         如果 re 不带 g 标志，则完全等同于 str.match(re)
         如果 re 带有 g 标志，则从 str 的 re.lastIndex 位置开始查找，查找成功后把 re.lastIndex 置为匹配位置的后一个位置
         查找不成功的时候，返回 null，把 lastIndex 置为 0
-
+    
       -str.split(String|RegExp)
         当参数是字符串时，按字符串把原字符串拆成数组
         当参数为正则时，按正则把原字符串拆成各部分的数组，但是
         当正则里有捕获分组时，分组捕获到的内容也会出现在结果数组的相应位置
-
+    
      * https://regex101.com/    debug 正则表达式网站
        https://regexper.com/    查看正则表达式流程图
 
@@ -2684,7 +2771,7 @@
     code(module, module.exports) // 调用 code 函数，修改了局部变量 module 的 exports 属性值
     require.moduleCache[path] = module.exports  将结果储存在映射对象里
     return  module.exports  返回结果
-  }
+    }
 
     function readFile(path) {
       var xhr = new XMLHttpRequest()
@@ -2734,44 +2821,70 @@
    * for of 可以直接拿到生成器里面的 value 属性值
        for( let   nums of g1){}  => nums 依次为 1,2,3,4,
 
-   * symbol
-     * symbol ES6 里添加得到一种原始数据类型，不能用 new 调用，表示是一个唯一的值（符号）, 类似一个对象，但是 symbol 可以作为对象的属性名，这个也是其主要作用；
-     var a = symbol() ,b = symbol()
-     a === b =>false
-     symbol 也无法进行隐式类型转换，会报错
-     a + 2  会报错
+## symbol
+  * symbol ES6 里添加得到一种原始数据类型，不能用 new 调用，表示是一个唯一的值（符号）, 类似一个对象，但是 symbol 可以作为对象的属性名，这个也是其主要作用；
+  
+    ```js
+    // 注意Symbol() 为大写
+    var a = Symbol();
+    typeof a; // "symbol"
+    var b = Symbol();
+    a === b; // 结果为false
+    ```
+  
+    symbol 也无法进行隐式类型转换，会报错
 
-     * symbol.iterator  Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
-        var myIterable = {}
-          myIterable[Symbol.iterator] = function* () {
-              yield 1;
-              yield 2;
-              yield 3;
-          };
-         [...myIterable] // [1, 2, 3]
-     * 一些内置类型拥有默认的迭代器行为，如 Array，String,Map，Set,TypeArray，可以直接使用 for of 循环调用
+  ```js
+    var a = Symbol()
+    a + 2  // 会报错
+  ```
 
-     * symbol.for（为 symbol 取名）
-      a = Symbol.for("aa")；b  = Symbol.for("aa")；a ===b
-     * symbol实现私有属性
-        (function(){
-          var age = Symbol()
-
-          window.People = class People {
-            constructor(name, gender, theAge) {
-              this.name = name
-              this.gender = gender
-              this[age] = theAge      
-            }
-            getAge() {
-              if (this.gender = 'f') {
-                return 18
-              } else {
-                return this[age]
-              }
+  * symbol.iterator  Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
+    
+    ```js
+    var myIterable = {};
+    myIterable[Symbol.iterator] = function*() {
+      yield 1;
+      yield 2;
+      yield 3;
+    };
+    [...myIterable]; // [1, 2, 3]
+    ```
+    
+  * 一些内置类型拥有默认的迭代器行为，如 Array，String, Map，Set, TypeArray，可以直接使用 for of 循环调用
+  
+  * symbol.for（为 symbol 取名）
+  
+    ```js
+    a = Symbol.for("aa")；
+    b = Symbol.for("aa")；
+    a === b
+    ```
+  
+  * symbol实现私有属性
+    
+    ```js
+    (function(){
+        var age = Symbol()
+      
+        window.People = class People {
+          constructor(name, gender, theAge) {
+            this.name = name
+            this.gender = gender
+            this[age] = theAge      
+          }
+          getAge() {
+            if (this.gender = 'f') {
+              return 18
+            } else {
+              return this[age]
             }
           }
-        }()) 
+        }
+      }()) 
+    ```
+    
+    ​    
 
 ## DOM Document Object Model
 
@@ -2882,61 +2995,81 @@
        elements.foucs() 使元素获得焦点
    * 加载事件
      * window.onload 是在页面所有资源加载完成时触发，包括 css, 图片，脚本等等；常用于页面构建完成时使用 load 进行初始化
+     
      * 浏览器遇到<script>标签会立即执行，之后再执行下面的代码；因为 js 代码里面可能会有 DOM 操作，这样不同的执行时刻页面有不同的显示，所以浏览器都是立即执行
        所以大型网站一般都把<script>标签放到后面；
        <script async src =""> <script defer src = "">为有 src 属性的 script 加上 async 或者 defer 属性会使 script 在页面加载完成之后执行
        CSS 代码写在前面，这样遇到标签就可以渲染其样式
+       
      * load 事件是在所有外部资源加载完成时触发，而 DOMContentLoaded 是在 DOM 解析完就触发，所以我们现在都用更快的 DOMContentLoaded
        beforeunload 事件，关闭页面或者跳转链接时触发
+       
      * readystatechange 事件    当文档的 readyState 属性发生改变，readystatechange 事件会被触发。
        document.readyState === "complete" 表示 DOM 解析完，可以替代 DOMContentLoaded。兼容性更好
-    * 脚本执行时间线
+        * 脚本执行时间线
        * 很多事件都会触发脚本（程序）执行，同一文档中无法同时执行 2 个脚本（CSS3 动画除外，其可以继续持续执行）
        * js 是单线程语言，但可以使用 Worker 函数将耗时的操作放到后台运行，其可以独立文档主程序运行；
           worker 之间不能共享数据，只能通过事件"message"与 postMessage 来发送消息，所发送的消息是复制之后发送过去的，所有修改接收到的消息是不会改变源消息的；
           worker 内不能访问 dom, 以及任何与 UI 相关的接口
-    * 时间定时器
+        * 时间定时器
+       
       * setTimeout 设置函数多少毫秒后调用  其返回值是一个任务号数字
         clearTimeout（number） 清除该任务，不在调用队列里
         var number = setTimeout(fun,time)
+        
       * setTimeout  最快也要将其调用栈里面的代码执行完毕之后再调用函数，即使时间设置为 0；
+     
       * setInterval/clearInterval 设置函数每隔多少毫秒调用
-    * 事件防抖（降低事件多次连续迅速触发，如 mousemove，scroll)
+        
+      * 事件防抖（降低事件多次连续迅速触发，如 mousemove，scroll)
+        
       * debounce 防抖函数
-        function debounce(f,time){
-          let timeId = null
-          return function(...argments){
-            clearTimeout(timeId)
-            var timeId=setTimeout(f(argments),time)
-          }
+        
+        ```js
+        function debounce(f, time) {
+          let timeId = null;
+          return function(...argments) {
+            clearTimeout(timeId);
+            var timeId = setTimeout(f(argments), time);
+          };
         }
+        ```
+        
+        
         只有在连续时间内，不在触发频繁事件后的 time 秒后，执行真正的回调，如输入联想
-       * throttle 节流函数
-        function throttle(f, duration) {
-          var timerId
-          var lastRunTime = 0
-          return function(...args) {
-            clearTimeout(timerId)
-            var now = Date.now()
-            if (now - lastRunTime > duration) {
-              f(...args)
-              lastRunTime = now
-            } else {
-              timerId = setTimeout(() => {
-                f(...args)
-                lastRunTime = Date.now()
-              }, duration)
-            }
+        
+        * throttle 节流函数，以一定的频率触发，降频；如鼠标滚动
+      ```js
+      function throttle(f, duration) {
+        var timerId;
+        var lastRunTime = 0;
+        return function(...args) {
+          clearTimeout(timerId);
+          var now = Date.now();
+          if (now - lastRunTime > duration) {
+            f(...args);
+            lastRunTime = now;
+          } else {
+            timerId = setTimeout(() => {
+              f(...args);
+              lastRunTime = Date.now();
+            }, duration);
           }
-        }
-        以一定的频率触发，降频；如鼠标滚动
-         理解上述函数注意 setTimeout 里面的函数调用时修改局部变量影响其他事件是否触发
-
-    * 创建自定义事件
-      Events 可以使用 Event 构造函数创建如下
-      var event = new Event('build');
-      elem.addEventListener('build', function (e) { ... }, false);
-      elem.dispatchEvent(event)  （触发改事件）
+        };
+      }
+      ```
+    
+      理解上述函数注意 setTimeout 里面的函数调用时修改局部变量影响其他事件是否触发
+          
+     * 创建自定义事件
+     
+      * Events 可以使用 Event 构造函数创建如下
+       
+        ```js
+        var event = new Event('build');
+        elem.addEventListener('build', function (e) { ... }, false);
+        elem.dispatchEvent(event)  （触发改事件）
+        ```
 
 ## 表单和表单域
 
@@ -3006,7 +3139,7 @@
   * data uri   将数据 64 位编码
   * 全字母解码 （atob）
     全字母编码  （btoa）
-  *DataURL 把数据直接编码进了 url 里面。可以通过 base64，也可以直接把数据的原始文本直接放进 url 中
+    *DataURL 把数据直接编码进了 url 里面。可以通过 base64，也可以直接把数据的原始文本直接放进 url 中
 
 # 计算机网络
 
@@ -3387,21 +3520,21 @@
             url = url + '?' + [...Object.entries(data)].map(pair => {
               return pair.join('=')
             }).join('&') + '&callback=' + callbackName
-
+            
             window[callbackName] = function(data) {
               delete window[callbackName]
               document.head.removeChild(script)
               resolve(data)
             }
-
+            
             script.src = url
-
+            
             script.onerror = function(e) {
               delete window[callbackName]
               document.head.removeChild(script)
               reject(e)
             }
-
+            
             document.head.appendChild(script)
           })
         }
@@ -3583,7 +3716,7 @@
                   step()
 
                   <!--generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果-->
-
+            
                 } catch(e) {
                   reject(e)
                 }
@@ -3869,11 +4002,11 @@
       app.use((req,res,next)=>{}) 中间键，对所有请求做一种方式的处理
       app.use(path,()=>{}) 以该路径开头走这个中间键，也可以接多个中间键
       httpServer = app.listen(port,()=>{}) listen方法会返回一个http服务器
-
+    
     * app2 = express.Router  
       创建一个模块化的路由处理程序，完整的路由系统的中间件
       配合module.exports = app使用
-
+    
     * 基本路由
       app.METHOD(PATH, HANDLER)
         * app 是 express 的实例。
@@ -3950,7 +4083,7 @@
         * INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  为指定表插入数据
           insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
           insert into users values(1,"a","a","a@qq.com","御膳房");
-
+    
         * .header on  查看时显示头行
         * .mode column 每列对应排齐查看
         * .schema 查看所有表 
@@ -3961,29 +4094,29 @@
         * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
           base WHERE condition;
           SELECT * FROM users WHERE name =name "jim";
-
+    
         * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
           更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
           update foods set status="off" where id=1;
-
+    
         * base ORDER BY column1, column2, ... ASC|DESC;  表单指定列按照升序 / 降序排列
         * NULL 在数据库里面表示该位置是空值，base where name is NUll
-
+    
         * DELETE FROM table_name WHERE condition;
            DELETE 语句用于在表中删除现有记录。如果省略 WHERE 子句，所有记录都将被更新！
-
+    
         * base LIMIT number;  LIMIT 表示选择前几行
-
+    
         * SELECT COUNT(column_name) 所选列一共多少行
           SELECT AVG(column_name)  所选数值列的平均值
           SELECT SUM(column_name) 所选数值列的总和
           SELECT MIN(column_name) 所选列的最小值
           SELECT MAX(column_name) 所选列的最大值
-
+    
         * drop table tablename    如drop table users 删除users表  
-
+    
         *  alter table orders add totalPrice integer; 为orders表增加一列totalPrice，为整数
-
+    
         * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
           % 表示任意个字符，_表示单个字符
           where a_____  筛选以 a 开头 6 个字符长度
@@ -4000,7 +4133,7 @@
             LEFT JOIN：返回左表的所有记录，以及匹配的记录
             RIGHT JOIN：返回右表的所有记录，以及匹配的记录
             FULL JOIN： 交叉连接，返回所有的排列组合记录
-
+    
       * 项目使用 sqlite 的方法
         * npm i sqlite   sqlite 是基于 promise 对 sqlite3API 的封装
           sqlite = require('sqlite')
@@ -4040,10 +4173,10 @@
     - 数据以消息为单位
     - TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
     - 缺点容易断线，兼容性不好，建议使用socked.io
-
+    
     - Connection:Upgrade ；Upgrate:websocket 
       http请求带上这2个主要的请求头告知服务器请求升级为websocked协议，服务器同意后TCP连接就不会中断
-    
+
 
 
     * socked.io 对 websocked 的更高级的一层封装
@@ -4065,7 +4198,7 @@
             io/socked.on("event",()=>{}) 服务器/客户端监听事件
             socket.join/leave（'some room'）加入或者离开房间
           - 发送的参数数据可以同时有字符串和二进制字节流，而websocket不能混合发送  
-
+    
       * socket.handshake.query可以拿到query部分的参数      
 
   ### linux 服务器知识
@@ -4519,9 +4652,10 @@
         * <style lang="scss" scoped> css 代码 </style> scoped 表示 css 只对这个组件生效
         * <script>js 代码</script>
         * import 模块 / 组件 from path 导入模块
+          
           - 这里可以用 @表示 src 文件的路径，比较方便
-        * export default {components:{导入得到局部组件需要在这个里面赋值过来才能在 template 生效，一般组件名都大写}, 其它组件属性}
-
+* export default {components:{导入得到局部组件需要在这个里面赋值过来才能在 template 生效，一般组件名都大写}, 其它组件属性}
+        
       * 安装 npm install -g @vue/cli
       * 单个文件快速原型开发
         vue serve 文件名   vue serve index.vue
@@ -4548,6 +4682,7 @@
     * 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.creatElement（标签名，属性，子元素）
      <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
     * 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量
+      
       <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
     * 这个 bable 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
       <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
@@ -4751,8 +4886,9 @@
     * 子元素冒泡时按照实际 dom 结构冒泡而不是直接冒泡到容器
 
   * 高阶组件
-    * 和高阶函数类似，高阶组件是参数为组件，返回值为新组件的函数
-
+    
+* 和高阶函数类似，高阶组件是参数为组件，返回值为新组件的函数
+  
   * 错误边界
     * 错误边界是一种 React 组件，捕获并打印发生在其子组件树任何位置的 JavaScript 错误，并且它会渲染出备用 UI
     * 类似在组件层面实现了一个 try catch 机制，让错误不会跑到外层
@@ -4847,6 +4983,7 @@
 
   * react 路由
     * 安装
+      
       <script src = "https://unpkg.com/react-router-dom@4.3.0/umd/react-router-dom.js"> / npm install react-router-dom
     * var { BrowserRouter,HashRouter,Switch,Route,Link,withRouter} = ReactRouterDOM   引入变量
     * 相关变量
@@ -4879,8 +5016,8 @@
             </div>
           </HashRouter>
         )
-      }
-
+  }
+    
   * Redux
     * 比较底层的封装，单项数据流，全局数据中心，实现了组件之间的数据和事件的传递
     * 仅支持同步函数，异步需要使用第三方插件（Redux-thunk）
