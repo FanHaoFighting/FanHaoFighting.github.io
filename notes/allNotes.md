@@ -2089,16 +2089,15 @@
    大堆
    
    ```js
-    class deap {
+  class deap {
     constructor(nums) {
-        this.elements = nums
-        this.heapfy(nums)
+      this.elements = nums
+      this.heapfy(nums)
     }
     add(val) {
         this.elements.push(val)
         this.heapUp(this.elements.length - 1)
     }
-    
     // 将某个节点的父节点调整为堆，且保持整个堆结构
     heapUp(currIdx) {
       while (currIdx > 0) {
@@ -2111,28 +2110,26 @@
         }
       }
     }
-    
     // 将某个节点调整为堆，且保持整个堆结构
     heapdown(currIdx, end = this.elements.length) {
-        while (currIdx < end) {
-            let maxIdx = currIdx
-            let leftIdx = currIdx * 2 + 1
-            let rightIdx = leftIdx + 1
-            if (leftIdx < end && this.elements[leftIdx] > this.elements[maxIdx]) {
-                maxIdx = leftIdx
-            }
-            if (rightIdx < end && this.elements[rightIdx] > this.elements[maxIdx]) {
-                maxIdx = rightIdx
-            }
-            if (this.elements[maxIdx] != this.elements[currIdx]) {
-                this.swap(maxIdx, currIdx)
-                currIdx = maxIdx
-            } else {
-                break
-            }
+      while (currIdx < end) {
+        let maxIdx = currIdx
+        let leftIdx = currIdx * 2 + 1
+        let rightIdx = leftIdx + 1
+        if (leftIdx < end && this.elements[leftIdx] > this.elements[maxIdx]) {
+          maxIdx = leftIdx
         }
+        if (rightIdx < end && this.elements[rightIdx] > this.elements[maxIdx]) {
+          maxIdx = rightIdx
+        }
+        if (this.elements[maxIdx] != this.elements[currIdx]) {
+          this.swap(maxIdx, currIdx)
+          currIdx = maxIdx
+        } else {
+          break
+        }
+      }
     }
-
     // 从不是叶子节点开始进行倒序 headdown 操作，得到了整个堆结构数组
     heapfy() {
       let curr = (this.elements.length - 2) >> 1
@@ -2140,13 +2137,13 @@
         this.heapdown(i)
       }
     }
-    
+  
     swap(i, j) {
       let temp = this.elements[i]
       this.elements[i] = this.elements[j]
       this.elements[j] = temp
     }
-    
+  
     SortArray(arr){
       this.heapify(ary)
       for(var i = ary.length - 1; i > 0; i--) {
@@ -2155,13 +2152,13 @@
       }
       return ary
     }
-    
+  
     // 在末尾添加元素
     push(val){
       this.elements.push(val)
       this.heapUp(this.elements.length - 1)
     }
-    
+  
     // 取出堆顶
     pop(){
       var result = this.elements[0]
@@ -2173,8 +2170,8 @@
       this.heapdown(0)
       return result
     }
-    }
-   ```
+  }
+  ```
    
 
 ## 回溯算法
