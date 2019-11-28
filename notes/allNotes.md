@@ -1303,44 +1303,44 @@
 
 ## JSON  一种数据格式
 
-   * 一段储存数据的字符串，写法类似 js 的数据格式
-     https://www.json.org/json-zh.html 每种 js 值对应着每种 json 结构
-     JSON.stringify(value[, replacer [, space]]) =>JSON 格式
-     JSON.parse(text[, reviver])  =>值
-   * JSON 里面的属性名都要加双引号，属性值不能是表达式，只能是最终结果
-   * 双引号之间不能有特殊字符（需要转义 \\t )，不能出现任意的多余逗号，不能有 undefined 值
-   * 序列化：比如链表结构在储存时会转化为一种其它的数据格式（如 json), 该结构是连续储存的，这就是序列化
-     反序列化：比如链表结构在运行中就是反序列化的，不同的节点在不同的内存中，不连续储存
-   * 利用 JAON 进行深拷贝 JSON.parse(JSON.stringfy())
-     使用这种方法会有一些隐藏的坑：因为在序列化 JavaScript 对象时，所有函数和原型成员会被有意忽略。
+  * 一段储存数据的字符串，写法类似 js 的数据格式
+    https://www.json.org/json-zh.html 每种 js 值对应着每种 json 结构
+    JSON.stringify(value[, replacer [, space]]) =>JSON 格式
+    JSON.parse(text[, reviver])  =>值
+  * JSON 里面的属性名都要加双引号，属性值不能是表达式，只能是最终结果
+  * 双引号之间不能有特殊字符（需要转义 \\t )，不能出现任意的多余逗号，不能有 undefined 值
+  * 序列化：比如链表结构在储存时会转化为一种其它的数据格式（如 json), 该结构是连续储存的，这就是序列化
+    反序列化：比如链表结构在运行中就是反序列化的，不同的节点在不同的内存中，不连续储存
+  * 利用 JAON 进行深拷贝 JSON.parse(JSON.stringfy())
+    使用这种方法会有一些隐藏的坑：因为在序列化 JavaScript 对象时，所有函数和原型成员会被有意忽略。
 
-    通俗点说，JSON.parse(JSON.stringfy(X))，其中 X 只能是 Number, String, Boolean, Array, 扁平对象，即那些能够被 JSON 直接表示的数据结构。
-   * JSON.stringify(一个promise)=>{}
+  通俗点说，JSON.parse(JSON.stringfy(X))，其中 X 只能是 Number, String, Boolean, Array, 扁平对象，即那些能够被 JSON 直接表示的数据结构。
+  * JSON.stringify(一个promise)=>{}
 
-   * 环形克隆
+  * 环形克隆
      
-      ```js
-      function cloneDeep(obj) {
-        var cacheMap = new Map()
-        return clone(obj)
-        function clone(obj) {
-          if (cacheMap.has(obj)) {
-            return cacheMap.get(obj)
-          }
-          var ret = {}
-          cacheMap.set(obj, ret)
-          for(let key in obj) {
-            let val = obj[key]
-            if (typeof val == 'object') {
-              ret[key] = clone(val)
-            } else {
-              ret[key] = val
-            }
-          }
-          return ret
+  ```js
+  function cloneDeep(obj) {
+    var cacheMap = new Map()
+    return clone(obj)
+    function clone(obj) {
+      if (cacheMap.has(obj)) {
+        return cacheMap.get(obj)
+      }
+      var ret = {}
+      cacheMap.set(obj, ret)
+      for(let key in obj) {
+        let val = obj[key]
+        if (typeof val == 'object') {
+          ret[key] = clone(val)
+        } else {
+          ret[key] = val
         }
       }
-      ```
+      return ret
+    }
+  }
+  ```
 
 
 
@@ -1363,37 +1363,35 @@
       
     * try 语句：里面是填写 js 代码，
       
-       - 里面可以接 throw 语句，抛出自己填写的报错信息（一般抛出 throw new Error(""))，并且 try 里面的执行语句终止，catch 的变量 e 会接收这个错误；throw 会在离自己最近的 try 语句中生效
+      - 里面可以接 throw 语句，抛出自己填写的报错信息（一般抛出 throw new Error(""))，并且 try 里面的执行语句终止，catch 的变量 e 会接收这个错误；throw 会在离自己最近的 try 语句中生效
        
     * catch: 如果 try 语句里面有错误，catch 会返回错误的具体信息；需要一个变量 e 来接收错误，e 只在自己的 catch 语句中生效
       变量 e 有几个属性，e.stack 调用栈信息；e.message 具体的错误原因；e.name: 错误类型函数
       
     * finally：里面的代码永远可以运行，不管前面有没有错误
     
-        ```js
-        function hasValue(root, val) {
-        try {
-          traverse(root)
-          return false
-        } catch(e) {
-          if(e===true){
-            return true
-          }
-          return e
+    ```js
+    function hasValue(root, val) {
+    try {
+      traverse(root)
+      return false
+    } catch(e) {
+      if(e === true){
+        return true
+      }
+      return e
+    }
+    function traverse(root) {
+      if (root) {
+        if (root.val === val) {
+          throw true
         }
-        function traverse(root) {
-          if (root) {
-        if (root.val == val) {
-              throw true
-            }
-            traverse(root.left)
-            traverse(root.right)
-          }
+        traverse(root.left)
+        traverse(root.right)
         }
-        }
-        ```
-    
-        
+      }
+    }
+    ```
     
   * 严格模式：在作用域的顶部写上"use strict"  该作用域里面的代码就可以按照严格模式执行；但是并不能要求作用域里面嵌套的作用域按照严格模式执行；
     https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Strict_mode
