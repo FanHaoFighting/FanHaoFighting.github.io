@@ -1457,6 +1457,7 @@
 ## 数组
 
   * 判断两个纯数字数组里面的内容是否相同，先 array.sort(function(a,b){return a - b})  从小到大排序，再 join() 转化为字符串作全等判断
+
   * 数组相关方法
     * arr = Array.from(arrlike)  从一个（类似）数组或可迭代对象中创建一个新的，浅拷贝的数组实例
     * Array.isArray(arr) 判断 arr 是否是数组
@@ -1471,20 +1472,25 @@
       every() 方法测试一个数组内的所有元素是否都能通过某个指定函数的测试。它返回一个布尔值。
     * join([separator]), 如果没有传分隔符,  数组元素用逗号（`,`）分隔。  如果一个元素为 `undefined` 或 `null`，它会被转换为空字符串。 
     * 数组的toString方法[1,2,3].toString()=>'1,2,3'  
+    
   *  ES6 数组去重的最佳实践：Set 结合 Array.from()
       var  a = [1,1,2,2,4,4]
       var  b = new Set(a)
       var  c = Array.from(b) =>[1,2,4]
       var  d = b.size  =>3（不同项个数）
+      
   *  数组的高阶函数作为方法调用时（each,map,every 等等）, 可以加一个参数表示为第一个参数的他 this
      [1,2,3].map(f(),obj)=>obj 是 f() 的 this
-  * 数组的冒泡排序最优解   每次把最值放到最后
+     
+  * 数组的冒泡排序最优解: 如果中间有一次没有发生交换, 则终止循环
+    
+    ```js
     function swap(ary, i, j) {
-    if (i != j) {
-      var t = ary[i]
-      ary[i] = ary[j]
-      ary[j] = t
-    }
+      if (i != j) {
+        var t = ary[i]
+        ary[i] = ary[j]
+        ary[j] = t
+      }
     }
     function bubbleSort(ary) {
       for(var j = ary.length - 2; j >= 0; j--) {
@@ -1501,7 +1507,10 @@
       }
       return ary
     }
+    ```
+    
   * 数组的归并排序
+    ```js
     function mergeSort(ary) {
       if (ary.length < 2) {
         return ary
@@ -1529,74 +1538,95 @@
       }
       return ary
     }
+    ```
+    
   * 数组的选择排序 每次遍历将最小值放到前面
+    ```js
     function swap(array, i, j) {
-    let temp = array[i]
-    array[i] = array[j]
-    array[j] = temp
+      let temp = array[i];
+      array[i] = array[j];
+      array[j] = temp;
     }
     function selectSort(ary) {
-        for (let i = 0; i < ary.length - 1; i++) {
-            var minPos = i
-            for (let j = i + 1; j < ary.length; j++) {
-                if (ary[minPos] > ary[j]) {
-                    minPos = j
-                }
-            }
-            swap(ary, i, minPos)
+      for (let i = 0; i < ary.length - 1; i++) {
+        var minPos = i;
+        for (let j = i + 1; j < ary.length; j++) {
+          if (ary[minPos] > ary[j]) {
+            minPos = j;
+          }
         }
-        return ary
+        swap(ary, i, minPos);
+      }
+      return ary;
     }
+    ```
+    
   * 数组的插入排序（将无序的部分插入到有序部分），利用排序二叉树，先将数组转化为排序二叉树，再   将二叉树遍历得到排序数组
+    
+    ```js
     function insertIntoBST(root, val) {
-    if (!root) {
-        return new TreeNode(val)
-    }
-    if (root.val <= val) {
-        root.right = insertIntoBST(root.right, val)
-    } else {
-        root.left = insertIntoBST(root.left, val)
-    }
-    return root
+      if (!root) {
+        return new TreeNode(val);
+      }
+      if (root.val <= val) {
+        root.right = insertIntoBST(root.right, val);
+      } else {
+        root.left = insertIntoBST(root.left, val);
+      }
+      return root;
     }
     function bstSort(ary) {
-        let root = ary.reduce(insertIntoBST, null)
-        let i = 0
-        inOrderTraverse(root, val => { ary[i++] = val })
-        return ary
+      let root = ary.reduce(insertIntoBST, null);
+      let i = 0;
+      inOrderTraverse(root, val => {
+        ary[i++] = val;
+      });
+      return ary;
     }
+    ```
+    
   * 数组的原地快速排序
     对应所有元素完全相同的数组，性能退化为 n*n , 调用栈深度为 n
     方法： 数组中随机取一个数 s 和最后一位交换位置；双指针从头开始遍历数组，快指针遇到比 s 小的就和慢指针交换位置，如此就可以遍历一遍后比 s 小的都在 s 左边，s 相当于排序了。然后递归操作
+    
+    ```js
     function quickSort(ary, start = 0, end = ary.length - 1) {
-    function swap(array, i, j) {
+      function swap(array, i, j) {
         if (i != j) {
-            let t = array[i]
-            array[i] = array[j]
-            array[j] = t
+          let t = array[i];
+          array[i] = array[j];
+          array[j] = t;
         }
-        return array
-    }
-    if (end - start <= 0) { return ary }
-    let pivotIndex = start + Math.random() * (end - start + 1) | 0
-    let pivotNumber = ary[pivotIndex]
-    swap(ary, pivotIndex, end)
-    let i = start, j = start
-    for (; j < end; j++) {
+        return array;
+      }
+      if (end - start <= 0) {
+        return ary;
+      }
+      let pivotIndex = (start + Math.random() * (end - start + 1)) | 0;
+      let pivotNumber = ary[pivotIndex];
+      swap(ary, pivotIndex, end);
+      let i = start,
+        j = start;
+      for (; j < end; j++) {
         if (ary[j] < pivotNumber) {
-            swap(ary, i, j)
-            i++
+          swap(ary, i, j);
+          i++;
         }
+      }
+      swap(ary, i, end);
+      quickSort(ary, start, i - 1);
+      quickSort(ary, i + 1, end);
+      return ary;
     }
-    swap(ary, i, end)
-    quickSort(ary, start, i - 1)
-    quickSort(ary, i + 1, end)
-    return ary
-    }
-  * // 排序前后不改变相同元素的相对位置，则称为稳定的排序算法
-    // 反之，则为不稳定的
-    // 不稳定的排序算法：选择排序，就地快排
-    // 稳定的排序算法：冒泡，归并，插入排序，bst 排序
+    ```
+    
+    
+    
+  * > 排序前后不改变相同元素的相对位置，则称为稳定的排序算法
+    > 反之，则为不稳定的
+    > 不稳定的排序算法：选择排序，就地快排
+    > 稳定的排序算法：冒泡，归并，插入排序，bst 排序
+    
   * 数组的 sort 方法
     function qSort(ary, compare) {
     return quickSort(ary, compare)
@@ -1844,14 +1874,14 @@
 *  利用二叉树对数组排序
    向将数组转化为排序二叉树（左边的节点一定比右边小），再中序遍历二叉树，将值储存在数组中就是排序的结果
    
-   ```js
-   function bstSort(ary) {
-     var root = ary.reduce(insertIntoBST, null)
-     k = 0
-     inOrderTraverse(root, val => {
-    ary[k++] = val
-     })
-    return ary
+  ```js
+  function bstSort(ary) {
+    var root = ary.reduce(insertIntoBST, null);
+    k = 0;
+    inOrderTraverse(root, val => {
+      ary[k++] = val;
+    });
+    return ary;
   }
   ```
   
@@ -2752,34 +2782,49 @@
  * Function 构造器生成的 Function 对象是在函数创建时解析的，所有被传递到构造函数中的参数，都将被视为将被创建的函数的参数，并且是相同的标示符名称和传递顺序；
    这种方式比 eval 好的地方是可以传递参数
    var sum = new Function('a', 'b', 'return a + b');console.log(sum(2, 6)); =>8
+   
  * 直接调用函数表达式
    var add = function(a,b){return a +b}((1,2))
    (function add (a,b){return a +b})(1,2) 加（）将函数声明语句变成表达式，然后再调用
+   
  * IIFE： immediately invoked function expression  立即执行函数表达式
    两种常用的模块方案
     - CommonJS     require 函数
     - AMD          define 函数
+   
  * require 函数
-    require.moduleCache = {} 创造 1 个映射来储存缓存
+   
+   
+    ```js
+    // 创造 1 个映射来储存缓存
+    require.moduleCache = {} 
     function require(path) {
-    if (require.moduleCache.hasOwnProperty(path)) {
-      return require.moduleCache[path]
-    } // 判断目标模块是否在缓存中
-    var code = new Function('module, exports', readFile(path)) // 根据路径创造新的函数，新的函数有 modele 和 exports 两个参数
-    var module = {exports: {}}   //exports 是 module 的属性
-    require.moduleCache[path] = module.exports  模块循环引用时提前缓存可以防止爆栈，也能为 module.exports 添加东西（没有循环引用可以省略）
-    code(module, module.exports) // 调用 code 函数，修改了局部变量 module 的 exports 属性值
-    require.moduleCache[path] = module.exports  将结果储存在映射对象里
-    return  module.exports  返回结果
+      // 判断目标模块是否在缓存中
+      if (require.moduleCache.hasOwnProperty(path)) {
+        return require.moduleCache[path];
+      }
+      // 根据路径创造新的函数，新的函数有 modele 和 exports 两个参数
+      var code = new Function("module, exports", readFile(path));
+      // exports 是 module 的属性
+      var module = { exports: {} };
+      // 模块循环引用时提前缓存可以防止爆栈，也能为 module.exports 添加东西（没有循环引用可以省略）
+      require.moduleCache[path] = module.exports;
+      // 调用 code 函数，修改了局部变量 module 的 exports 属性值
+      code(module, module.exports);
+      //将结果储存在映射对象里
+      require.moduleCache[path] = module.exports;
+      // 返回结果
+      return module.exports;
     }
-
+    // readFile 函数将目标路径里面储存的函数以字符串的形式返回
     function readFile(path) {
-      var xhr = new XMLHttpRequest()
-      xhr.open('GET', path, false)
-      xhr.send()
-      return xhr.responseText
-    }  // readFile 函数将目标路径里面储存的函数以字符串的形式返回
-
+      var xhr = new XMLHttpRequest();
+      xhr.open("GET", path, false);
+      xhr.send();
+      return xhr.responseText;
+    } 
+    ```
+    
   * 模块加载性能问题
     * 模块的相互依赖会形成树状结构，模块过多会导致加载时间慢
     * 解决方法
@@ -2795,94 +2840,105 @@
 
 ## generator 生成器函数
 
-   * 必要构成，1 个*号和 yield 运算符
-     function * gen(){
-      a = yield 1;b = yield 2;c = yield 3;d = yield 4;
-     }
-      var g1 = gen() //g1 就是 1 个生成器
-      g1.next()//=>{value: 1, done: false}             此时函数暂停在第一个 = 号右边
-      g1.next(88)//=>{value: 2, done: false}           此时函数暂停在第二个 = 号右边，完成上一个 = 号赋值，a=88
-      g1.next(99)//=>{value: 3, done: false}           此时函数暂停在第三个 = 号右边，完成上一个 = 号赋值，b=99
-      g1.next(77)//=>{value: 4, done: false}           此时函数暂停在第四个 = 号右边，完成上一个 = 号赋值，c=77
-      g1.next(55)//=>{value: undefined, done: true}    此时函数运行完毕，完成上一个 = 号赋值，d=55
-   * next 属性返回一个对象，里面 value 是当前 yield 后面的值，done 表示当前生成器有没有运行完
-   * yield: yield 的运算结果是生成器 next() 里面的参数
-   * return()；结束函数
-     g1.return(8)=>{value: 8, done: true}         此时函数从上一个暂停的地方立即停止，返回一个值
-   * throw() 此时函数从上一个暂停的地方抛出一个错误，需要一个 try{}catch{}语句配合使用，try{}catch{}语句里面的函数没有运行，try{}catch{}语句结束后下面的代码继续执行
-   * 生成器的嵌套
-     还是按照顺序执行，遇到嵌套的生成器会进入生成器执行其代码，一步一步执行完该生成器后接着执行外面的代码，直到整个代码执行完毕
-     function * gen(){
-     a = yield 1;b = yield *g2;c = yield *g3;d = yield 4;
-     }
-   * ... 可以展开生成器得到一个生成器 value 属性值的数组集合
-     [...g1] = [1,2,3,4]
-
-   * for of 可以直接拿到生成器里面的 value 属性值
-       for( let   nums of g1){}  => nums 依次为 1,2,3,4,
-
-## symbol
-  * symbol ES6 里添加得到一种原始数据类型，不能用 new 调用，表示是一个唯一的值（符号）, 类似一个对象，但是 symbol 可以作为对象的属性名，这个也是其主要作用；
-  
-    ```js
-    // 注意Symbol() 为大写
-    var a = Symbol();
-    typeof a; // "symbol"
-    var b = Symbol();
-    a === b; // 结果为false
-    ```
-  
-    symbol 也无法进行隐式类型转换，会报错
-
-  ```js
-    var a = Symbol()
-    a + 2  // 会报错
-  ```
-
-  * symbol.iterator  Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
+  * 必要构成，1 个*号和 yield 运算符
     
     ```js
-    var myIterable = {};
-    myIterable[Symbol.iterator] = function*() {
-      yield 1;
-      yield 2;
-      yield 3;
-    };
-    [...myIterable]; // [1, 2, 3]
+    function* gen() {
+      a = yield 1;
+      b = yield 2;
+      c = yield 3;
+      d = yield 4;
+    }
+    var g1 = gen(); //g1 就是 1 个生成器
+    g1.next(); //=>{value: 1, done: false} 此时函数暂停在第一个 = 号右边
+    g1.next(88); //=>{value: 2, done: false} 此时函数暂停在第二个 = 号右边，完成上一个 = 号赋值，a=88
+    g1.next(99); //=>{value: 3, done: false} 此时函数暂停在第三个 = 号右边，完成上一个 = 号赋值，b=99
+    g1.next(77); //=>{value: 4, done: false} 此时函数暂停在第四个 = 号右边，完成上一个 = 号赋值，c=77
+    g1.next(55); //=>{value: undefined, done: true} 此时函数运行完毕，完成上一个 = 号赋值，d=55
     ```
     
-  * 一些内置类型拥有默认的迭代器行为，如 Array，String, Map，Set, TypeArray，可以直接使用 for of 循环调用
-  
-  * symbol.for（为 symbol 取名）
-  
-    ```js
-    a = Symbol.for("aa")；
-    b = Symbol.for("aa")；
-    a === b
-    ```
-  
-  * symbol实现私有属性
+  * next 属性返回一个对象，里面 value 是当前 yield 后面的值，done 表示当前生成器有没有运行完
+
+  * yield: yield 的运算结果是生成器 next() 里面的参数
+
+  * return()；结束函数
+    g1.return(8)=>{value: 8, done: true}         此时函数从上一个暂停的地方立即停止，返回一个值
     
-    ```js
-    (function(){
-        var age = Symbol()
+  * throw() 此时函数从上一个暂停的地方抛出一个错误，需要一个 try{}catch{}语句配合使用，try{}catch{}语句里面的函数没有运行，try{}catch{}语句结束后下面的代码继续执行
+
+  * 生成器的嵌套
+    还是按照顺序执行，遇到嵌套的生成器会进入生成器执行其代码，一步一步执行完该生成器后接着执行外面的代码，直到整个代码执行完毕
+    function * gen(){
+    a = yield 1;b = yield *g2;c = yield *g3;d = yield 4;
+    }
+    
+  * ... 可以展开生成器得到一个生成器 value 属性值的数组集合
+    [...g1] = [1,2,3,4]
+
+  * for of 可以直接拿到生成器里面的 value 属性值
+      for( let   nums of g1){}  => nums 依次为 1,2,3,4,
+
+  * Symbol
+    * Symbol ES6 里添加得到一种原始数据类型，不能用 new 调用，表示是一个唯一的值（符号）, 类似一个对象，但是 symbol 可以作为对象的属性名，这个也是其主要作用；
+
+      ```js
+      // 注意Symbol() 为大写
+      var a = Symbol();
+      typeof a; // "symbol"
+      var b = Symbol();
+      a === b; // 结果为false, 相同参数的Symbol函数的返回值是不相等的。
+      ```
+
+    * symbol 也无法进行隐式类型转换，即Symbol 值不能与其他类型的值进行运算，会报错。
+      ```js
+      var a = Symbol()
+      a + 2  // TypeError
+      ```
+
+    * Symbol.iterator  Symbol.iterator 为每一个对象定义了默认的迭代器。该迭代器可以被 for...of 循环使用。
       
-        window.People = class People {
-          constructor(name, gender, theAge) {
-            this.name = name
-            this.gender = gender
-            this[age] = theAge      
-          }
-          getAge() {
-            if (this.gender = 'f') {
-              return 18
-            } else {
-              return this[age]
+      ```js
+      const myIterable = {};
+      myIterable[Symbol.iterator] = function*() {
+        yield 1;
+        yield 2;
+        yield 3;
+      };
+      [...myIterable]; // [1, 2, 3]
+      ```
+      
+    * 一些内置类型拥有默认的迭代器行为，如 Array，String, Map，Set, TypeArray，可以直接使用 for of 循环调用
+
+    * Symbol.for（为 symbol 取名）
+
+      ```js
+      let a = Symbol.for("aa");
+      let b = Symbol.for("aa");
+      a === b
+      ```
+
+    * Symbol实现私有属性 : Symbol 值作为键名，不会被常规方法(for in,  Object.getOwnPropertyNames() )遍历得到。我们可以利用这个特性，为对象定义一种非私有的内部方法。 
+      
+      ```js
+      (function(){
+          var age = Symbol()
+        
+          window.People = class People {
+            constructor(name, gender, theAge) {
+              this.name = name
+              this.gender = gender
+              this[age] = theAge      
+            }
+            getAge() {
+              if (this.gender = 'f') {
+                return 18
+              } else {
+                return this[age]
+              }
             }
           }
-        }
-      }()) 
-    ```
+        }()) 
+      ```
     
     ​    
 
@@ -3034,37 +3090,33 @@
           };
         }
         ```
+        - 只有在连续时间内，不在触发频繁事件后的 time 秒后，执行真正的回调，如输入联想
         
-        
-        只有在连续时间内，不在触发频繁事件后的 time 秒后，执行真正的回调，如输入联想
-        
-        * throttle 节流函数，以一定的频率触发，降频；如鼠标滚动
-      ```js
-      function throttle(f, duration) {
-        var timerId;
-        var lastRunTime = 0;
-        return function(...args) {
-          clearTimeout(timerId);
-          var now = Date.now();
-          if (now - lastRunTime > duration) {
-            f(...args);
-            lastRunTime = now;
-          } else {
-            timerId = setTimeout(() => {
+      * throttle 节流函数，以一定的频率触发，降频；如鼠标滚动
+        ```js
+        function throttle(f, duration) {
+          var timerId;
+          var lastRunTime = 0;
+          return function(...args) {
+            clearTimeout(timerId);
+            var now = Date.now();
+            if (now - lastRunTime > duration) {
               f(...args);
-              lastRunTime = Date.now();
-            }, duration);
-          }
-        };
-      }
-      ```
-    
-      理解上述函数注意 setTimeout 里面的函数调用时修改局部变量影响其他事件是否触发
-          
-     * 创建自定义事件
+              lastRunTime = now;
+            } else {
+              timerId = setTimeout(() => {
+                f(...args);
+                lastRunTime = Date.now();
+              }, duration);
+            }
+          };
+        }
+        ```
      
-      * Events 可以使用 Event 构造函数创建如下
+     - 理解上述函数注意 setTimeout 里面的函数调用时修改局部变量影响其他事件是否触发
        
+        * 创建自定义事件
+      - Events 可以使用 Event 构造函数创建如下
         ```js
         var event = new Event('build');
         elem.addEventListener('build', function (e) { ... }, false);
@@ -3075,11 +3127,11 @@
 
   * 表单域中的内容更改时会触发 change 事件，但只有在光标移出输入框（失去焦点）才会触发，并且通过 js 修改文本不会触发该事件；
     如果在输入过程中就触发其改变，就可以使用 keydown/keyup/keypress/input 事件
-  * document.forms 文档中所有的表单元素
-    document.all 文档中所有的元素以及 id 映射
-    document.images 文档中所有的图片元素
-    document.links 文档在所以的链接元素
-    document.activeElement  执向当前获得焦点的元素（默认指向 body 元素）
+  * > document.forms 文档中所有的表单元素
+    > document.all 文档中所有的元素以及 id 映射
+    > document.images 文档中所有的图片元素
+    > document.links 文档在所以的链接元素
+    > document.activeElement  执向当前获得焦点的元素（默认指向 body 元素）
   * draggable = "true"  设置标签是否可以拖拽
   * 表单的 elements 属性指向其所有的内部元素 form.elements
     表单的内部元素的 form 属性指向表单元素  element.form
@@ -3672,92 +3724,109 @@
           则往其父文件夹找 node_modules, 顺着往上找
 
     * 异步回调函数和 promise 函数的转化
+      
+      ```js
       function promisify(callbackBasedFunction) {
-        return function (...args) {
+        return function(...args) {
           return new Promise((resolve, reject) => {
-           callbackBasedFunction(...args, (err, data) => {    <!-- data异步调用args后得到的结果 -->
+            callbackBasedFunction(...args, (err, data) => {
+              //data异步调用args后得到的结果
               if (err) {
-                reject(err)
+                reject(err);
               } else {
-                resolve(data)
+                resolve(data);
               }
-            })
-          })
-        }
+            });
+          });
+        };
       }
 
       function callbackify(promiseBased) {
         return function(...args) {
-          var cb = args.pop()
-          promiseBased(...args).then(val => {
-            cb(null, val)
-          }, reason => {
-            cb(reason)
-          })
-        }
+          var cb = args.pop();
+          promiseBased(...args).then(
+            val => {
+              cb(null, val);
+            },
+            reason => {
+              cb(reason);
+            }
+          );
+        };
       }
-
+      ```
+      
+      
+      
     * 生成器函数和 promise 结合替代异步调用 (async await 的原理）
+      
+      ```js
       function run(generatorFunction) {
         return new Promise((resolve, reject) => {
-          var iter = generatorFunction()
-          var generated
+          var iter = generatorFunction();
+          var generated;
           try {
-            generated = iter.next()
-            step()
+            generated = iter.next();
+            step();
           } catch (e) {
-            reject(e)
+            reject(e);
           }
           function step() {
             if (!generated.done) {
-              generated.value.then(val => {
-                try {
-                  generated = iter.next(val)
-                  step()
+              // generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果
+              generated.value.then(
+                val => {
+                  try {
+                    generated = iter.next(val);
+                    step();
 
-                  <!--generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果-->
-            
-                } catch(e) {
-                  reject(e)
+                  } catch (e) {
+                    reject(e);
+                  }
+                },
+                reason => {
+                  try {
+                    generated = iter.throw(reason);
+                    step();
+                  } catch (e) {
+                    reject(e);
+                  }
                 }
-              }, reason => {
-                try {
-                  generated = iter.throw(reason)
-                  step()
-                } catch(e) {
-                  reject(e)
-                }
-              })
+              );
             } else {
-              Promise.resolve(generated.value).then(resolve, reject)
+              Promise.resolve(generated.value).then(resolve, reject);
             }
           }
-        })
+        });
       }
-
+      ```
     * async + 生成器函数 function  {await ：promise 函数}
       async 函数就是将 Generator 函数的星号（*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
-
+    
+      ```js
       async function showStory(storyUrl) {
-        var story = await getJSON(storyUrl)
-
-        <!-- story 会接收 promise 函数返回的结果 -->
-
-        for(var chapterUrl of story.chapterUrls) {
-          var chapter = await getJSON(chapterUrl)
-          addContentToPage(chapter)
+        // story 会接收 promise 函数返回的结果
+        var story = await getJSON(storyUrl);
+        // 串行加载，串行调用
+        for (var chapterUrl of story.chapterUrls) {
+          var chapter = await getJSON(chapterUrl);
+          addContentToPage(chapter);
         }
-      } <!-- 串形加载，串形调用 -->
-
+      } 
+    
       async function showStory(storyUrl) {
-        var story = await getJSON(storyUrl)
-        var chapterPromises = story.chapterUrls.map(getJSON)
-        for(var chapterPromise of chapterPromises) {
-          var chapter = await chapterPromise
-          addContentToPage(chapter)
+        var story = await getJSON(storyUrl);
+        //并行加载，串行调用
+        var chapterPromises = story.chapterUrls.map(getJSON);
+        for (var chapterPromise of chapterPromises) {
+          var chapter = await chapterPromise;
+          addContentToPage(chapter);
         }
-      }<!-- 并行加载，串形调用 -->
-
+      } 
+      ```
+      
+      
+      
     * 文件模块 require（'fs'）
         * 主要方法
           fs.readFile（文件路径，'utf8',（error，data）=>{}) 读取当前路径文件
@@ -3771,19 +3840,20 @@
         * 路径
           '/' 系统根目录
           './'  ，'.' 当前目录
-          '../'父目录
+      '../'父目录
         * 同步函数只需要加一个 Sync ,fs.readFileSync
         * fs =fs.require('fs').promises  将模块所有异步函数转化为返回一个 promise 的函数
         * fd file descriptor 文件描述符  用一个整数表示（可读可写等）
-
+    
     * HTTP 模块  require('http')
       * const server = http.createServer((request,response)=>{}) 创造 http 服务器，当服务器收到客户端 http 请求时触发，相当于绑定了一个 request 帧听事件
         * request 是一个对象，里面有客户端请求的各种信息（method,url,header 等）
-        * response 是一个对象，里面编辑发送给客户端的信息（响应体，响应头等），发完之后调用 response.end()
+      
+    * response 是一个对象，里面编辑发送给客户端的信息（响应体，响应头等），发完之后调用 response.end()
       * 两个服务器之间也可以通过 http 模块建立 http 连接，利用 http.request() 函数充当客户端
         http.request({请求的网络配置}，f(response){收到对方的响应对象})
       * index.html 导航页  每个网站首页基本都是这个文件，储存在网站服务器里面
-
+    
     * 流 stream     stream = require('stream')  双向链表结构
       * 一种数据传输的模型
         * 一片一片的传输数据
@@ -3805,21 +3875,21 @@
         * pipe  连接两个流的管道，可链式调用；rs.pipe(ws) 从可读流出来的数据进入到可写流
       * process 相关的 3 个标准流对象
         process.stdout 当前进程标准输出流，本进程输出的东西，默认情况下是输出到控制台；
-          - 对于自己是一个可写流，可以 pipe 到一个可读流里面
+      - 对于自己是一个可写流，可以 pipe 到一个可读流里面
         process.stderr 当前进程标准错误流，本进程输出的错误，默认情况下是输出到控制台
         process.stdin  当前进程的标准输入流，别的进程给本进程输入的东西
           - 对于自己是一个可读流，可以 pipe 到一个可写流里面
-
+    
     * net 模块
-      * socket.write() 服务器向客户端发送数据
+  * socket.write() 服务器向客户端发送数据
       * socket.end()  服务器向客户端发送 FIN 包中断连接，注意 end 后不能再 write，会报错
       * socket.on('data',callback) 服务器接收到客户端发送数据时触发
       * socket.on("end",callback) 服务器接收到客户端发送 fin 包时触发
-
+      
     * Buffer 提供一段储存数据的原始字节流，是一个表示你内存片段的类数组
       * b = Buffer.alloc(16 ) 构造 10 个字节的 buffer, 数据已清空
         c = Buffer.allocUnsafe(10)  构造 10 个字节的 buffer，数据未清空
-        d = Buffer.from(value，[utf8/base64]) 返回一个新的 buffer，通过相关协议解析处理的 buffer
+    d = Buffer.from(value，[utf8/base64]) 返回一个新的 buffer，通过相关协议解析处理的 buffer
       * TypedArray 描述一个底层的二进制数据缓存区的一个类似数组 (array-like) 视图，可以直接操作内存，性能非常快；
         应用：canvas,B 站 flv.js；直接操作二进制字节流
         https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
@@ -3827,34 +3897,38 @@
     * Child Process 子进程  require('child_process')
       * 主要用来运行计算机已经装好的其它程序
       * child_process.exec（命令，(err,stdout)=>{})
-
-    * mime 模块 判断媒体类型，需要安装
+    
+* mime 模块 判断媒体类型，需要安装
       mime = require('mime')
       mime.getType(path) 得到媒体类型 如'text/html'
       mime.getExtension(path) 得到扩展名
-
+  
     * Path 模块  path = require('path')
       path.resolve(path1,path2) path1 和 path2 合并得到的路径
       path.relative(path1,path2) path1 怎样操作到 path2
       path.basename(path) 拿到文件的名字
-      Path.dirname(path) 拿到文件夹的名字
+  Path.dirname(path) 拿到文件夹的名字
       path.extname(path) 拿到扩展名
       path.normalize(path) 化简路径
-      path.sep  判断系统路径用、还是 /
-
+  path.sep  判断系统路径用、还是 /
+    
     * qs 模块  var queryParse = require('querystring') 调用 node 上面的'querystring'模块，可以解析 http 协议的 query 字符串数据
       queryParse.parse(query)
-
+    
     * DNS 模块
       封装了 DNS 协议，node 自己解析域名，自己不用发 UDP 数据包
+      
     * readline 模块
       从标准输入流中读入数据
+  
     * OS 模块  读取当前操作系统的相关信息
+
     * VM 模块
       虚拟机，创建一个可以运行 js 代码的虚拟机，并定义一个全局作用域，js 代码不会影响到虚拟机全局作用域外面的内容
+      
     * cluster  集群
       多个进程都启动 node，对于复杂的运算可以分配任务到多个进程
-
+    
     * Worker Thread  和 js 中的 worker 功能一样
 
     * Events
@@ -3864,33 +3938,34 @@
           constructor() {
             this._events = {}
           }
-
-          on(type, handler) {
+      
+      
+      on(type, handler) {
             if (type in this._events) {
               this._events[type].push(handler)
             } else {
               this._events[type] = [handler]
             }
-            return this
-          }
-
+        return this
+        }
+      
           off(type, handler) {
             var listeners = this._events[type]
             this._events[type] = listeners.filter(it => it != handler)
             return this
-          }
-
+        }
+            
           emit(type, ...args) {
             var listeners = this._events[type]
-            if (listeners) {
+        if (listeners) {
               for (var i = 0; i < listeners.length; i++) {
                 var handler = listeners[i]
                 handler.call(this, ...args)
               }
             }
           }
-        }
-
+      }
+    
     * node send email
       npm install nodemailer
       var nodemailer = require('nodemailer');
@@ -3906,7 +3981,7 @@
           to: 'myfriend@yahoo.com',
           subject: 'Sending Email using Node.js',
           text: 'That was easy!'
-        };
+      };
         transporter.sendMail(mailOptions, function(error, info){
           if (error) {
             console.log(error);
@@ -3914,12 +3989,12 @@
             console.log('Email  sent: ' + info.response);
           }
         });
-
+    
     * node 其它常用 npm 包
       * multer  文件上传  https://www.jianshu.com/p/93151c777caf
       * sharp 图像处理库
       * svg-captcha 生成验证码
-      * express-session  会话，存储你通过请求获取到的数据的地方。每一个访问你网站的用户都有一个唯一的 session，包括多次通信，保存到服务器
+  * express-session  会话，存储你通过请求获取到的数据的地方。每一个访问你网站的用户都有一个唯一的 session，包括多次通信，保存到服务器
         cookie会储存sessionid，由sessionid确认是不是同一个会话  
       * md5 加密算法
       * Jimp 图像处理库
@@ -3927,11 +4002,12 @@
         - pngBuffer = await pixelData.getBufferAsync(Jimp.MIME_PNG) 将图片对象转化为二进制字节流，储存在一段buffer里面
         - var hexColor = Jimp.cssColorToHex(color) 将颜色解析为16进制，如 converts #FF00FF to 0xFF00FFFF
         - pixelData.setPixelColor(hexColor, col, row) 设置图片对象某个像素点的颜色
-
+    
   * 事件循环
     * nodejs 是单线程执行的，同时它又是基于事件驱动的非阻塞 IO 编程模型，事件循环机制是实现这一特性的原理
     * 异步操作时，将任务给到另外的线程（CPU 的其它核），异步事件触发之后，就会通知主线程，主线程执行相应事件的回调。
     * 事件循环原理
+
              ┌───────────────────────────┐
           ┌─>│           timers          │
           │  └─────────────┬─────────────┘
@@ -3950,42 +4026,46 @@
           │  ┌─────────────┴─────────────┐
           └──┤      close callbacks      │
              └───────────────────────────┘
-
+    
 
     - 进入 timers 阶段
-        检查 timer 队列是否有到期的 timer 回调，如果有，将到期的 timer 回调按照 timerId 升序执行。
-        检查是否有 process.nextTick 任务，如果有，全部执行。
-        检查是否有 microtask，如果有，全部执行。
-        退出该阶段。
+      >检查 timer 队列是否有到期的 timer 回调，如果有，将到期的 timer 回调按照 timerId 升序执行。
+      >检查是否有 process.nextTick 任务，如果有，全部执行。
+      >检查是否有 microtask，如果有，全部执行。
+      >退出该阶段。
     - 进入 IO callbacks 阶段。
-        检查是否有 pending 的 I/O 回调。如果有，执行回调。如果没有，退出该阶段。
-        检查是否有 process.nextTick 任务，如果有，全部执行。
-        检查是否有 microtask，如果有，全部执行。
-        退出该阶段。
+      >检查是否有 pending 的 I/O 回调。如果有，执行回调。如果没有，退出该阶段。
+      >检查是否有 process.nextTick 任务，如果有，全部执行。
+      >检查是否有 microtask，如果有，全部执行。
+      >退出该阶段。
     - 进入 idle，prepare 阶段：
-        这两个阶段与我们编程关系不大，暂且按下不表。
+      
+      >这两个阶段与我们编程关系不大，暂且按下不表。
     - 进入 poll 阶段
       首先检查是否存在尚未完成的回调，如果存在，那么分两种情况。
-      第一种情况：
-        如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
-        检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtaks，如果有，全部执行。
-        退出该阶段。
-      第二种情况：
-        如果没有可用回调。
-        检查是否有 immediate 回调，如果有，退出 poll 阶段。如果没有，阻塞在此阶段，等待新的事件通知。
-      如果不存在尚未完成的回调，退出 poll 阶段。
+      * 第一种情况：
+        > 如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
+        > 检查是否有 process.nextTick 回调，如果有，全部执行。
+        > 检查是否有 microtaks，如果有，全部执行。
+        > 退出该阶段。
+      * 第二种情况：
+        
+        > 如果没有可用回调。
+      > 检查是否有 immediate 回调，如果有，退出 poll 阶段。如果没有，阻塞在此阶段，等待新的事件通知。
+        > 如果不存在尚未完成的回调，退出 poll 阶段。
     - 进入 check 阶段。
-        如果有 immediate 回调，则执行所有 immediate 回调。
-        检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtaks，如果有，全部执行。
-        退出 check 阶段
+      
+        > 如果有 immediate 回调，则执行所有 immediate 回调。
+        > 检查是否有 process.nextTick 回调，如果有，全部执行。
+        > 检查是否有 microtaks，如果有，全部执行。
+        > 退出 check 阶段
     - 进入 closing 阶段。
-        如果有 immediate 回调，则执行所有 immediate 回调。
-        检查是否有 process.nextTick 回调，如果有，全部执行。
-        检查是否有 microtaks，如果有，全部执行。
-        退出 closing 阶段
-
+      
+        > 如果有 immediate 回调，则执行所有 immediate 回调。
+    > 检查是否有 process.nextTick 回调，如果有，全部执行。
+        > 检查是否有 microtaks，如果有，全部执行。
+        > 退出 closing 阶段
+    
   * 宏任务和微任务
     * 宏任务：客户银行取号排队办理业务
       微任务：每个客户又可以在柜台办理一些新的业务 
@@ -3996,7 +4076,7 @@
     * 微任务的递归调用会死循环，浏览器无法执行其它任务
 
 
-  ## express    node.js 的框架
+  ## express node.js 的框架
     * 先 npm 安装，express=require('express')
       app = express() （得到 express 的一个实例）
       app.use((req,res,next)=>{}) 中间键，对所有请求做一种方式的处理
@@ -4014,7 +4094,7 @@
         * PATH 是服务器上的路径。
         * HANDLER 是在路由匹配时执行的函数。
       app.route(path) 为路由路径创建可链接的路由处理程序
-        app.route(path).get(()=>{}).post((req,res,next)=>{})
+          app.route(path).get(()=>{}).post((req,res,next)=>{})
     * 创建静态文件
         app.use(express.static('./public'));     创建了位于 public 目录中的静态文件作为服务器器
     * 调试   $ DEBUG=express:* node index.js
@@ -4033,9 +4113,9 @@
             -  res.signedcookies 签名的 cookie 只能在这个上面读到，req.signedCookies.user
             - res.clearCookie('user') 清除 cookie
           res.status(404) 响应一个状态码  
-          res.json()	发送 JSON 响应并end。
-          res.redirect()	重定向请求并end。
-          res.render(path,local)	呈现指定路径视图模板，local 是一个对象，里面可以为模板文件传递参数
+            res.json()	发送 JSON 响应并end。
+            res.redirect()	重定向请求并end。
+            res.render(path,local)	呈现指定路径视图模板，local 是一个对象，里面可以为模板文件传递参数
           res.set("Content-Type","text/html;charset=UTF-8") 设置响应头
           res.send() 发送响应
     * 内置中间键
@@ -4044,26 +4124,26 @@
       express.query() 解析请求体 query 部分
       express.static(path) 将某个文件夹暴露为一个静态文件服务器
     * ecpress 应用程序生成器
-       $ npm install express-generator -g
+        $ npm install express-generator -g
 
-  ## Koa
-    * https://koajs.com
-    * 另一种node框架，express 团队开发的，下一代node框架
-    * 只接受异步函数，next函数也是异步函数，express里面的next是同步函数
-      express里面的next放到最后，而koa可以放到中间
-    * 没有任何中间键，全部需要第三方库加载进来，基本只有use方法
-    * 洋葱模型，如果涉及到互相调用，后进先出,因为next函数的异步机制，后面的中间键执行完后执行前面next函数后面的内容  
-    * const Koa = require('koa)
-      const app = new Koa() 实例需要用new调用
-      app.use((async ctx,next)=>{
-        ctx.method
-        ctx.cookie.id
-        await next()
-        ctx.body
-        ctx是app的上下文，context;对象包括req和res，它会自动根据上下文判断是req还是res,直接代理这2个对象
-      })
-    * 方便记录一个请求所需要的时间  
-    * egg.js 基于koa再封装了一层的框架
+## Koa
+  * https://koajs.com
+  * 另一种node框架，express 团队开发的，下一代node框架
+  * 只接受异步函数，next函数也是异步函数，express里面的next是同步函数
+    express里面的next放到最后，而koa可以放到中间
+  * 没有任何中间键，全部需要第三方库加载进来，基本只有use方法
+  * 洋葱模型，如果涉及到互相调用，后进先出,因为next函数的异步机制，后面的中间键执行完后执行前面next函数后面的内容  
+  * const Koa = require('koa)
+    const app = new Koa() 实例需要用new调用
+    app.use((async ctx,next)=>{
+      ctx.method
+      ctx.cookie.id
+      await next()
+      ctx.body
+      ctx是app的上下文，context;对象包括req和res，它会自动根据上下文判断是req还是res,直接代理这2个对象
+    })
+  * 方便记录一个请求所需要的时间  
+  * egg.js 基于koa再封装了一层的框架
 
   ## 数据库
     * SQL  结构化查询语言（Structured Query Language）
@@ -4679,12 +4759,12 @@
 ## React
 
   * 三个引用
-    * 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.creatElement（标签名，属性，子元素）
+    > 这个文件是用来实现虚拟 dom 的，全局创建一个 react 变量，react 代码里面的每一个标签都通过 bable 转化为了 React.creatElement（标签名，属性，子元素）
      <script src="https://unpkg.com/react@16/umd/react.development.js"></script>
-    * 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量
-      
+    > 这个文件是用来实现真实 dom 的，全局创建一个 ReactDOM 变量
+    
       <script src="https://unpkg.com/react-dom@16/umd/react-dom.development.js"></script>
-    * 这个 bable 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
+    > 这个 bable 文件是用来编译 react 代码的，如 JSX, 编译为 ES5 代码
       <script src="https://unpkg.com/babel-standalone@6/babel.min.js"></script>
       <script type="text/babel">react代码</script>
   * ReactDOM.render(react 代码实现一个虚拟 dom，document.getElementById('root'))
@@ -4695,11 +4775,18 @@
      通过{}插值，里面可以是各种类型的值，可以是表达式但不能是语句
   * React 组件
     * 组件名必须大写
+    
     * 不能将通用表达式作为组件名，组件名必须是静态的，即使用组件时它是确定唯一的
+    
     * class 组件
+      
+      ```js
       class 大写组件名 extends React.Component{
         constructor(props){
-          super(props)  用来引入 this，props 用来接收组件标签传来的属性，一般是一个对象{prop:value},props 只读不能更改；props.chidren 可以直接拿到组件的子元素或者中间的插值
+          // 用来引入 this，props 用来接收组件标签传来的属性，一般是一个对象{prop:value},
+          // props 只读不能更改；
+          // props.chidren 可以直接拿到组件的子元素或者中间的插值
+          super(props)  
           this.state={  用来记录数据状态
             key：value
           }
@@ -4710,15 +4797,22 @@
         }
         method = ()=>{
           this.setState({}) /this.setState((state)=>{return {}})
-          React 只能通过 setState 设置数据状态才可以更改 dom, 相当于把新的 state 浅合并到旧的 state 里面，只更改新 state 传入的部分，其它数据保留；this.state 的指向从开始创建到更新一直没有改变，指向同一个对象，对象里面的数据发生改变
-          setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
-        } class fields 语法，相当于把这个方法传入到 construct 里面，并加上 this; 即 this.methods=()=>{}
+          // React 只能通过 setState 设置数据状态才可以更改 dom, 相当于把新的 state 浅合并到旧的 state 里面，只更改新 state 传入的部分，其它数据保留；this.state 的指向从开始创建到更新一直没有改变，指向同一个对象，对象里面的数据发生改变
+          // setState 也可以接收一个函数，参数默认是 state，返回一个新的 state 对象
+        } 
+        // class fields 语法，相当于把这个方法传入到 construct 里面，并加上 this; 即 this.methods=()=>{}
       }
+      ```
+      
+      
+      
     * 函数组件
+      ```js
       function Welcome(props) {
         return <h1>Hello, {props.name}</h1>;
       } 创建一个简单的函数组件，函数组件没有实例，也没有 ref 属性
-
+      ```
+    
   * State 的更新可能是异步的，出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。
     * 在同步函数里面调用 setState 那么 state 的更新是异步的
     * 在异步函数里面调用 setState 那么 state 的更新是同步的
@@ -4732,8 +4826,7 @@
     * React 里面的 style 属性的值必须是一个对象 ，style ={对象{}}
     * React 里面的 onChange 事件不是光标移开后触发，而是输入的每时刻都会触发
     * key 和 ref 属性是组件的特殊属性，不在 props 上面
-
-  * 组件标签可以写作自闭和标签，React 里面的自闭和标签必须要 /，如 input 标签
+    * 组件标签可以写作自闭和标签，React 里面的自闭和标签必须要 /，如 input 标签
 
   * JSX
     * JavaScript 的语法扩展，一种标签语法
