@@ -1135,7 +1135,7 @@
             b = a^b
             a = a^b
       ~按位非   ~2==-3    数字化为 2 进制每 bit 位进行非运算
-      符号》>按位右移（保留符号位） 15>>3==1;   n>>1==Math.floor(n/2)    n>>2==Math.floor(n/4)  n>>3==Math.floor(n/8)
+      符号>> 按位右移（保留符号位） 15>>3==1;   n>>1==Math.floor(n/2)    n>>2==Math.floor(n/4)  n>>3==Math.floor(n/8)
       符号》>>按位右移（不保留符号位，左边补 0） -15>>>3==536870910
       <《按位左移（右边总是补 0） 15<<3==120
   *  ** 次方    2**5==32
@@ -1628,35 +1628,40 @@
     > 稳定的排序算法：冒泡，归并，插入排序，bst 排序
     
   * 数组的 sort 方法
+    
+    ```js
     function qSort(ary, compare) {
-    return quickSort(ary, compare)
-    // 分治 divide and conquer
-    function quickSort(ary, compare, start = 0, end = ary.length - 1) {
-      if (end - start <= 0) {
-        return ary
-      }
-
-      var pivotIndex = Math.floor(Math.random() * (end - start + 1) + start)
-      var pivot = ary[pivotIndex]
-
-      swap(ary, pivotIndex, end)
-
-      var i = start
-      for(var j = start; j < end; j++) {
-        if (compare(ary[j], pivot) < 0) {
-          swap(ary, i, j)
-          i++
+      return quickSort(ary, compare);
+      // 分治 divide and conquer
+      function quickSort(ary, compare, start = 0, end = ary.length - 1) {
+        if (end - start <= 0) {
+          return ary;
         }
+
+        var pivotIndex = Math.floor(Math.random() * (end - start + 1) + start);
+        var pivot = ary[pivotIndex];
+
+        swap(ary, pivotIndex, end);
+
+        var i = start;
+        for (var j = start; j < end; j++) {
+          if (compare(ary[j], pivot) < 0) {
+            swap(ary, i, j);
+            i++;
+          }
+        }
+
+        swap(ary, i, end);
+
+        quickSort(ary, compare, start, i - 1);
+        quickSort(ary, compare, i + 1, end);
+
+        return ary;
       }
-
-      swap(ary, i, end)
-
-      quickSort(ary, compare, start, i - 1)
-      quickSort(ary, compare, i + 1, end)
-
-      return ary
     }
-      }
+    ```
+    
+    
 
 ## 循环
 
@@ -1675,164 +1680,192 @@
     * 方法 1
       * 首先遍历数组一次创造 n 个节点对象 node，value = Arr[i],next = null,node 全部 push 到数组 nodes 中
       * 接着再遍历数组 nodes 一次，将节点链接在一起，nodes[i].next=nodes[i+1]
+      
     * 方法 2
       * 创建一个头部节点，使其 next 属性指向下标为 i 的节点，一次循环下去
+      
+      ```js
       function arrTolist(arr) {
         let head = {
-            value: undefined,
-            next: null
-        }
-        let remmber = head
+          value: undefined,
+          next: null
+        };
+        let remmber = head;
         for (let i = 0; i < arr.length; i++) {
-            node = {
-                value: arr[i],
-                next: null
-            }
-            head.next = node
-            head = node
+          node = {
+            value: arr[i],
+            next: null
+          };
+          head.next = node;
+          head = node;
         }
-        return remmber.next
-    }
+        return remmber.next;
+      }
+      ```
+      
     * 方法 3 递归
-      * function arrayToList(arr){
-           if(arr.length==0){
-              return null
-            }
-            return {
-              value:arr[0],
-              next:arrayToList(arr.slice(1))
-            }
-       }
+      
+      ```js
+      function arrayToList(arr) {
+        if (arr.length == 0) {
+          return null;
+        }
+        return {
+          value: arr[0],
+          next: arrayToList(arr.slice(1))
+        };
+      }
+      ```
+      
+    
   * 链表转化为数组
-    *   function listToArray(list){
-          let result = []
-          while(list != null){
-              result.push(list.value)
-              list = list.next
-          }
-          return result
-       }
-
-    *  function  listToArray2(list){
-          if(list == null){
-              return []
-          }
-          let tail = list.next
-          return [list.value,...listToArray2(tail)]
-       }
-  * 在某个节点前面插入一个值为 value 的新节点 (index 是下标号）
-    function insert(list, index, value) {
-      if (index < 0) {
-        index = 0
+    ```js
+    // 方法一
+    function listToArray(list){
+      let result = []
+      while(list != null){
+          result.push(list.value)
+          list = list.next
       }
-      下标小于 0 时就相当于 0
-      if (!list) {
-        return {
-          value: value, next: null
-        }
-      }
-      如果 list 是空节点，那就是在 null 前面加入一个新节点，index 只能为 0，返回其值
-      if (index == 0) {
-        return {
-          value: value,
-          next: list
-        }
-      }
-      如果 index 为 0，即在 list 前面加一个节点
-      var head = list    用 head 保存头节点
-      var idx = -1    用 idx 记录下标
-
-      while (idx != index - 1 && list.next) {
-        idx++
-        list = list.next
-      }
-      如果下标没有到达目标位置且 list.next 不为 null
-      循环 idx 递增，list=list.next
-
-      list.next = {
-        value: value,
-        next: list.next,
-      }
-      指针到达目标位置时，list.next 指向新节点，新节点又指向原来 list.next 的值
-      return head
+      return result
     }
+    // 方法二
+    function  listToArray2(list){
+      if(list == null){
+        return []
+      }
+      let tail = list.next
+      return [list.value,...listToArray2(tail)]
+    }
+    ```
+
+  * 在某个节点前面插入一个值为 value 的新节点 (index 是下标号）
+  ```js
+  function insert(list, index, value) {
+    // 下标小于 0 时就相当于 0
+    if (index < 0) {
+      index = 0
+    }
+    // 如果 list 是空节点，那就是在 null 前面加入一个新节点，index 只能为 0，返回其值
+    if (!list) {
+      return {
+        value: value, next: null
+      }
+    }
+    // 如果 index 为 0，即在 list 前面加一个节点
+    if (index == 0) {
+      return {
+        value: value,
+        next: list
+      }
+    }
+    // 用 head 保存头节点
+    var head = list   
+    //  用 idx 记录下标
+    var idx = -1    
+    // 如果下标没有到达目标位置且 list.next 不为 null
+    // 循环 idx 递增，list=list.next
+    while (idx != index - 1 && list.next) {
+      idx++
+      list = list.next
+    }
+    // 指针到达目标位置时，list.next 指向新节点，新节点又指向原来 list.next 的值
+    list.next = {
+      value: value,
+      next: list.next,
+    }
+    return head
+  }
+  ```
+
   *  链表的反转
     反转 head 后面的链表，再把反转的链表指向 head
+    
+    ```js
     var reverseList = function (head) {
-    if (!head || !head.next) { return head }
-    let newHead = reverseList(head.next)
-    head.next.next = head
-    head.next = null
-    return newHead
+      if (!head || !head.next) { return head }
+      let newHead = reverseList(head.next)
+      head.next.next = head
+      head.next = null
+      return newHead
     };
+    ```
+    
   * 链表的归并
     * 循环
-      function mergeTwoLists(l1, l2) {
+    ```js
+    function mergeTwoLists(l1, l2) {
       let hummy = new ListNode()
       let hummy2 = hummy
       while (l1 && l2) {
-          if (l1.val < l2.val) {
-              hummy2.next = l1
-              l1 = l1.next
-          } else {
-              hummy2.next = l2
-              l2 = l2.next
-          }
-          hummy2 = hummy2.next
+        if (l1.val < l2.val) {
+          hummy2.next = l1
+          l1 = l1.next
+        } else {
+          hummy2.next = l2
+          l2 = l2.next
+        }
+        hummy2 = hummy2.next
       }
       hummy2.next = l1 || l2
       return hummy.next
-     }
-     * 递归
-        var mergeTwoLists = function (l1, l2) {
-        if (!l1 || !l2) {
-          return l1 || l2
-        }
-        if (l1.val < l2.val) {
-          l1.next = mergeTwoLists(l1.next, l2)
-          return l1
-        } else {
-          l2.next = mergeTwoLists(l1, l2.next)
-          return l2
-        }
-        }
+    }
+    ```
+    * 递归
+    ```js
+    var mergeTwoLists = function (l1, l2) {
+      if (!l1 || !l2) {
+        return l1 || l2
+      }
+      if (l1.val < l2.val) {
+        l1.next = mergeTwoLists(l1.next, l2)
+        return l1
+      } else {
+        l2.next = mergeTwoLists(l1, l2.next)
+        return l2
+      }
+    }
+    ```
   * 链表的排序
-    先递归二分再归并
-    var sortList = function (head) {
-      if (!head || !head.next) {
-          return head
-      }
+  ```js
+  // 先递归二分再归并
+  var sortList = function (head) {
+    if (!head || !head.next) {
+        return head
+    }
+    let hummy = new ListNode()
+    hummy.next = head
+    let slow = hummy
+    let fast = hummy
+    while (fast && fast.next) {
+      slow = slow.next
+      fast = fast.next.next
+    }
+    let left = head
+    let right = slow.next
+    slow.next = null
+    left = sortList(left)
+    right = sortList(right)
+    function mergeTwoLists(l1, l2) {
       let hummy = new ListNode()
-      hummy.next = head
-      let slow = hummy
-      let fast = hummy
-      while (fast && fast.next) {
-          slow = slow.next
-          fast = fast.next.next
+      let hummy2 = hummy
+      while (l1 && l2) {
+        if (l1.val < l2.val) {
+            hummy2.next = l1
+            l1 = l1.next
+        } else {
+            hummy2.next = l2
+            l2 = l2.next
+        }
+        hummy2 = hummy2.next
       }
-      let left = head
-      let right = slow.next
-      slow.next = null
-      left = sortList(left)
-      right = sortList(right)
-      function mergeTwoLists(l1, l2) {
-          let hummy = new ListNode()
-          let hummy2 = hummy
-          while (l1 && l2) {
-              if (l1.val < l2.val) {
-                  hummy2.next = l1
-                  l1 = l1.next
-              } else {
-                  hummy2.next = l2
-                  l2 = l2.next
-              }
-              hummy2 = hummy2.next
-          }
-          hummy2.next = l1 || l2
-          return hummy.next
-      }
-      return mergeTwoLists(left, right)
-    };
+      hummy2.next = l1 || l2
+      return hummy.next
+    }
+    return mergeTwoLists(left, right)
+  };
+  ```
+
 
 ## 哈希表
 
@@ -1849,31 +1882,29 @@
 
 ## 二叉树
 
-*  完全二叉树在数组中表示
-   对于下标为 i 的节点对于的左节点为 2i+1, 右节点为 2i+2
-   对于下标为 n 的节点，其对应的父节点为 Math.floor((n-1)/2)
+  *  完全二叉树在数组中表示
+    对于下标为 i 的节点对于的左节点为 2i+1, 右节点为 2i+2
+    对于下标为 n 的节点，其对应的父节点为 Math.floor((n-1)/2)
 
-*  二叉树的排序插入
-   
-*  ```
-   var insertIntoBST = function (root, val) {
+  *  二叉树的排序插入
+
+  ```js
+  var insertIntoBST = function (root, val) {
     if (!root) {
-        return new TreeNode(val)
+      return new TreeNode(val)
     }
     if (root.val > val) {
-        root.left = insertIntoBST(root.left, val)
+      root.left = insertIntoBST(root.left, val)
     } else {
-        root.right = insertIntoBST(root.right, val)
+      root.right = insertIntoBST(root.right, val)
     }
     return root
-    };
-   ```
-   
-   
-   
-*  利用二叉树对数组排序
-   向将数组转化为排序二叉树（左边的节点一定比右边小），再中序遍历二叉树，将值储存在数组中就是排序的结果
-   
+  };
+  ```
+
+  * 利用二叉树对数组排序
+    向将数组转化为排序二叉树（左边的节点一定比右边小），再中序遍历二叉树，将值储存在数组中就是排序的结果
+
   ```js
   function bstSort(ary) {
     var root = ary.reduce(insertIntoBST, null);
@@ -1884,7 +1915,7 @@
     return ary;
   }
   ```
-  
+
 *  前中后序遍历
   前序遍历  根节点 左子数 右子数     看书看过的顺序
   
@@ -1922,84 +1953,111 @@
   }
   ```
   
-  
-  
 * 将数组转化为二叉树
   
   * 方法一： 递归
   
-    ```js
-     function arrayToTree(array, rootPos = 0) {
-      if (array[rootPos] == null) {
-          return null
-      }
-      return {
-          val: array[rootPos],
-          left: arrayToTree(array, rootPos * 2 + 1),
-          right: arrayToTree(array, rootPos * 2 + 2)
-      }}
-    ```
+  ```js
+  function arrayToTree(array, rootPos = 0) {
+  if (array[rootPos] == null) {
+      return null
+  }
+  return {
+      val: array[rootPos],
+      left: arrayToTree(array, rootPos * 2 + 1),
+      right: arrayToTree(array, rootPos * 2 + 2)
+  }}
+  ```
   
   * 方法二 队列  创造一个储存数组，先进先出，使用 shift 和 push 方法达到效果
   
-    ```js
-     function arrayToTree2(array) {
-      if (array.length == 0) { return null }
-      let root = new TreeNode(array[0])
-      let nodes = [root]
-      for (let i = 1; i < array.length; i++) {
-          let current = nodes.shift()
-          if (array[i] != null) {
-              let node = new TreeNode(array[i])
-              current.left = node
-              nodes.push(node)
-          } else {
-              current.left = null
-          }
-          i++
-          if (i == array.length) {
-              break
-          }
-          if (array[i] != null) {
-              let node = new TreeNode(array[i])
-            current.right = node
-              nodes.push(node)
-          } else {
-              current.right = null
-          }
-        }
-        return root
-     }
-    ```
+  ```js
+  function arrayToTree2(array) {
+  if (array.length == 0) { return null }
+  let root = new TreeNode(array[0])
+  let nodes = [root]
+  for (let i = 1; i < array.length; i++) {
+      let current = nodes.shift()
+      if (array[i] != null) {
+          let node = new TreeNode(array[i])
+          current.left = node
+          nodes.push(node)
+      } else {
+          current.left = null
+      }
+      i++
+      if (i == array.length) {
+          break
+      }
+      if (array[i] != null) {
+          let node = new TreeNode(array[i])
+        current.right = node
+          nodes.push(node)
+      } else {
+          current.right = null
+      }
+    }
+    return root
+  }
+  ```
   
      
   
 * 将二叉树转化为数组
   * 方法一  递归
-    
-    ```js
-    function treeToArray(root, pos = 0, result = []) {
-      if (root) {
-        result[pos] = root.val
-        treeToArray(root.left, pos * 2 + 1, result)
-        treeToArray(root.right, pos * 2 + 2, result)
-      }
-    return result}
-    ```
-    
+  ```js
+  function treeToArray(root, pos = 0, result = []) {
+    if (root) {
+      result[pos] = root.val
+      treeToArray(root.left, pos * 2 + 1, result)
+      treeToArray(root.right, pos * 2 + 2, result)
+    }
+    return result
+  }
+  ```
+  
   * 方法二 层次遍历 队列   队列里面没有值时循环结束
   
-    ```js
-    function treeToArray2(root) {
-      if (root==null ) { return [] }
-      let result = []
-      let nodes = [root]
+  ```js
+  function treeToArray2(root) {
+    if (root==null ) { return [] }
+    let result = []
+    let nodes = [root]
+    while (nodes.length) {
+      let current = nodes.shift()
+      if(current){
+        result.push(current.val)
+        nodes.push(current.left,current.right)
+      }else{
+        result.push(null)
+      }
+    }
+    while(result[result.length - 1] === null) {
+      result.pop()
+    }
+    return result
+  }
+  ```
+  
+  * 方法三  层次遍历
+    
+  ```js
+  function treeToArray3(root) {
+    if (root) {
+      var result = [root.val]
+      var nodes = [root]
       while (nodes.length) {
-        let current = nodes.shift()
-        if(current){
-          result.push(current.val)
-          nodes.push(current.left,current.right)
-        }else{
+        var curr = nodes.shift()
+        if (curr.left) {
+          result.push(curr.left.val)
+          nodes.push(curr.left)
+        } else {
+          result.push(null)
+        }
+        if (curr.right) {
+          result.push(curr.right.val)
+          nodes.push(curr.right)
+        } else {
           result.push(null)
         }
       }
@@ -2008,55 +2066,32 @@
       }
       return result
     }
-    ```
-  
-  * 方法三  层次遍历
-    
-    ```js
-    function treeToArray3(root) {
-      if (root) {
-        var result = [root.val]
-        var nodes = [root]
-        while (nodes.length) {
-          var curr = nodes.shift()
-          if (curr.left) {
-            result.push(curr.left.val)
-            nodes.push(curr.left)
-          } else {
-            result.push(null)
-          }
-          if (curr.right) {
-            result.push(curr.right.val)
-            nodes.push(curr.right)
-          } else {
-            result.push(null)
-          }
-        }
-        while(result[result.length - 1] === null) {
-          result.pop()
-        }
-        return result
-      }
-    }
-    ```
+  }
+  ```
 
 ## 堆（Heap）
 
  * 堆内存：对于大小无法确认的数据，计算机储存其内存地址，其本体储存在堆内存中
    栈内存（空间）：指储存正在等待调用返回函数的局部变量的一片的内存，其储存是连续的，大小是确定的
    调用栈：函数之间互相调用的逻辑关系
+   
  * 堆是一种数据结构，也叫优先队列（PriorityQueue），和堆空间没有任何关系
+
  * 堆的结构
    * 堆是一个完全二叉树
    * 每个节点都比其子节点要大（小）
    * 根节点一定是最大（最小）值
+   
  *  对于堆，主要支持两种操作
    * 往堆里面增加元素
    * 从堆里面取出其最值
    * 两种操作都要保证堆的结构
+   
  * 代码
    大堆
-   class deap {
+   
+   ```js
+  class deap {
     constructor(nums) {
         this.elements = nums
         this.heapfy(nums)
@@ -2065,20 +2100,21 @@
         this.elements.push(val)
         this.heapUp(this.elements.length - 1)
     }
-
-    heapUp(currIdx) {
-        while (currIdx > 0) {
-            let pIdx = (currIdx - 1) >> 1
-            if (this.elements[pIdx] < this.elements[currIdx]) {
-                this.swap(pIdx, currIdx)
-                currIdx = pIdx
-            } else {
-                break
-            }
-        }
-    }
+  
     // 将某个节点的父节点调整为堆，且保持整个堆结构
-
+    heapUp(currIdx) {
+      while (currIdx > 0) {
+        let pIdx = (currIdx - 1) >> 1
+        if (this.elements[pIdx] < this.elements[currIdx]) {
+          this.swap(pIdx, currIdx)
+          currIdx = pIdx
+        } else {
+          break
+        }
+      }
+    }
+  
+    // 将某个节点调整为堆，且保持整个堆结构
     heapdown(currIdx, end = this.elements.length) {
         while (currIdx < end) {
             let maxIdx = currIdx
@@ -2098,36 +2134,37 @@
             }
         }
     }
-    // 将某个节点调整为堆，且保持整个堆结构
-    heapfy() {
-        let curr = (this.elements.length - 2) >> 1
-        for (let i = curr; i >= 0; i--) {
-            this.heapdown(i)
-        }
-    }
+
     // 从不是叶子节点开始进行倒序 headdown 操作，得到了整个堆结构数组
-
-    swap(i, j) {
-        let temp = this.elements[i]
-        this.elements[i] = this.elements[j]
-        this.elements[j] = temp
+    heapfy() {
+      let curr = (this.elements.length - 2) >> 1
+      for (let i = curr; i >= 0; i--) {
+        this.heapdown(i)
+      }
     }
-
+  
+    swap(i, j) {
+      let temp = this.elements[i]
+      this.elements[i] = this.elements[j]
+      this.elements[j] = temp
+    }
+  
     SortArray(arr){
       this.heapify(ary)
       for(var i = ary.length - 1; i > 0; i--) {
-      this.swap(ary, i, 0)
-      this.heapdown(0)
+        this.swap(ary, i, 0)
+        this.heapdown(0)
       }
-    return ary
+      return ary
     }
-
+  
+    // 在末尾添加元素
     push(val){
       this.elements.push(val)
       this.heapUp(this.elements.length - 1)
     }
-    // 在末尾添加元素
-
+  
+    // 取出堆顶
     pop(){
       var result = this.elements[0]
       var last = this.elements.pop()
@@ -2138,7 +2175,9 @@
       this.heapdown(0)
       return result
     }
-    // 取出堆顶
+  }
+   ```
+   
 
 ## 回溯算法
 
@@ -2148,236 +2187,267 @@
   * 结束深度搜索条件：深度搜索结束，将一种可能结果记录下来
   * 删除路径：找到满足条件的路径后删除最后一步寻找更多的可能
   * // leetcod 77 78 17 22
+    ```js
     // 给定两个整数 n 和 k，返回 1 ... n 中所有可能的 k 个数的组合
     var combine = function (n, k) {
-        let res = []
-        if (n < k) {
-            return res
-        }
-        function backtrack(result, n, k) {
-            if (result.length === k) {
-                res.push(result.slice())
-                return   // 结束条件，返回上一层
-            }
-            for (let i = n; i > 0; i--) {
-                result.push(i)
-                backtrack(result, i - 1, k)   深度搜索
-                result.pop()  找到满足条件的路径后删除最后一步寻找更多的可能
-            }
-        }
-        backtrack([], n, k)
+      let res = []
+      if (n < k) {
         return res
+      }
+      function backtrack(result, n, k) {
+        if (result.length === k) {
+          res.push(result.slice())
+          return   // 结束条件，返回上一层
+        }
+        for (let i = n; i > 0; i--) {
+          result.push(i)
+          backtrack(result, i - 1, k)   深度搜索
+          result.pop()  找到满足条件的路径后删除最后一步寻找更多的可能
+        }
+      }
+      backtrack([], n, k)
+      return res
     }
+    ```
+    
 
 ## 算法技巧
 
   * 进制转换
-     var n = 3123
-     while(n > 0){
-       var digit = n % 2
-       console.log(digit)
-       n = (n - digit)/2
-     }
+  ```js
+  var n = 3123
+  while(n > 0){
+    var digit = n % 2
+    console.log(digit)
+    n = (n - digit)/2
+  }
+
+  ```  
   *  判断素数的简化方法
-      - 遍历到根号 n 即可
-      - 前面再加一些判断缩小范围，比如能不能被 2,3,5，7 等整除
-      var isPrime = function(n) {
+    - 遍历到根号 n 即可
+    - 前面再加一些判断缩小范围，比如能不能被 2,3,5，7 等整除
+    ```js
+    var isPrime = function(n) {
       if (n < 2) {
         return false
       }
-      var sqrt_n = Math.floor(Math.sqrt(n))
-      for(var i = 2; i <= sqrt_n; i++) {
+      var sqrtN = Math.floor(Math.sqrt(n))
+      for(var i = 2; i <= sqrtN; i++) {
         if (n % i == 0) {
           return false
         }
       }
       return true
     }
-      -  利用正则表达式判断
-       function isPrime(n) {
-         return !/^(?=(.{2,})\1+$)/.test('x'.repeat(n))
-       }
+    ```
+    
+    -  利用正则表达式判断
+    ```js
+    function isPrime(n) {
+      return !/^(?=(.{2,})\1+$)/.test('x'.repeat(n))
+    }
+    ```
+       
     * 素数两性定理
       把素数分为 6 列，素数全部存在于第 1 列和第 5 列（2 和 3 除外）；第 2，4 列全部能被 2 整除。第 3，6 列全部能被 3 整除
     * 算法中递归优雅易懂，但是耗时；超时可以转化为循环语句
     * 记录递归深度的技巧
-      depth = 0
-      var levelOrder = function(root) {
-          depth++
-          if (root) {
-              if (depth in result) {
-                  result[depth].push(root.val)
-              } else {
-                  result[depth] = [root.val]
-              }
-              levelOrder(root.left)
-              levelOrder(root.right)
-          }
-          depth--
+    ```js
+    depth = 0
+    var levelOrder = function(root) {
+      depth++
+      if (root) {
+        if (depth in result) {
+          result[depth].push(root.val)
+        } else {
+          result[depth] = [root.val]
+        }
+        levelOrder(root.left)
+        levelOrder(root.right)
       }
+      depth--
+    }
+    ```
+      
   * 递归下降，解析语法数
-    leetcode 1106. 解析布尔表达式
-    var parseBoolExpr = function(expr) {
-    var i = 0
-    return parse()
+  leetcode 1106. 解析布尔表达式
+  ```js
+  var parseBoolExpr = function(expr) {
+    var i = 0;
+    return parse();
     function parse() {
-        if (expr[i] == 't') {
-            i++
-            return true
-        }
-        if (expr[i] == 'f') {
-            i++
-            return false
-        }
-        if (expr[i] == '!') {
-            return parseNot()
-        }
-        if (expr[i] == '&') {
-            return parseAnd()
-        }
-        if (expr[i] == '|') {
-            return parseOr()
-        }
+      if (expr[i] == "t") {
+        i++;
+        return true;
+      }
+      if (expr[i] == "f") {
+        i++;
+        return false;
+      }
+      if (expr[i] == "!") {
+        return parseNot();
+      }
+      if (expr[i] == "&") {
+        return parseAnd();
+      }
+      if (expr[i] == "|") {
+        return parseOr();
+      }
     }
 
     function parseNot() {
-        i += 2
-        var value = parse()
-        i++
-        return !value
+      i += 2;
+      var value = parse();
+      i++;
+      return !value;
     }
 
     function parseAnd() {
-        i += 2
-        var result = true
-        while (true) {
-            var value = parse()
-            result = result & value
-            if (expr[i] == ')') {
-                i++
-                break
-            }
-            if (expr[i] == ',') {
-                i++
-            }
+      i += 2;
+      var result = true;
+      while (true) {
+        var value = parse();
+        result = result & value;
+        if (expr[i] == ")") {
+          i++;
+          break;
         }
-        return result
+        if (expr[i] == ",") {
+          i++;
+        }
+      }
+      return result;
     }
 
     function parseOr() {
-        i += 2
-        var result = false
-        while (true) {
-            var value = parse()
-            result = result || value
-            if (expr[i] == ')') {
-                i++
-                break
-            }
-            if (expr[i] == ',') {
-                i++
-            }
+      i += 2;
+      var result = false;
+      while (true) {
+        var value = parse();
+        result = result || value;
+        if (expr[i] == ")") {
+          i++;
+          break;
         }
-        return result
+        if (expr[i] == ",") {
+          i++;
+        }
+      }
+      return result;
     }
-    }
+  };
+
+  ```
+    
 
 ## ES6 相关知识
 
-   * https://leanpub.com/understandinges6/read#leanpub-auto-default-values-in-modules
-   * ES6 标准里形参的声明都是默认为用 let 声明
-   * 剩余参数（参数 1， ... 剩余参数）只能写在最后
-      function addEntry(squirrel, ...events) {
-          return {
-          squirrel: squirrel,
-          events: events,
-          }
-        }
-   * 参数的默认值 （属性 = 默认值）
-      function slice(array,start = 0,end = array.length){}
-   * 展开运算符 (... 将数组两边的【号和】号中合掉）  不能单独使用，作为参数使用
-      Math.max(...[1,2,3]) == Math.max(1,2,3) =>3
-   * class 语法 ，也就是构造语法糖
-     将一类功能对象封装；class 类名{}
-     * 这样写的好处
-      - 里面的方法默认是不可枚举的
-      - 不使用 new 会报错
-      - 方便继承
-     *  constructor() {}  构造函数
-        static 用来定义一个类的一个静态方法。调用静态方法不需要实例化该类，但不能通过一个类实例调用静态方法；方法放在类上而不是实例 this, 减少原型链压力
-        各种方法直接写在{}里面
-        里面不要加，号和；号
-     * class B extends A     B 类继承 A 类
-       B.prototype._proto_ === A.prototype
-       B._proto_ === A
-       B 类可以直接用 A 的方法，注意不要命名和父类的同名方法，会覆盖父类方法，原型污染
-       super()  调用父类构造函数，先构造一个父类的实例，然后将 this 绑定到这个实例上，所以 super() 调用之前不能使用 this
-       继承时在构造函数中需要调用 super，super 相当于父类的构造函数，后面也可以直接接父类的方法 super.method
-       B 类如果不写构造函数也行，会默认写
-       constructor(...arg) {
-         super(...arg)
-       }
-
-   * class A {
-          static a(){}
-          static b(){}
-          constructor(){}
-          method1(){}
-          method2(){}
-          get length(){}
-          set length(val){}
+  * https://leanpub.com/understandinges6/read#leanpub-auto-default-values-in-modules
+  * ES6 标准里形参的声明都是默认为用 let 声明
+  * 剩余参数（参数 1， ... 剩余参数）只能写在最后
+  ```js
+  function addEntry(squirrel, ...events) {
+    return {
+    squirrel: squirrel,
+    events: events,
+    }
+  }
+  ```
+      
+  * 参数的默认值 （属性 = 默认值）
+    function slice(array,start = 0,end = array.length){}
+  * 展开运算符 (... 将数组两边的【号和】号中合掉）  不能单独使用，作为参数使用
+    Math.max(...[1,2,3]) == Math.max(1,2,3) =>3
+  * class 语法 ，也就是构造语法糖
+    将一类功能对象封装；class 类名{}
+    * 这样写的好处
+    - 里面的方法默认是不可枚举的
+    - 不使用 new 会报错
+    - 方便继承
+    *  constructor() {}  构造函数
+      static 用来定义一个类的一个静态方法。调用静态方法不需要实例化该类，但不能通过一个类实例调用静态方法；方法放在类上而不是实例 this, 减少原型链压力
+      各种方法直接写在{}里面
+      里面不要加，号和；号
+    * class B extends A     B 类继承 A 类
+      B.prototype._proto_ === A.prototype
+      B._proto_ === A
+      B 类可以直接用 A 的方法，注意不要命名和父类的同名方法，会覆盖父类方法，原型污染
+      super()  调用父类构造函数，先构造一个父类的实例，然后将 this 绑定到这个实例上，所以 super() 调用之前不能使用 this
+      继承时在构造函数中需要调用 super，super 相当于父类的构造函数，后面也可以直接接父类的方法 super.method
+      B 类如果不写构造函数也行，会默认写
+      constructor(...arg) {
+        super(...arg)
       }
 
-  * class Queue {
-        static from(ary) {
-            var q = new Queue()
-            for (var val of ary) {
-                q.add(val)
-            }
-            return q
-        }
+  * 
+  ```js
+  class A {
+    static a(){}
+    static b(){}
+    constructor(){}
+    method1(){}
+    method2(){}
+    get length(){}
+    set length(val){}
+  }
+  ```
+   
 
-        constructor(initVals) {
-            this._head = null
-            this._tail = null
-
-            for (var val of initVals) {
-                this.add(val)
-            }
-        }
-
-        add(val) {
-            var node = {
-                val: val,
-                next: null,
-            }
-            if (this._head == null) {
-                this._head = this._tail = node
-            } else {
-                this._tail.next = node
-                this._tail = node
-            }
-            this._size++
-            return this
-        }
-
-        remove() {
-            if (!this._head) {
-                return undefined
-            }
-            this._size--
-            var node = this._head
-            this._head = this._head.next
-            if (this._head == null) {
-                this._tail = null
-            }
-            return node.val
-        }
-
-        get size() {
-            return this._size
-        }
+  * 队列类 
+  ```js
+  class Queue {
+    static from(ary) {
+      var q = new Queue();
+      for (var val of ary) {
+        q.add(val);
+      }
+      return q;
     }
+
+    constructor(initVals) {
+      this._head = null;
+      this._tail = null;
+
+      for (var val of initVals) {
+        this.add(val);
+      }
+    }
+
+    add(val) {
+      var node = {
+        val: val,
+        next: null
+      };
+      if (this._head == null) {
+        this._head = this._tail = node;
+      } else {
+        this._tail.next = node;
+        this._tail = node;
+      }
+      this._size++;
+      return this;
+    }
+
+    remove() {
+      if (!this._head) {
+        return undefined;
+      }
+      this._size--;
+      var node = this._head;
+      this._head = this._head.next;
+      if (this._head == null) {
+        this._tail = null;
+      }
+      return node.val;
+    }
+
+    get size() {
+      return this._size;
+    }
+  }
+
+  ```
+  
 
    * 解构语法
 
@@ -2395,33 +2465,44 @@
        ]
      - 在标签函数的第一个参数中，存在一个特殊的属性 raw ，我们可以通过它来访问模板字符串的原始字符串，而不经过特殊字符的替换。
   * 伪调用  可以优化调用栈，防止爆栈
-     function(){
-       var a = 1
-       return g(a)
-     }
+  ```js
+  function(){
+    var a = 1
+    return g(a)
+  }
+  ```
+     
   * 模块的导入导出
     * 模块的导出
-      - export var color = "red";
-      - export function sum(num1, num2) {
-            return num1 + num1;
-        }
-      - export class Rectangle {
-            constructor(length, width) {
-                this.length = length;
-                this.width = width;
-            }
-        }
-    * 模块的导出  import { identifier1, identifier2 } from "./example.js";
+    ```js
+    export var color = "red";
+
+    export function sum(num1, num2) {
+      return num1 + num1;
+    }
+
+    export class Rectangle {
+      constructor(length, width) {
+          this.length = length;
+          this.width = width;
+      }
+    }
+    ```
+
+    * 模块的导入  import { identifier1, identifier2 } from "./example.js";
       import {color，sum,Rectangle} form path
     * 模块的导入和导出都需要写在最外层作用域，不能嵌套到其它作用域，方便静态分析
     * 可以设置一个默认的导出，当导入一个没有的模块名时就导入这个默认的
-      export default function(num1, num2) {
-        return num1 + num2;
-      }
+    ```js
+    export default function(num1, num2) {
+      return num1 + num2;
+    }
+    ```
     * 要引入到 type 为 module 的 script 标签里<script type = 'module'>
   * 私有属性的实现
     如果一个对象还有指针指向，它就不会被垃圾回收
     弱引用，如果一个对象仅仅被 weakMap/WeakSet 内部指向时，它可以被垃圾回收
+    ```js
     var C = (function(){
       var classProperties = new WeakMap()
       return class A {
@@ -2440,35 +2521,44 @@
     }())
     var c = new C()
     c = null
+    ```
   * Proxy代理
     对对象属性的读取设置(get,set)，方法调用等等的拦截  
 
 ## 高阶函数
+  * forEach 函数
+    * 源代码
+    ```js
+    function forEach(array,action){
+    for(let i = 0;i< array.length;i++){
+        action(array[i], i, array)
+    }}
+    ```
+    * array.forEach(function(){}) 方法从头至尾遍历数组，为每个元素调用指定的函数。
+    * action 最多可以传递 3 个有效的参数 (arr[i]，索引，数组），修改原数组只能通过第二个和第三个参数修改
+    * forEach 只有一个参数时，即每个元素的处理函数。
+    ```js
+    var numbers = [1, 2, 3];
+    numbers.forEach(x => console.log(x));
+    // 同等于
+    numbers.forEach(function (x) {
+    console.log(x);
+    ```
 
-   * forEach 函数
-     * 源代码
-      function forEach(array,action){
-      for(let i = 0;i< array.length;i++){
-          action(array[i], i, array)
-      }}
-     array.forEach(function(){}) 方法从头至尾遍历数组，为每个元素调用指定的函数。
-     action 最多可以传递 3 个有效的参数 (arr[i]，索引，数组），修改原数组只能通过第二个和第三个参数修改
-     forEach 只有一个参数时，即每个元素的处理函数。
-     <!--  var numbers = [1, 2, 3];
-      numbers.forEach(x => console.log(x));
-      // 同等于
-      numbers.forEach(function (x) {
-          console.log(x); -->
 
    * filter 函数   返回新数组
       * 源代码
+      ```js
       function filter(array, test) {
-      let result = []
-      for (let i = 0; i < array.length; i++) {
-      if (test(array[i], i, array)) {
-          result.push(array[i])
-      }}
-      return result}
+        let result = []
+        for (let i = 0; i < array.length; i++) {
+        if (test(array[i], i, array)) {
+            result.push(array[i])
+        }}
+        return result
+      }
+      ```
+      
       array.filter(function(){})  filter 函数的作用是遍历该集合，然后将该集合中符合某些特定条件的元素组成新的数组，并返回该新数组。
       test 最多可以传递 3 个有效的参数 (arr[i]，索引，数组）
       filter 只有一个参数时，即判断所有元素是否符合条件的处理函数。
@@ -3671,334 +3761,340 @@
           }
         })
       }
+    
+  * 异步回调函数和 promise 函数的转化
+    
+    ```js
+    function promisify(callbackBasedFunction) {
+      return function(...args) {
+        return new Promise((resolve, reject) => {
+          callbackBasedFunction(...args, (err, data) => {
+            //data异步调用args后得到的结果
+            if (err) {
+              reject(err);
+            } else {
+              resolve(data);
+            }
+          });
+        });
+      };
+    }
+
+    function callbackify(promiseBased) {
+      return function(...args) {
+        var cb = args.pop();
+        promiseBased(...args).then(
+          val => {
+            cb(null, val);
+          },
+          reason => {
+            cb(reason);
+          }
+        );
+      };
+    }
+    ```
+    
+  * 生成器函数和 promise 结合替代异步调用 (async await 的原理）
+    
+    ```js
+    function run(generatorFunction) {
+      return new Promise((resolve, reject) => {
+        var iter = generatorFunction();
+        var generated;
+        try {
+          generated = iter.next();
+          step();
+        } catch (e) {
+          reject(e);
+        }
+        function step() {
+          if (!generated.done) {
+            // generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果
+            generated.value.then(
+              val => {
+                try {
+                  generated = iter.next(val);
+                  step();
+
+                } catch (e) {
+                  reject(e);
+                }
+              },
+              reason => {
+                try {
+                  generated = iter.throw(reason);
+                  step();
+                } catch (e) {
+                  reject(e);
+                }
+              }
+            );
+          } else {
+            Promise.resolve(generated.value).then(resolve, reject);
+          }
+        }
+      });
+    }
+    ```
+  * async + 生成器函数 function  {await ：promise 函数}
+    async 函数就是将 Generator 函数的星号（*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
+    ```js
+    async function showStory(storyUrl) {
+      // story 会接收 promise 函数返回的结果
+      var story = await getJSON(storyUrl);
+      // 串行加载，串行调用
+      for (var chapterUrl of story.chapterUrls) {
+        var chapter = await getJSON(chapterUrl);
+        addContentToPage(chapter);
+      }
+    } 
+
+    async function showStory(storyUrl) {
+      var story = await getJSON(storyUrl);
+      //并行加载，串行调用
+      var chapterPromises = story.chapterUrls.map(getJSON);
+      for (var chapterPromise of chapterPromises) {
+        var chapter = await chapterPromise;
+        addContentToPage(chapter);
+      }
+    } 
+    ```
 
 # Node.js
-  * 用偶数版本，最好用 LTS 版本
-  * Node.js 是一个 JS 的运行环境（RunTime）
-  * 用途
-    * 高性能 web 服务器（异步实现）
-    * 前端工程化  即全端系统化、模块化、规范化的一个过程
-        * 打包（webpack）
-        * Electron （融合了浏览器的 dom 功能和 node.js 的相关模块功能，做一个桌面软件，如 Vscode）
-        * 转义（es6=>es5,less/sass=>css）, 浏览器的兼容性
-        * 源代码的压缩混淆，把源代码转化为不可读，改变形参的名字
-        * 爬虫，命令行程序的编写等
-  * 进程和线程
-    * 进程是资源分配的最小单位，线程是 CPU 调度的最小单位
-    * 进程就是包括上下文切换的程序执行时间总和 = CPU 加载上下文 +CPU 执行 +CPU 保存上下文
-    * 一个进程里面可以有多个线程，线程是共享了进程的上下文环境，的更为细小的 CPU 时间段
-    * 进程和线程都是一个时间段的描述，是 CPU 工作时间段的描述，不过是颗粒大小不同
-    * CPU 运行一个软件相当于打开一个了进程，执行该软件里面的 1 个功能相当于打开一个线程
-    * https://www.zhihu.com/question/25532384/answer/81152571
+* 用偶数版本，最好用 LTS 版本
+* Node.js 是一个 JS 的运行环境（RunTime）
+* 用途
+  * 高性能 web 服务器（异步实现）
+  * 前端工程化  即全端系统化、模块化、规范化的一个过程
+      * 打包（webpack）
+      * Electron （融合了浏览器的 dom 功能和 node.js 的相关模块功能，做一个桌面软件，如 Vscode）
+      * 转义（es6=>es5,less/sass=>css）, 浏览器的兼容性
+      * 源代码的压缩混淆，把源代码转化为不可读，改变形参的名字
+      * 爬虫，命令行程序的编写等
+* 进程和线程
+  * 进程是资源分配的最小单位，线程是 CPU 调度的最小单位
+  * 进程就是包括上下文切换的程序执行时间总和 = CPU 加载上下文 +CPU 执行 +CPU 保存上下文
+  * 一个进程里面可以有多个线程，线程是共享了进程的上下文环境，的更为细小的 CPU 时间段
+  * 进程和线程都是一个时间段的描述，是 CPU 工作时间段的描述，不过是颗粒大小不同
+  * CPU 运行一个软件相当于打开一个了进程，执行该软件里面的 1 个功能相当于打开一个线程
+  * https://www.zhihu.com/question/25532384/answer/81152571
 
-  * 常用命令
-    * nodemon xxx.js  以 nodemon 启动某 js 文件，文件修改时客户端同步更新
-    * process 一个全局变量
-      node xxx.js aguemnts  给 xxx.js 传递参数 arguements,xxx.js 里面通过 process.argv 接收 arguements
-      process.argv 返回一个数组，第一项是 node 的运行路径，第二项是 xxx.js 文件路径，第三项开始是 arguements(process.argv[2])
-      process.exit(0) 正常结束一个脚本模块
-      process.cwd() 当前工作目录
-      process.pid 当前进程 ID
-    * node.js 的调试
-      node --inspect-brk script.js arguments  node.js 调试功能  brk 表示停在第一行，可以省去
-      node --inspect-brk=ip 地址端口号 script.js arguments  node.js 调试功能在指定地址端口
-      ndb node --inspect-brk script.js arguments
-      ndb node --inspect-brk=ip 地址端口号 script.js arguments  node.js 调试功能在指定地址端口
-      通过 vscode 调试
-    * http server 开启网络服务
-      npm install http-server -g  通过 npm 安装
-      http-server   使用命令
-    * npm 的初始化
-      npm init 在某个地址初始化 npm 后会创建 node__medules 文件夹，之后安装的模块都在里面
-    * __dirname 模块所在文件夹的绝对路径，全局变量
-      __filename 模块本身目录的绝对路径  ，全局变量
+* 常用命令
+  * nodemon xxx.js  以 nodemon 启动某 js 文件，文件修改时客户端同步更新
+  * process 一个全局变量
+    node xxx.js aguemnts  给 xxx.js 传递参数 arguements,xxx.js 里面通过 process.argv 接收 arguements
+    process.argv 返回一个数组，第一项是 node 的运行路径，第二项是 xxx.js 文件路径，第三项开始是 arguements(process.argv[2])
+    process.exit(0) 正常结束一个脚本模块
+    process.cwd() 当前工作目录
+    process.pid 当前进程 ID
+  * node.js 的调试
+    node --inspect-brk script.js arguments  node.js 调试功能  brk 表示停在第一行，可以省去
+    node --inspect-brk=ip 地址端口号 script.js arguments  node.js 调试功能在指定地址端口
+    ndb node --inspect-brk script.js arguments
+    ndb node --inspect-brk=ip 地址端口号 script.js arguments  node.js 调试功能在指定地址端口
+    通过 vscode 调试
+  * http server 开启网络服务
+    npm install http-server -g  通过 npm 安装
+    http-server   使用命令
+  * npm 的初始化
+    npm init 在某个地址初始化 npm 后会创建 node__medules 文件夹，之后安装的模块都在里面
+  * __dirname 模块所在文件夹的绝对路径，全局变量
+    __filename 模块本身目录的绝对路径  ，全局变量
 
-  * 模块
-    * require(X)
-      * 如果 X 是路径，直接加载对应路径的文件
-      * 如果 X 是内置模块，直接返回内置模块
-      * 在当前文件夹的 node_modules 文件夹里面找到名为 X 的文件
-          如果此文件夹里面有 package.json, 则加载 main 字段指向的文件
-          如果此文件夹里面没有 package.json，则加载此文件夹里面的 index.js 文件
-         在当前文件夹的 node_modules 文件夹里面找不到名为 X 的文件
-          则往其父文件夹找 node_modules, 顺着往上找
+* 模块
+  * require(X)
+    * 如果 X 是路径，直接加载对应路径的文件
+    * 如果 X 是内置模块，直接返回内置模块
+    * 在当前文件夹的 node_modules 文件夹里面找到名为 X 的文件
+        如果此文件夹里面有 package.json, 则加载 main 字段指向的文件
+        如果此文件夹里面没有 package.json，则加载此文件夹里面的 index.js 文件
+        在当前文件夹的 node_modules 文件夹里面找不到名为 X 的文件
+        则往其父文件夹找 node_modules, 顺着往上找
 
-    * 异步回调函数和 promise 函数的转化
+  * 文件模块 require（'fs'）
+    * 主要方法
+      - fs.readFile（文件路径，'utf8',（error，data）=>{}) 读取当前路径文件
+      - fs.write（文件路径，'写入内容'，(error)=>{}) 为当前路径的文件写入内容，没有该文件会创造一个文件
+      - fs.readdirSync（路径，{withFileTypes:true}) 读取路径上的文件夹所有文件名，返回一个数组；
+      - withFileTypes:true 存在的话，数组的每一项都有 isFile() 和 isDirectory() 方法
+      - fs.stat（路径，（error,data)=>{}) 获取文件信息，里面有 isFile() 和 isDirectory() 方法判断文件类型
+      - fs.rename（路径，newname,()=>{}) 重命名
+      - fs.unlink（路径，(error)=>{}) 删除一个文件
+      - fs.openSync（路径） 返回文件描述符
+    * 路径
       
-      ```js
-      function promisify(callbackBasedFunction) {
-        return function(...args) {
-          return new Promise((resolve, reject) => {
-            callbackBasedFunction(...args, (err, data) => {
-              //data异步调用args后得到的结果
-              if (err) {
-                reject(err);
-              } else {
-                resolve(data);
-              }
-            });
-          });
-        };
-      }
-
-      function callbackify(promiseBased) {
-        return function(...args) {
-          var cb = args.pop();
-          promiseBased(...args).then(
-            val => {
-              cb(null, val);
-            },
-            reason => {
-              cb(reason);
-            }
-          );
-        };
-      }
-      ```
-      
-      
-      
-    * 生成器函数和 promise 结合替代异步调用 (async await 的原理）
-      
-      ```js
-      function run(generatorFunction) {
-        return new Promise((resolve, reject) => {
-          var iter = generatorFunction();
-          var generated;
-          try {
-            generated = iter.next();
-            step();
-          } catch (e) {
-            reject(e);
-          }
-          function step() {
-            if (!generated.done) {
-              // generated.value是一个promise, val 在生成器函数中完成赋值，从而可以在生成器函数中操作 val ，这个val可以赋值到=号右边，这样就可以拿到异步结果
-              generated.value.then(
-                val => {
-                  try {
-                    generated = iter.next(val);
-                    step();
-
-                  } catch (e) {
-                    reject(e);
-                  }
-                },
-                reason => {
-                  try {
-                    generated = iter.throw(reason);
-                    step();
-                  } catch (e) {
-                    reject(e);
-                  }
-                }
-              );
-            } else {
-              Promise.resolve(generated.value).then(resolve, reject);
-            }
-          }
-        });
-      }
-      ```
-    * async + 生成器函数 function  {await ：promise 函数}
-      async 函数就是将 Generator 函数的星号（*）替换成 async，将 yield 替换成 await；async 函数对 Generator 函数的改进，配合 promise 使用，包装原理如上；并且 function() 返回一个 promise
+      > '/' 系统根目录
+      > './'  ，'.' 当前目录
+      > '../'父目录
+    * 同步函数只需要加一个 Sync ,fs.readFileSync
+    * fs =fs.require('fs').promises  将模块所有异步函数转化为返回一个 promise 的函数
     
-      ```js
-      async function showStory(storyUrl) {
-        // story 会接收 promise 函数返回的结果
-        var story = await getJSON(storyUrl);
-        // 串行加载，串行调用
-        for (var chapterUrl of story.chapterUrls) {
-          var chapter = await getJSON(chapterUrl);
-          addContentToPage(chapter);
-        }
-      } 
+  * fd file descriptor 文件描述符  用一个整数表示（可读可写等）
     
-      async function showStory(storyUrl) {
-        var story = await getJSON(storyUrl);
-        //并行加载，串行调用
-        var chapterPromises = story.chapterUrls.map(getJSON);
-        for (var chapterPromise of chapterPromises) {
-          var chapter = await chapterPromise;
-          addContentToPage(chapter);
-        }
-      } 
-      ```
-      
-      
-      
-    * 文件模块 require（'fs'）
-        * 主要方法
-          fs.readFile（文件路径，'utf8',（error，data）=>{}) 读取当前路径文件
-          fs.write（文件路径，'写入内容'，(error)=>{}) 为当前路径的文件写入内容，没有该文件会创造一个文件
-          fs.readdirSync（路径，{withFileTypes:true}) 读取路径上的文件夹所有文件名，返回一个数组；
-            withFileTypes:true 存在的话，数组的每一项都有 isFile() 和 isDirectory() 方法
-          fs.stat（路径，（error,data)=>{}) 获取文件信息，里面有 isFile() 和 isDirectory() 方法判断文件类型
-          fs.rename（路径，newname,()=>{}) 重命名
-          fs.unlink（路径，(error)=>{}) 删除一个文件
-          fs.openSync（路径） 返回文件描述符
-        * 路径
-          '/' 系统根目录
-          './'  ，'.' 当前目录
-      '../'父目录
-        * 同步函数只需要加一个 Sync ,fs.readFileSync
-        * fs =fs.require('fs').promises  将模块所有异步函数转化为返回一个 promise 的函数
-        * fd file descriptor 文件描述符  用一个整数表示（可读可写等）
-    
-    * HTTP 模块  require('http')
-      * const server = http.createServer((request,response)=>{}) 创造 http 服务器，当服务器收到客户端 http 请求时触发，相当于绑定了一个 request 帧听事件
-        * request 是一个对象，里面有客户端请求的各种信息（method,url,header 等）
-      
+  * HTTP 模块  require('http')
+    * const server = http.createServer((request,response)=>{}) 创造 http 服务器，当服务器收到客户端 http 请求时触发，相当于绑定了一个 request 帧听事件
+    * request 是一个对象，里面有客户端请求的各种信息（method,url,header 等）
     * response 是一个对象，里面编辑发送给客户端的信息（响应体，响应头等），发完之后调用 response.end()
       * 两个服务器之间也可以通过 http 模块建立 http 连接，利用 http.request() 函数充当客户端
         http.request({请求的网络配置}，f(response){收到对方的响应对象})
       * index.html 导航页  每个网站首页基本都是这个文件，储存在网站服务器里面
     
-    * 流 stream     stream = require('stream')  双向链表结构
-      * 一种数据传输的模型
-        * 一片一片的传输数据
-        * 传输速度是可控的，不同类型的流速度不一样
-        * 减少 CPU内存占用（超过 CPU 的最大缓存内存可以暂停接收）
-      * 流的类型
-        * 可读流 类似将数据读取到 CPU   Readable
-        * 可写流 类似将数据写入到硬盘   Writable
-        * 双工流 如 TCP      Duplex
-        * 转化流 如 zip 压缩  Transform
-        * const { Readable，Writable} = require('stream')
-      * 主要的方法和事件
-        * rs = fs.createReadStream(path) 创造从某个路径文件读取数据的可读流
-        * ws = fs.createWriteStream(path) 创造向某个路径文件写入数据的可写流
-        * ws.write(data) 可写流都有 write 方法，向目标 path 写入数据；可写流的 finish 事件，end 之后缓冲区里面的数据全部处理完了之后触发
-        * rs 可读流通过监听 data 事件，end 事件，readable 事件（自身缓冲区有准备好的数据）来操作数据传输
-        * pause() 方法，暂停流的传输； resume() 方法 ，恢复流的传输；end() 方法，告知已经没有数据传递给该流了；destory() 销毁该流；以上都是所有流的通用方法
-        * drain 事件，表示流的缓存区数据都已经传输到了下一级，一般通过该事件让上一级恢复流的传输
-        * pipe  连接两个流的管道，可链式调用；rs.pipe(ws) 从可读流出来的数据进入到可写流
+  * 流 stream     stream = require('stream')  双向链表结构
+    * 一种数据传输的模型
+      * 一片一片的传输数据
+      * 传输速度是可控的，不同类型的流速度不一样
+      * 减少 CPU内存占用（超过 CPU 的最大缓存内存可以暂停接收）
+    * 流的类型
+      * 可读流 类似将数据读取到 CPU   Readable
+      * 可写流 类似将数据写入到硬盘   Writable
+      * 双工流 如 TCP      Duplex
+      * 转化流 如 zip 压缩  Transform
+      * const { Readable，Writable} = require('stream')
+    * 主要的方法和事件
+      * rs = fs.createReadStream(path) 创造从某个路径文件读取数据的可读流
+      * ws = fs.createWriteStream(path) 创造向某个路径文件写入数据的可写流
+      * ws.write(data) 可写流都有 write 方法，向目标 path 写入数据；可写流的 finish 事件，end 之后缓冲区里面的数据全部处理完了之后触发
+      * rs 可读流通过监听 data 事件，end 事件，readable 事件（自身缓冲区有准备好的数据）来操作数据传输
+      * pause() 方法，暂停流的传输； resume() 方法 ，恢复流的传输；end() 方法，告知已经没有数据传递给该流了；destory() 销毁该流；以上都是所有流的通用方法
+      * drain 事件，表示流的缓存区数据都已经传输到了下一级，一般通过该事件让上一级恢复流的传输
+      * pipe  连接两个流的管道，可链式调用；rs.pipe(ws) 从可读流出来的数据进入到可写流
+        - 对于自己是一个可写流，可以 pipe 到一个可读流里面
+        - 对于自己是一个可读流，可以 pipe 到一个可写流里面
       * process 相关的 3 个标准流对象
         process.stdout 当前进程标准输出流，本进程输出的东西，默认情况下是输出到控制台；
-      - 对于自己是一个可写流，可以 pipe 到一个可读流里面
         process.stderr 当前进程标准错误流，本进程输出的错误，默认情况下是输出到控制台
         process.stdin  当前进程的标准输入流，别的进程给本进程输入的东西
-          - 对于自己是一个可读流，可以 pipe 到一个可写流里面
     
-    * net 模块
-  * socket.write() 服务器向客户端发送数据
-      * socket.end()  服务器向客户端发送 FIN 包中断连接，注意 end 后不能再 write，会报错
-      * socket.on('data',callback) 服务器接收到客户端发送数据时触发
-      * socket.on("end",callback) 服务器接收到客户端发送 fin 包时触发
-      
-    * Buffer 提供一段储存数据的原始字节流，是一个表示你内存片段的类数组
-      * b = Buffer.alloc(16 ) 构造 10 个字节的 buffer, 数据已清空
-        c = Buffer.allocUnsafe(10)  构造 10 个字节的 buffer，数据未清空
-    d = Buffer.from(value，[utf8/base64]) 返回一个新的 buffer，通过相关协议解析处理的 buffer
-      * TypedArray 描述一个底层的二进制数据缓存区的一个类似数组 (array-like) 视图，可以直接操作内存，性能非常快；
-        应用：canvas,B 站 flv.js；直接操作二进制字节流
+  * net 模块
+    * socket.write() 服务器向客户端发送数据
+        * socket.end()  服务器向客户端发送 FIN 包中断连接，注意 end 后不能再 write，会报错
+        * socket.on('data',callback) 服务器接收到客户端发送数据时触发
+        * socket.on("end",callback) 服务器接收到客户端发送 fin 包时触发
+        
+      * Buffer 提供一段储存数据的原始字节流，是一个表示你内存片段的类数组
+        * b = Buffer.alloc(16 ) 构造 10 个字节的 buffer, 数据已清空
+          c = Buffer.allocUnsafe(10)  构造 10 个字节的 buffer，数据未清空
+      d = Buffer.from(value，[utf8/base64]) 返回一个新的 buffer，通过相关协议解析处理的 buffer
+        * TypedArray 描述一个底层的二进制数据缓存区的一个类似数组 (array-like) 视图，可以直接操作内存，性能非常快；
+          应用：canvas,B 站 flv.js；直接操作二进制字节流
         https://developer.mozilla.org/zh-CN/docs/Web/JavaScript/Reference/Global_Objects/TypedArray
-
-    * Child Process 子进程  require('child_process')
-      * 主要用来运行计算机已经装好的其它程序
-      * child_process.exec（命令，(err,stdout)=>{})
-    
-* mime 模块 判断媒体类型，需要安装
-      mime = require('mime')
-      mime.getType(path) 得到媒体类型 如'text/html'
-      mime.getExtension(path) 得到扩展名
   
-    * Path 模块  path = require('path')
-      path.resolve(path1,path2) path1 和 path2 合并得到的路径
-      path.relative(path1,path2) path1 怎样操作到 path2
-      path.basename(path) 拿到文件的名字
-  Path.dirname(path) 拿到文件夹的名字
-      path.extname(path) 拿到扩展名
-      path.normalize(path) 化简路径
-  path.sep  判断系统路径用、还是 /
+      * Child Process 子进程  require('child_process')
+        * 主要用来运行计算机已经装好的其它程序
+        * child_process.exec（命令，(err,stdout)=>{})
     
-    * qs 模块  var queryParse = require('querystring') 调用 node 上面的'querystring'模块，可以解析 http 协议的 query 字符串数据
-      queryParse.parse(query)
+  * mime 模块 判断媒体类型，需要安装
+        mime = require('mime')
+        mime.getType(path) 得到媒体类型 如'text/html'
+        mime.getExtension(path) 得到扩展名
     
-    * DNS 模块
-      封装了 DNS 协议，node 自己解析域名，自己不用发 UDP 数据包
-      
-    * readline 模块
-      从标准输入流中读入数据
+      * Path 模块  path = require('path')
+        path.resolve(path1,path2) path1 和 path2 合并得到的路径
+        path.relative(path1,path2) path1 怎样操作到 path2
+        path.basename(path) 拿到文件的名字
+    Path.dirname(path) 拿到文件夹的名字
+        path.extname(path) 拿到扩展名
+        path.normalize(path) 化简路径
+    path.sep  判断系统路径用、还是 /
+    
+  * qs 模块  var queryParse = require('querystring') 调用 node 上面的'querystring'模块，可以解析 http 协议的 query 字符串数据
+    queryParse.parse(query)
   
-    * OS 模块  读取当前操作系统的相关信息
-
-    * VM 模块
-      虚拟机，创建一个可以运行 js 代码的虚拟机，并定义一个全局作用域，js 代码不会影响到虚拟机全局作用域外面的内容
-      
-    * cluster  集群
-      多个进程都启动 node，对于复杂的运算可以分配任务到多个进程
+  * DNS 模块
+    封装了 DNS 协议，node 自己解析域名，自己不用发 UDP 数据包
     
-    * Worker Thread  和 js 中的 worker 功能一样
-
-    * Events
-      * e.on（事件）  绑定事件   e.off（事件） 解绑事件 e.emit（事件） 触发事件
-      * 函数实现
-        class EventEmitter {
-          constructor() {
-            this._events = {}
-          }
-      
-      
-      on(type, handler) {
-            if (type in this._events) {
-              this._events[type].push(handler)
-            } else {
-              this._events[type] = [handler]
-            }
-        return this
-        }
-      
-          off(type, handler) {
-            var listeners = this._events[type]
-            this._events[type] = listeners.filter(it => it != handler)
-            return this
-        }
-            
-          emit(type, ...args) {
-            var listeners = this._events[type]
-        if (listeners) {
-              for (var i = 0; i < listeners.length; i++) {
-                var handler = listeners[i]
-                handler.call(this, ...args)
-              }
-            }
-          }
+  * readline 模块
+  从标准输入流中读入数据
+  
+* OS 模块  读取当前操作系统的相关信息
+  
+  * VM 模块
+    虚拟机，创建一个可以运行 js 代码的虚拟机，并定义一个全局作用域，js 代码不会影响到虚拟机全局作用域外面的内容
+    
+  * cluster  集群
+    多个进程都启动 node，对于复杂的运算可以分配任务到多个进程
+  
+* Worker Thread  和 js 中的 worker 功能一样
+  
+  * Events
+    * e.on（事件）  绑定事件   e.off（事件） 解绑事件 e.emit（事件） 触发事件
+    
+    * 函数实现
+    
+    ```js
+    class EventEmitter {
+      constructor() {
+        this._events = {};
       }
-    
-    * node send email
-      npm install nodemailer
-      var nodemailer = require('nodemailer');
-        var transporter = nodemailer.createTransport({
-          service: 'gmail',
-          auth: {
-            user: 'youremail@gmail.com',
-            pass: 'yourpassword'
+
+      on(type, handler) {
+        if (type in this._events) {
+          this._events[type].push(handler);
+        } else {
+          this._events[type] = [handler];
+        }
+        return this;
+      }
+
+      off(type, handler) {
+        var listeners = this._events[type];
+        this._events[type] = listeners.filter(it => it != handler);
+        return this;
+      }
+
+      emit(type, ...args) {
+        var listeners = this._events[type];
+
+        if (listeners) {
+          for (var i = 0; i < listeners.length; i++) {
+            var handler = listeners[i];
+            handler.call(this, ...args);
           }
-        });
-        var mailOptions = {
-          from: 'youremail@gmail.com',
-          to: 'myfriend@yahoo.com',
-          subject: 'Sending Email using Node.js',
-          text: 'That was easy!'
-      };
-        transporter.sendMail(mailOptions, function(error, info){
-          if (error) {
-            console.log(error);
-          } else {
-            console.log('Email  sent: ' + info.response);
-          }
-        });
+        }
+      }
+    }
+    ```
     
-    * node 其它常用 npm 包
-      * multer  文件上传  https://www.jianshu.com/p/93151c777caf
-      * sharp 图像处理库
-      * svg-captcha 生成验证码
+  * node send email
+    * 首先npm install nodemailer
+    ```js
+    var nodemailer = require("nodemailer");
+    var transporter = nodemailer.createTransport({
+      service: "gmail",
+      auth: {
+        user: "youremail@gmail.com",
+        pass: "yourpassword"
+      }
+    });
+    var mailOptions = {
+      from: "youremail@gmail.com",
+      to: "myfriend@yahoo.com",
+      subject: "Sending Email using Node.js",
+      text: "That was easy!"
+    };
+    transporter.sendMail(mailOptions, function(error, info) {
+      if (error) {
+        console.log(error);
+      } else {
+        console.log("Email  sent: " + info.response);
+      }
+    });
+
+    ```
+    
+    
+    
+  * node 其它常用 npm 包
+    * multer  文件上传  https://www.jianshu.com/p/93151c777caf
+    * sharp 图像处理库
+    * svg-captcha 生成验证码
+    
   * express-session  会话，存储你通过请求获取到的数据的地方。每一个访问你网站的用户都有一个唯一的 session，包括多次通信，保存到服务器
         cookie会储存sessionid，由sessionid确认是不是同一个会话  
       * md5 加密算法
       * Jimp 图像处理库
-        - pixelData = await Jimp.read('./pixelData.png')  得到这个位置的初始图片对象，图片对象是一个描述这个图片的数据对象
+      - pixelData = await Jimp.read('./pixelData.png')  得到这个位置的初始图片对象，图片对象是一个描述这个图片的数据对象
         - pngBuffer = await pixelData.getBufferAsync(Jimp.MIME_PNG) 将图片对象转化为二进制字节流，储存在一段buffer里面
         - var hexColor = Jimp.cssColorToHex(color) 将颜色解析为16进制，如 converts #FF00FF to 0xFF00FFFF
         - pixelData.setPixelColor(hexColor, col, row) 设置图片对象某个像素点的颜色
@@ -4007,7 +4103,8 @@
     * nodejs 是单线程执行的，同时它又是基于事件驱动的非阻塞 IO 编程模型，事件循环机制是实现这一特性的原理
     * 异步操作时，将任务给到另外的线程（CPU 的其它核），异步事件触发之后，就会通知主线程，主线程执行相应事件的回调。
     * 事件循环原理
-
+    
+  
              ┌───────────────────────────┐
           ┌─>│           timers          │
           │  └─────────────┬─────────────┘
@@ -4027,7 +4124,7 @@
           └──┤      close callbacks      │
              └───────────────────────────┘
     
-
+  
     - 进入 timers 阶段
       >检查 timer 队列是否有到期的 timer 回调，如果有，将到期的 timer 回调按照 timerId 升序执行。
       >检查是否有 process.nextTick 任务，如果有，全部执行。
@@ -4044,27 +4141,27 @@
     - 进入 poll 阶段
       首先检查是否存在尚未完成的回调，如果存在，那么分两种情况。
       * 第一种情况：
-        > 如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
-        > 检查是否有 process.nextTick 回调，如果有，全部执行。
-        > 检查是否有 microtaks，如果有，全部执行。
-        > 退出该阶段。
+      > 如果有可用回调（可用回调包含到期的定时器还有一些 IO 事件等），执行所有可用回调。
+      > 检查是否有 process.nextTick 回调，如果有，全部执行。
+      > 检查是否有 microtaks，如果有，全部执行。
+      > 退出该阶段。
       * 第二种情况：
         
-        > 如果没有可用回调。
+      > 如果没有可用回调。
       > 检查是否有 immediate 回调，如果有，退出 poll 阶段。如果没有，阻塞在此阶段，等待新的事件通知。
-        > 如果不存在尚未完成的回调，退出 poll 阶段。
+      > 如果不存在尚未完成的回调，退出 poll 阶段。
     - 进入 check 阶段。
       
-        > 如果有 immediate 回调，则执行所有 immediate 回调。
-        > 检查是否有 process.nextTick 回调，如果有，全部执行。
-        > 检查是否有 microtaks，如果有，全部执行。
-        > 退出 check 阶段
+      > 如果有 immediate 回调，则执行所有 immediate 回调。
+      > 检查是否有 process.nextTick 回调，如果有，全部执行。
+      > 检查是否有 microtaks，如果有，全部执行。
+      > 退出 check 阶段
     - 进入 closing 阶段。
       
-        > 如果有 immediate 回调，则执行所有 immediate 回调。
-    > 检查是否有 process.nextTick 回调，如果有，全部执行。
-        > 检查是否有 microtaks，如果有，全部执行。
-        > 退出 closing 阶段
+      > 如果有 immediate 回调，则执行所有 immediate 回调。
+      > 检查是否有 process.nextTick 回调，如果有，全部执行。
+      > 检查是否有 microtaks，如果有，全部执行。
+      > 退出 closing 阶段
     
   * 宏任务和微任务
     * 宏任务：客户银行取号排队办理业务
@@ -4076,55 +4173,55 @@
     * 微任务的递归调用会死循环，浏览器无法执行其它任务
 
 
-  ## express node.js 的框架
-    * 先 npm 安装，express=require('express')
-      app = express() （得到 express 的一个实例）
-      app.use((req,res,next)=>{}) 中间键，对所有请求做一种方式的处理
-      app.use(path,()=>{}) 以该路径开头走这个中间键，也可以接多个中间键
-      httpServer = app.listen(port,()=>{}) listen方法会返回一个http服务器
-    
-    * app2 = express.Router  
-      创建一个模块化的路由处理程序，完整的路由系统的中间件
-      配合module.exports = app使用
-    
-    * 基本路由
-      app.METHOD(PATH, HANDLER)
-        * app 是 express 的实例。
-        * METHOD 是 HTTP 请求方法。
-        * PATH 是服务器上的路径。
-        * HANDLER 是在路由匹配时执行的函数。
-      app.route(path) 为路由路径创建可链接的路由处理程序
-          app.route(path).get(()=>{}).post((req,res,next)=>{})
-    * 创建静态文件
-        app.use(express.static('./public'));     创建了位于 public 目录中的静态文件作为服务器器
-    * 调试   $ DEBUG=express:* node index.js
-    * 相关 API
-        * req 相关
-          req.body  请求体通过一些中间键解析后的数据会储存在 req.body 里面
-          req.params 这是一个对象，储存了路径中的变量，如
-            token = 12344
-            当对这个路径发出请求时，'/change-password/:token'
-            可以通过 req.params.token 拿到 12344
-        *res 相关
-          res.cookie() 一个验证身份的字符串，网站在用户验证成功之后都会设置一个 cookie，只要 cookie 没有过期，用户就可以自由浏览这个网站的任意页面不需要再次登录
-            - const cookieParse = require('cookie-parser') 要安装
-            - app.use(cookieParse("secret")) 解析 cookie，加参数表示自己签名
-            - res.cookie('user',loginUser.name,{signed:true})
-            -  res.signedcookies 签名的 cookie 只能在这个上面读到，req.signedCookies.user
-            - res.clearCookie('user') 清除 cookie
-          res.status(404) 响应一个状态码  
+## express node.js 的框架
+  * 先 npm 安装，express=require('express')
+    app = express() （得到 express 的一个实例）
+    app.use((req,res,next)=>{}) 中间键，对所有请求做一种方式的处理
+    app.use(path,()=>{}) 以该路径开头走这个中间键，也可以接多个中间键
+    httpServer = app.listen(port,()=>{}) listen方法会返回一个http服务器
+  
+  * app2 = express.Router  
+    创建一个模块化的路由处理程序，完整的路由系统的中间件
+    配合module.exports = app使用
+  
+  * 基本路由
+    app.METHOD(PATH, HANDLER)
+    * app 是 express 的实例。
+    * METHOD 是 HTTP 请求方法。
+    * PATH 是服务器上的路径。
+    * HANDLER 是在路由匹配时执行的函数。
+    app.route(path) 为路由路径创建可链接的路由处理程序
+        app.route(path).get(()=>{}).post((req,res,next)=>{})
+  * 创建静态文件
+      app.use(express.static('./public'));     创建了位于 public 目录中的静态文件作为服务器器
+  * 调试   $ DEBUG=express:* node index.js
+  * 相关 API
+      * req 相关
+        req.body  请求体通过一些中间键解析后的数据会储存在 req.body 里面
+        req.params 这是一个对象，储存了路径中的变量，如
+          token = 12344
+          当对这个路径发出请求时，'/change-password/:token'
+          可以通过 req.params.token 拿到 12344
+      *res 相关
+        res.cookie() 一个验证身份的字符串，网站在用户验证成功之后都会设置一个 cookie，只要 cookie 没有过期，用户就可以自由浏览这个网站的任意页面不需要再次登录
+          - const cookieParse = require('cookie-parser') 要安装
+          - app.use(cookieParse("secret")) 解析 cookie，加参数表示自己签名
+          - res.cookie('user',loginUser.name,{signed:true})
+          -  res.signedcookies 签名的 cookie 只能在这个上面读到，req.signedCookies.user
+          - res.clearCookie('user') 清除 cookie
+        res.status(404) 响应一个状态码  
             res.json()	发送 JSON 响应并end。
             res.redirect()	重定向请求并end。
             res.render(path,local)	呈现指定路径视图模板，local 是一个对象，里面可以为模板文件传递参数
-          res.set("Content-Type","text/html;charset=UTF-8") 设置响应头
-          res.send() 发送响应
-    * 内置中间键
-      express.json() 解析请求体 json
-      express.urlencoded({extended:true}) 请求体为 url 编码时解析
-      express.query() 解析请求体 query 部分
-      express.static(path) 将某个文件夹暴露为一个静态文件服务器
-    * ecpress 应用程序生成器
-        $ npm install express-generator -g
+        res.set("Content-Type","text/html;charset=UTF-8") 设置响应头
+        res.send() 发送响应
+  * 内置中间键
+    express.json() 解析请求体 json
+    express.urlencoded({extended:true}) 请求体为 url 编码时解析
+    express.query() 解析请求体 query 部分
+    express.static(path) 将某个文件夹暴露为一个静态文件服务器
+  * ecpress 应用程序生成器
+      $ npm install express-generator -g
 
 ## Koa
   * https://koajs.com
@@ -4145,151 +4242,150 @@
   * 方便记录一个请求所需要的时间  
   * egg.js 基于koa再封装了一层的框架
 
-  ## 数据库
-    * SQL  结构化查询语言（Structured Query Language）
-    * https://www.w3schools.com/sql
-    * sqlite  一个数据库相当于一个 excel 文件，可以有多个 sheet
-      * 按装方法
-        - 先下载其到项目文件
-        - 命令行运行    ./sqlite3 + 数据库名
-      * 基本使用方法
-        * 以下 base 表示 SELECT column1, column2, FROM tablename/SELECT * FROM tablename
-        * creat table 表名字（列名 1，列名 2，列名 3） 如 creat table users (name,email,password)
-          create table users(
-           id integer primary key autoincrement,    primary key 表示既不空，也自动增加; autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
-           name string not null,
-           email string,
-           password string not null)
-        * INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  为指定表插入数据
-          insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
-          insert into users values(1,"a","a","a@qq.com","御膳房");
+## 数据库
+  * SQL  结构化查询语言（Structured Query Language）
+  * https://www.w3schools.com/sql
+  * sqlite  一个数据库相当于一个 excel 文件，可以有多个 sheet
+    * 按装方法
+      - 先下载其到项目文件
+      - 命令行运行    ./sqlite3 + 数据库名
+    * 基本使用方法
+      * 以下 base 表示 SELECT column1, column2, FROM tablename/SELECT * FROM tablename
+      * creat table 表名字（列名 1，列名 2，列名 3） 如 creat table users (name,email,password)
+        create table users(
+          id integer primary key autoincrement,    primary key 表示既不空，也自动增加; autoincrement表示id不会重复，即使把最后一个id删除，再添加也是在之前删除的id基础上增加
+          name string not null,
+          email string,
+          password string not null)
+      * INSERT INTO  users()  VALUES('jim',"123@77.com","12341")  为指定表插入数据
+        insert into users(name,password,email,title) values("a","a","a@qq.com","御膳房");
+        insert into users values(1,"a","a","a@qq.com","御膳房");
     
-        * .header on  查看时显示头行
-        * .mode column 每列对应排齐查看
-        * .schema 查看所有表 
-        * SELECT * FROM tablename 查看指定表单所有列
-        * .table 查看所有已创建的表单
-        * SELECT column1, column2, FROM tablename  查看指定表单指定列
-        * SELECT DISTINCT column, FROM tablename; 为指定列去重复
-        * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
-          base WHERE condition;
-          SELECT * FROM users WHERE name =name "jim";
+      * .header on  查看时显示头行
+      * .mode column 每列对应排齐查看
+      * .schema 查看所有表 
+      * SELECT * FROM tablename 查看指定表单所有列
+      * .table 查看所有已创建的表单
+      * SELECT column1, column2, FROM tablename  查看指定表单指定列
+      * SELECT DISTINCT column, FROM tablename; 为指定列去重复
+      * where 后面接有条件的查找数据，可以有多个条件，用 AND,OR，NOT 连接
+        base WHERE condition;
+        SELECT * FROM users WHERE name =name "jim";
     
-        * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
-          更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
-          update foods set status="off" where id=1;
+      * UPDATE table_name SET column1 = value1, column2 = value2, WHERE condition;
+        更新记录时要小心。如果省略 WHERE 子句，所有记录都将被更新！
+        update foods set status="off" where id=1;
     
-        * base ORDER BY column1, column2, ... ASC|DESC;  表单指定列按照升序 / 降序排列
-        * NULL 在数据库里面表示该位置是空值，base where name is NUll
+      * base ORDER BY column1, column2, ... ASC|DESC;  表单指定列按照升序 / 降序排列
+      * NULL 在数据库里面表示该位置是空值，base where name is NUll
     
-        * DELETE FROM table_name WHERE condition;
-           DELETE 语句用于在表中删除现有记录。如果省略 WHERE 子句，所有记录都将被更新！
+      * DELETE FROM table_name WHERE condition;
+          DELETE 语句用于在表中删除现有记录。如果省略 WHERE 子句，所有记录都将被更新！
     
-        * base LIMIT number;  LIMIT 表示选择前几行
+      * base LIMIT number;  LIMIT 表示选择前几行
     
-        * SELECT COUNT(column_name) 所选列一共多少行
-          SELECT AVG(column_name)  所选数值列的平均值
-          SELECT SUM(column_name) 所选数值列的总和
-          SELECT MIN(column_name) 所选列的最小值
-          SELECT MAX(column_name) 所选列的最大值
+      * SELECT COUNT(column_name) 所选列一共多少行
+        SELECT AVG(column_name)  所选数值列的平均值
+        SELECT SUM(column_name) 所选数值列的总和
+        SELECT MIN(column_name) 所选列的最小值
+        SELECT MAX(column_name) 所选列的最大值
     
-        * drop table tablename    如drop table users 删除users表  
+      * drop table tablename    如drop table users 删除users表  
     
-        *  alter table orders add totalPrice integer; 为orders表增加一列totalPrice，为整数
+      *  alter table orders add totalPrice integer; 为orders表增加一列totalPrice，为整数
     
-        * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
-          % 表示任意个字符，_表示单个字符
-          where a_____  筛选以 a 开头 6 个字符长度
-        * in 运算符，WHERE name IN ('jim', 'bob', 'merry') 筛选 name 列满足任意一个
-        * BETWEEN...AND..   WHERE price BETWEEN 10 AND 20  筛选 10 到 20 的价格
-        * 别名，可以为列或者表起一个别名
-          SELECT column_name AS alias_name FROM table_name;
-          base AS alias_name;
-      * SQL 的多表连接
-          * 用法
-            - base join tablename on condition
-          * 种类
-            INNER JOIN（内连接）：返回有两个表中的匹配值的记录
-            LEFT JOIN：返回左表的所有记录，以及匹配的记录
-            RIGHT JOIN：返回右表的所有记录，以及匹配的记录
-            FULL JOIN： 交叉连接，返回所有的排列组合记录
+      * LIKE 运算符在 WHERE 子句用于搜索在一列中指定的模式。
+        % 表示任意个字符，_表示单个字符
+        where a_____  筛选以 a 开头 6 个字符长度
+      * in 运算符，WHERE name IN ('jim', 'bob', 'merry') 筛选 name 列满足任意一个
+      * BETWEEN...AND..   WHERE price BETWEEN 10 AND 20  筛选 10 到 20 的价格
+      * 别名，可以为列或者表起一个别名
+        SELECT column_name AS alias_name FROM table_name;
+        base AS alias_name;
+    * SQL 的多表连接
+        * 用法
+          - base join tablename on condition
+        * 种类
+          INNER JOIN（内连接）：返回有两个表中的匹配值的记录
+          LEFT JOIN：返回左表的所有记录，以及匹配的记录
+          RIGHT JOIN：返回右表的所有记录，以及匹配的记录
+          FULL JOIN： 交叉连接，返回所有的排列组合记录
     
-      * 项目使用 sqlite 的方法
-        * npm i sqlite   sqlite 是基于 promise 对 sqlite3API 的封装
-          sqlite = require('sqlite')
-          db = sqlite.open(数据库实例地址path) 创建一个 promise
-          db = await db   拿到 promise 的结果
-        * 相关方法
-          db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如
-            db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")
-          var datas = await db.all('select * from datas') 可以拿到数据库里的所有的数据,一个对象集合的数组
-          db.run('SQL 操作') 操作数据库
-          db.get('SQL 操作') 返回从数据库查找到的数据，只能拿一条,得到一个对象
+    * 项目使用 sqlite 的方法
+      * npm i sqlite   sqlite 是基于 promise 对 sqlite3API 的封装
+        sqlite = require('sqlite')
+        db = sqlite.open(数据库实例地址path) 创建一个 promise
+        db = await db   拿到 promise 的结果
+      * 相关方法
+        db 里面的相关方法进行 ('SQL 操作') 时，可以用？代码后面出现的参数，如
+          db.run('insert into users VALUES(?,?,?),jim',"123@77.com","12341")
+        var datas = await db.all('select * from datas') 可以拿到数据库里的所有的数据,一个对象集合的数组
+        db.run('SQL 操作') 操作数据库
+        db.get('SQL 操作') 返回从数据库查找到的数据，只能拿一条,得到一个对象
 
-  ## html 模板引擎 Pug
-    * https://pug.bootcss.com/api/getting-started.html
-    * include path 把另外的文件引入到模板文件里面，方便将一份代码重复使用 ；如 include head.pug  includes foot.pug
-    * 继承与扩展；
-      * 一个父文件 layout.pug ，里面有一个 block 语句，block + 标识名，后面的代码可以继承修改，其它地方不可以
-      * extends layout.pug  extends 语句，子文件用该语句继承父文件的内容，然后 block + 标识名 + 修改内容 ，实现继承与扩展
-    * 嵌入
-      *  {代码} 这种写法代码会被求值，可以对变量进行操作
-    * 迭代 Iteration; 通过 each 和 while 实现内容为 1 到 5 的 5 个 li 标签
-      * ul
-          each val in [1, 2, 3, 4, 5]
-            li= val
-      * - var n = 1;
-          ul
-            while n < 6
-              li= n++
-  ## websocked 协议，TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
-    - 长轮询
-      * 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
-      * 长轮休是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
-        - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
-        - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
-    - node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听http的upgrate事件
-    - 开始客户端发送 http 请求，询问服务器是否接收 websocked 协议，服务器同意就可以升级为 websocked 协议
-    - 数据以消息为单位
-    - TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
-    - 缺点容易断线，兼容性不好，建议使用socked.io
+## html 模板引擎 Pug
+  * https://pug.bootcss.com/api/getting-started.html
+  * include path 把另外的文件引入到模板文件里面，方便将一份代码重复使用 ；如 include head.pug  includes foot.pug
+  * 继承与扩展；
+    * 一个父文件 layout.pug ，里面有一个 block 语句，block + 标识名，后面的代码可以继承修改，其它地方不可以
+    * extends layout.pug  extends 语句，子文件用该语句继承父文件的内容，然后 block + 标识名 + 修改内容 ，实现继承与扩展
+  * 嵌入
+    *  {代码} 这种写法代码会被求值，可以对变量进行操作
+  * 迭代 Iteration; 通过 each 和 while 实现内容为 1 到 5 的 5 个 li 标签
+    * ul
+        each val in [1, 2, 3, 4, 5]
+          li= val
+    * - var n = 1;
+        ul
+          while n < 6
+            li= n++
+## websocked 协议，TCP 之上的协议，连接后不会断开，服务器端可以主动向客户端发送消息
+  - 长轮询
+    * 由于基于 http 协议的服务器不能主动向客户端发送消息（响应式），如果服务器有没有指定客户端的数据要发往指定客户端，需要指定客户端发来请求才能发送，这样会造成延时
+    * 长轮休是指客户端发送一个请求到服务端，这条连接会在一段时间类不会断开
+      - 这段时间内服务器拿到了客户端想要的数据会基于这条连接立即把数据发送给客户端
+      - 这段时间内服务器没有拿到数据，连接断开，之后客户端再次发送同样的连接
+  - node 服务器不支持 ws 协议，需要安装 npm i ws,通过监听http的upgrate事件
+  - 开始客户端发送 http 请求，询问服务器是否接收 websocked 协议，服务器同意就可以升级为 websocked 协议
+  - 数据以消息为单位
+  - TCP 传输的是二进制字节流，而 websocked 是将字节流按照需要分为一份一份的，每一份都是完整的消息片段
+  - 缺点容易断线，兼容性不好，建议使用socked.io
+  
+  - Connection:Upgrade ；Upgrate:websocket 
+    http请求带上这2个主要的请求头告知服务器请求升级为websocked协议，服务器同意后TCP连接就不会中断
+
+
+  * socked.io 对 websocked 的更高级的一层封装
+    * 使用方法
+      npm i socked.io
+      var app = require('express')();
+      var http = require('http').createServer(app);
+      var io = require('socket.io')(http);/var io = require('socket.io').attach(http)
+    * 前端使用安装 socked.io-client  
+      或者通过页面加载<script src="/socket.io/socket.io.js"></script>
+    * 优点
+        - 房间
+          - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
+          - 客户端也可以给其它客户端发送消息
+          - 加入和离开房间的功能
+        - 解析：自动编码为字符串，自动编码为其它数据类型
+        - 远程事件：客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
+          io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
+          io/socked.on("event",()=>{}) 服务器/客户端监听事件
+          socket.join/leave（'some room'）加入或者离开房间
+        - 发送的参数数据可以同时有字符串和二进制字节流，而websocket不能混合发送  
     
-    - Connection:Upgrade ；Upgrate:websocket 
-      http请求带上这2个主要的请求头告知服务器请求升级为websocked协议，服务器同意后TCP连接就不会中断
+    * socket.handshake.query可以拿到query部分的参数      
 
-
-
-    * socked.io 对 websocked 的更高级的一层封装
-      * 使用方法
-        npm i socked.io
-        var app = require('express')();
-        var http = require('http').createServer(app);
-        var io = require('socket.io')(http);/var io = require('socket.io').attach(http)
-      * 前端使用安装 socked.io-client  
-        或者通过页面加载<script src="/socket.io/socket.io.js"></script>
-      * 优点
-          - 房间
-              - 服务器可以给某个频道所有的客户端发送消息，常用聊天室
-              - 客户端也可以给其它客户端发送消息
-              - 加入和离开房间的功能
-          - 解析：自动编码为字符串，自动编码为其它数据类型
-          - 远程事件：客户端和服务器可以监听对方的事件，对方触发了事件，己方可以马上得到触发事件的数据，实现了无延时的双向通信
-            io/socked.emit("event",{传递数据}) 服务器/客户端绑定事件
-            io/socked.on("event",()=>{}) 服务器/客户端监听事件
-            socket.join/leave（'some room'）加入或者离开房间
-          - 发送的参数数据可以同时有字符串和二进制字节流，而websocket不能混合发送  
-    
-      * socket.handshake.query可以拿到query部分的参数      
-
-  ### linux 服务器知识
-    * 虚拟空间：文件夹，只支持放静态文件
-      虚拟服务器 ： 文件夹，支持运行服务器端程序，如 node
-      vps ： 完全的机器，独立ip,0 到 65536 端口，可以重新装系统
-      云服务器： 支持弹性扩容的 vps
-    * https://www.digitalocean.com 购买 vps 服务器的网站
-    * ssh  secure shell 是一种网络协议，用于计算机之间的加密远程登录
-    * sftp 基于 ssh 协议的文件传输协议
-    * apt linux 系统的应用商店，类似 npm
+### linux 服务器知识
+  * 虚拟空间：文件夹，只支持放静态文件
+    虚拟服务器 ： 文件夹，支持运行服务器端程序，如 node
+    vps ： 完全的机器，独立ip,0 到 65536 端口，可以重新装系统
+    云服务器： 支持弹性扩容的 vps
+  * https://www.digitalocean.com 购买 vps 服务器的网站
+  * ssh  secure shell 是一种网络协议，用于计算机之间的加密远程登录
+  * sftp 基于 ssh 协议的文件传输协议
+  * apt linux 系统的应用商店，类似 npm
 
 # 框架学习
 
@@ -4736,25 +4832,25 @@
           - 这里可以用 @表示 src 文件的路径，比较方便
 * export default {components:{导入得到局部组件需要在这个里面赋值过来才能在 template 生效，一般组件名都大写}, 其它组件属性}
         
-      * 安装 npm install -g @vue/cli
-      * 单个文件快速原型开发
-        vue serve 文件名   vue serve index.vue
-      * 创建一个项目
-        * winpty vue.cmd create 项目名称   linux 环境下
-          vue create 项目名称   window 环境下
-        * 会生成一个项目文件夹，里面有以下信息
-          * git 相关
-          * public 网站用到的公开的文件，一般是图片和 html，基本不用动
-          * src 项目的源代码
-            * main.js 入口js文件
-            * App.vue 入口组件
-            * components 组件，会被 App.vue 引用
-            * views 视图，路由对应的组件文件放这里
-            * 路由，数据仓库，视图等
-            * asset 静态资源
-          * 一些配置文件
-          *readme.md  告诉你这么开启这个项目的命令
-        * 相关文件配置好后，运行 npm run build , 它会把相关文件打包到 dist 文件里，之后吧 dist 文件里面的资源放到 static 文件里
+  * 安装 npm install -g @vue/cli
+  * 单个文件快速原型开发
+    vue serve 文件名   vue serve index.vue
+  * 创建一个项目
+    * winpty vue.cmd create 项目名称   linux 环境下
+      vue create 项目名称   window 环境下
+    * 会生成一个项目文件夹，里面有以下信息
+      * git 相关
+      * public 网站用到的公开的文件，一般是图片和 html，基本不用动
+      * src 项目的源代码
+        * main.js 入口js文件
+        * App.vue 入口组件
+        * components 组件，会被 App.vue 引用
+        * views 视图，路由对应的组件文件放这里
+        * 路由，数据仓库，视图等
+        * asset 静态资源
+      * 一些配置文件
+      *readme.md  告诉你这么开启这个项目的命令
+    * 相关文件配置好后，运行 npm run build , 它会把相关文件打包到 dist 文件里，之后吧 dist 文件里面的资源放到 static 文件里
 
 ## React
 
@@ -4808,9 +4904,10 @@
       
     * 函数组件
       ```js
+      // 创建一个简单的函数组件，函数组件没有实例，也没有 ref 属性
       function Welcome(props) {
         return <h1>Hello, {props.name}</h1>;
-      } 创建一个简单的函数组件，函数组件没有实例，也没有 ref 属性
+      } 
       ```
     
   * State 的更新可能是异步的，出于性能考虑，React 可能会把多个 setState() 调用合并成一个调用。
@@ -4915,39 +5012,49 @@
 
   * PropTypes
     * 用来设定组件属性类型，有许多表达方式
+    
     * React 自带模块，直接引入 import PropTypes from 'prop-types'
-    * 组件名.propTypes = {
+    
+    * 
+      ```js
+      组件名.propTypes = {
         属性名：PropTypes.string/PropTypes.bool/PropTypes.func/PropTypes.object
       }
       MenuItem.propTypes = {
         food: PropTypes.object.isRequired,
         onUpdate: PropTypes.func,
       }
-
       MenuItem.defaultProps = {
           onUpdate: () => { },
       }
-
+      ```
+    
   * Render Props 渲染属性
     * 其本质是一个属性是一个函数，这个函数属性以组件的数据为参数得到一个 jsx 代码，组件的 render() 接收这个 jsx 渲染为虚拟 dom；所以这个属性可以是任何名字，业界通用叫做 render
     * 组件接收一个属性 render, 属性值是一个函数，组件会把自己的数据传给这个函数作为参数，函数的结果会被组件中的 render() 函数接收渲染
     * 在组件的 render() 函数里通过 this.props.render 可以拿到这个函数，再接收自己的 state 数据就可以通过函数返回一段 JSX, 最后渲染；
     * 告知组件需要渲染什么内容的函数属性
-    * <DataProvider render={data => (
+    * 
+      ```js
+      <DataProvider render={data => (
         <h1>Hello {data.target}</h1>
       )}/>
+      ```
 
   * 转发Refs
     * 使组件接收到的 ref 属性不指向自己，而是转发到组件内部的元素
     * 使用 React.forwardRef 创建组件，该组件的 ref 属性会转发到内部
     * 相当于组件换了一个名字 abc 接收 ref 值，然后内部的元素 ref 属性接收 abc 属性转发来的 ref 值，React.forwardRef 只是让组件继续可以使用 ref 属性
-    * const FancyButton = React.forwardRef((props, ref) => (
+    * 
+    ```js
+    const FancyButton = React.forwardRef((props, ref) => (
         <button ref={ref} className="FancyButton">
           {props.children}
         </button>
-      )); 创建了一个 FancyButton 组件
+      )); // 创建了一个 FancyButton 组件
       const ref = React.createRef();
       <FancyButton ref={ref}>Click me!</FancyButton>;
+    ```
 
   * React 相关 api
     * React.PureComponent
@@ -4958,19 +5065,21 @@
       创建并返回指定类型的新 React 元素，此时还没有实例化，是对虚拟 dom 的描述，上面有 key,ref，props 这些属性，渲染之前会根据这些信息创造实例，实例会调用 render() 函数
     * cloneElement( element,[props],[...children])  克隆 React 元素， props 与原始元素的 props 浅层合并后的结果。新的子元素将取代现有的子元素，而来自原始元素的 key 和 ref 将被保留
     * React.children 用来处理 this.props.children
-        - React.Children.map(children, function[(thisArg)])
-        - React.Children.forEach(children, function[(thisArg)])
-        - React.Children.count(children)  返回 children 中的组件总数量
+      - React.Children.map(children, function[(thisArg)])
+      - React.Children.forEach(children, function[(thisArg)])
+      - React.Children.count(children)  返回 children 中的组件总数量
     * React.lazy  代码分割，优化性能 , 需要返回一个 promise，必须配合 React.Suspense 使用
       const SomeComponent = React.lazy(() => import('./SomeComponent'))
     * React.Suspense
       * 内部异步加载的函数会抛出一个 promise（这个异步函数会被包一层），Suspense 本身是个错误边界会获取到这个 promise
       * 如果有这个资源的缓存就会同步返回数据，没有就运行 fallback 对应的组件，直到子元素资源加载完成替换为子元素
+      ```js
       <React.Suspense fallback={<div>loading</div>}>
       <div>
         <SomeComponent />
       </div>
       </React.Suspense>
+      ```
 
   * Portals   门户网站
     * Portal 提供了一种将子节点渲染到存在于父组件以外的 DOM 节点的优秀的方案，常用于对话框、悬浮卡以及提示框
@@ -5037,14 +5146,16 @@
         setState(value){state =  value} setState 的函数大概是这样
         如 var [count, setCount] = useState(0)
       * useEffect 函数，相当于一个生命周期函数 componentDidMount 或 componentDidUpdate，直接在函数组件内部使用
-        *用法
-          useEffect(
-            ()=>{
-              第一个参数是一个函数，可以挂载 componentDidMount 或 componentDidUpdate 阶段需要的操作；
-              这个函数可以有一个返回值函数，返回值函数会在函数组件 componentWillUnmount 阶段运行，可有挂载一些解绑操作；
-              对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数
-            },【第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行】
-          )
+        * 用法
+        ```js
+        useEffect(
+          ()=>{
+            第一个参数是一个函数，可以挂载 componentDidMount 或 componentDidUpdate 阶段需要的操作；
+            这个函数可以有一个返回值函数，返回值函数会在函数组件 componentWillUnmount 阶段运行，可有挂载一些解绑操作；
+            对于函数组件来讲，每次更新都会卸载再挂载；所以每次更新都会运行这个返回值函数
+          },[第二个可选参数是一个数组，当组件刷新时如果发现数组的内容和上一次一样，那么就不会运行这个 useEffect 函数，用于性能优化；要确保数组中包含了外部作用域中会随时间变化并且在 effect 中使用的变量，否则你的代码会引用到先前渲染中的旧变量，如果是空数组表示每次都是完全一样的内容，不运行]
+        )
+        ```
         * 优点
           * 绑定和解绑放在一起，可读性和操作性好
           * 对于复杂的逻辑，可以写多组 useEffect() 函数，相关逻辑放到同一个 useEffect() 函数里面，逻辑分离
@@ -5093,7 +5204,8 @@
         var User = withRouter(function User(props) {})
         接受到的属性 props 是个对象，有 history，location,match 几个属性，分别有相关的方法，可以通过 props.match.params. 参数名 (id) 拿到传递过来的参数
     *  react 是按照业务逻辑书写，符合用法即可。
-       function App() {
+      ```js
+      function App() {
         return (
           <HashRouter>
             <div>
@@ -5109,8 +5221,9 @@
             </div>
           </HashRouter>
         )
-  }
-    
+      }
+      ```
+  
   * Redux
     * 比较底层的封装，单项数据流，全局数据中心，实现了组件之间的数据和事件的传递
     * 仅支持同步函数，异步需要使用第三方插件（Redux-thunk）
@@ -5136,8 +5249,8 @@
           }
         }, state)
         * 操作数据的方法可以配合 immer.js，优化性能而且更方便
-
-    * 下层组件如何接入 store，需要第三方插件集成
+  
+  * 下层组件如何接入 store，需要第三方插件集成
       * <script src="https://unpkg.com/react-redux@5.0.6/dist/react-redux.js">
         var { Provider，connect} = ReactRedux
       * 在根组件里面的最外层用 <Provider store={store}></Provider>包一层，下层组件就可以访问到 store 的 state 以及相关方法
@@ -5149,39 +5262,41 @@
           obj1 和 obj2 都会合并到组件的 props 对象里面，这样组件可以通过 props.method 来 dispatch 相关方法到达交互目的
         * NewComponent 新返回的组件，可以接受全局的 store 进行交互
       *  connect 函数的实现
-          var StoreContext = React.createContext()
-          function connect(mapState, mapDispatch) {
-            return function(WrapComp) {
-              return React.forwardRef(function Comp(props, ref) {
-                var store = useContext(StoreContext)
-                var [r, setR] = useState(0)
-                useEffect(() => {
-                  return store.subscribe(() => {
-                    setR(r + 1)
-                  })
-                })
-                var state = mapState(store.getState())
-                var dispatchs = mapDispatch(store.dispatch)
-                var {children, ...props2} = props
-                return <WrapComp ref={ref} {...props2} {...state} {...dispatchs}>{children}</WrapComp>
+      ```js
+      var StoreContext = React.createContext()
+      function connect(mapState, mapDispatch) {
+        return function(WrapComp) {
+          return React.forwardRef(function Comp(props, ref) {
+            var store = useContext(StoreContext)
+            var [r, setR] = useState(0)
+            useEffect(() => {
+              return store.subscribe(() => {
+                setR(r + 1)
               })
-            }
-          }
-
-  * react 全家桶
+            })
+            var state = mapState(store.getState())
+            var dispatchs = mapDispatch(store.dispatch)
+            var {children, ...props2} = props
+            return <WrapComp ref={ref} {...props2} {...state} {...dispatchs}>{children}</WrapComp>
+          })
+        }
+      }
+      ```
+  
+* react 全家桶
     * 创建一个项目全家桶
       npm create-react-app 项目名称
       npx 表示下载完成之后直接运行
     * npm/yard run start  本地运行代码
     * 会生成一个项目文件夹，里面有以下信息
-        * git 相关
-        * public 网站用到的公开的文件，一般是图片和 html，基本不用动
-        * src 项目的源代码
-          * index.js 入口文件
-          * App.js 入口组件
-          * 自己写 store 以及相关组件
-        * 一些配置文件
-        *readme.md  告诉你这么开启这个项目的命令
+      * git 相关
+      * public 网站用到的公开的文件，一般是图片和 html，基本不用动
+      * src 项目的源代码
+        * index.js 入口文件
+        * App.js 入口组件
+        * 自己写 store 以及相关组件
+      * 一些配置文件
+      * readme.md  告诉你这么开启这个项目的命令
     * 相关文件配置好后，运行 npm run build , 它会根据 src 和 public 一起构建一个 build 文件，之后把 build 文件里面的资源放到后端的static静态文件夹里，这样就可以用后端的端口启动项目；这个 build 文件就是上线启动文件
 
 ## webpack
