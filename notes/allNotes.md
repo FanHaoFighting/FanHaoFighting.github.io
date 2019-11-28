@@ -1793,20 +1793,20 @@
     * 循环
     ```js
     function mergeTwoLists(l1, l2) {
-      let hummy = new ListNode()
-      let hummy2 = hummy
+      let dummy = new ListNode()
+      let dummy2 = dummy
       while (l1 && l2) {
         if (l1.val < l2.val) {
-          hummy2.next = l1
+          dummy2.next = l1
           l1 = l1.next
         } else {
-          hummy2.next = l2
+          dummy2.next = l2
           l2 = l2.next
         }
-        hummy2 = hummy2.next
+        dummy2 = dummy2.next
       }
-      hummy2.next = l1 || l2
-      return hummy.next
+      dummy2.next = l1 || l2
+      return dummy.next
     }
     ```
     * 递归
