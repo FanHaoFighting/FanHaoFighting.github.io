@@ -2091,7 +2091,7 @@
    大堆
    
    ```js
-  class deap {
+    class deap {
     constructor(nums) {
         this.elements = nums
         this.heapfy(nums)
@@ -2100,7 +2100,7 @@
         this.elements.push(val)
         this.heapUp(this.elements.length - 1)
     }
-  
+    
     // 将某个节点的父节点调整为堆，且保持整个堆结构
     heapUp(currIdx) {
       while (currIdx > 0) {
@@ -2113,7 +2113,7 @@
         }
       }
     }
-  
+    
     // 将某个节点调整为堆，且保持整个堆结构
     heapdown(currIdx, end = this.elements.length) {
         while (currIdx < end) {
@@ -2142,13 +2142,13 @@
         this.heapdown(i)
       }
     }
-  
+    
     swap(i, j) {
       let temp = this.elements[i]
       this.elements[i] = this.elements[j]
       this.elements[j] = temp
     }
-  
+    
     SortArray(arr){
       this.heapify(ary)
       for(var i = ary.length - 1; i > 0; i--) {
@@ -2157,13 +2157,13 @@
       }
       return ary
     }
-  
+    
     // 在末尾添加元素
     push(val){
       this.elements.push(val)
       this.heapUp(this.elements.length - 1)
     }
-  
+    
     // 取出堆顶
     pop(){
       var result = this.elements[0]
@@ -2175,7 +2175,7 @@
       this.heapdown(0)
       return result
     }
-  }
+    }
    ```
    
 
@@ -2222,7 +2222,7 @@
     n = (n - digit)/2
   }
 
-  ```  
+  ```
   *  判断素数的简化方法
     - 遍历到根号 n 即可
     - 前面再加一些判断缩小范围，比如能不能被 2,3,5，7 等整除
@@ -2247,7 +2247,7 @@
       return !/^(?=(.{2,})\1+$)/.test('x'.repeat(n))
     }
     ```
-       
+    
     * 素数两性定理
       把素数分为 6 列，素数全部存在于第 1 列和第 5 列（2 和 3 除外）；第 2，4 列全部能被 2 整除。第 3，6 列全部能被 3 整除
     * 算法中递归优雅易懂，但是耗时；超时可以转化为循环语句
@@ -2268,9 +2268,9 @@
       depth--
     }
     ```
-      
+    
   * 递归下降，解析语法数
-  leetcode 1106. 解析布尔表达式
+    leetcode 1106. 解析布尔表达式
   ```js
   var parseBoolExpr = function(expr) {
     var i = 0;
@@ -2338,7 +2338,7 @@
   };
 
   ```
-    
+
 
 ## ES6 相关知识
 
@@ -2353,7 +2353,7 @@
     }
   }
   ```
-      
+
   * 参数的默认值 （属性 = 默认值）
     function slice(array,start = 0,end = array.length){}
   * 展开运算符 (... 将数组两边的【号和】号中合掉）  不能单独使用，作为参数使用
@@ -2391,7 +2391,7 @@
     set length(val){}
   }
   ```
-   
+
 
   * 队列类 
   ```js
@@ -2447,7 +2447,7 @@
   }
 
   ```
-  
+
 
    * 解构语法
 
@@ -2471,7 +2471,7 @@
     return g(a)
   }
   ```
-     
+
   * 模块的导入导出
     * 模块的导出
     ```js
@@ -2547,7 +2547,7 @@
 
 
    * filter 函数   返回新数组
-      * 源代码
+      * 函数实现
       ```js
       function filter(array, test) {
         let result = []
@@ -2562,77 +2562,93 @@
       array.filter(function(){})  filter 函数的作用是遍历该集合，然后将该集合中符合某些特定条件的元素组成新的数组，并返回该新数组。
       test 最多可以传递 3 个有效的参数 (arr[i]，索引，数组）
       filter 只有一个参数时，即判断所有元素是否符合条件的处理函数。
-      <!--  var digits = [1, 4, 5, 10, 15]
+      ```js
+      var digits = [1, 4, 5, 10, 15]
       var even = digits.filter(function (number) { return number % 2 == 0 })
       console.log(even))
-      // [4, 10] -->
+      // [4, 10]
+      ```
 
-   * map 函数  返回新数组
-     *源代码
-
+  * map 函数  返回新数组
+    * 函数实现
+    ```js
     function map(array, mapper) {
-    let result = []
-    for (let i = 0; i < array.length; i++) {
+      let result = []
+      for (let i = 0; i < array.length; i++) {
         result.push(mapper(array[i], i, array))
-    }
-    return result}
-     array.map(function(){})  对数组的每个元素调用定义的回调函数并返回包含结果的数组
-     mapper 最多可以传递 3 个有效的参数 (arr[i]，索引，数组）
-     map 只有一个参数时，及给出映射关系的处理函数
-      <!-- var array = [16,25,36];
-      array.map(Math.sqrt);
-      //array = [4,5,6]
-    
-      var array = [11, 22, 33, 44, 55];
-      console.log(array.map(function (n) { return n % 10 }))
-      //array = [1,2,3,4,5] -->
-    
-    * reduce 函数 返回最终运算的结果
-      * reduce 源函数
-          function reduce(arr, reducer,initalVal=arr[0] ) {
-            var  i = 0
-            if (argument.length===2){
-              i=1
-            }
-            for (; i < arr.length; i++){
-                initalVal = reducer(initalVal,arr[i]，index,arr)
-            }
-            return initalVal
-          }
-      * reduce 可以接受 3 个参数，数组（作为数组的方法时可以省去），reducer 函数，初始值（不设置时默认为数组第一项）； reducer 是必要参数，其它可选
-      * 执行函数 reducer 接受 4 个参数，initalVal（上一次执行结果，第一次为初始值）arr[i] 数组的第 i 项，数组下标，数组本身（作为数组的方法时可以省去）；initalVal 和 arr[i] 是必要参数，其它可选
-    
-      Array 的 reduce() 把一个函数作用在这个 Array 的 [x1, x2, x3...] 上，这个函数必须接收两个参数，reduce() 把结果继续和序列的下一个元素做累积计算，其效果就是：
-      [x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4)
-     <!--  var arr = [1, 3, 5, 7, 9];
-      arr.reduce(function (x, y) {
-      return x + y;
-      }); // 25 -->
-    
-    * sort 函数
-      用于数组的排序，返回值大于 0 交换位置，其它位置不变
-      array.sort(function(a,b){return a - b})  从小到大排序
-      array.sort(function(a,b){return b - a})  从大到小排序
-    
-    * bind: 绑定 this 和参数 ，参数传多了只接受前面的参数，后面的参数无效；且 this 只能绑定一次，多次绑定不生效
-      apply: 设定 this 和参数，参数以数组形式传入
-      call: 设定 this 和参数，参数不能以数组的形式传入
-      如果只绑定参数而不指定 this, 通常将 this 设置为 null，新的绑定函数不使用 this 即可
-    
-    function myBind(thisArg, ...fixedArgs){ <!-- thisArg 是 this 要绑定参数，fixedArgs 是其它的参数 -->
-      let self = this <!-- 谁调用了这个函数谁就是 this -->
-      return function bound(...arguments){
-        fixedArgs.push(...arguments)<!-- 合并其它参数 -->
-        if(new.target=== bound){
-          return new self(...fixedArgs)
-    
-        <!-- 如果是构造函数调用了 mybind 函数，提供的 this 就会被忽略，thisArg 会被忽略掉；其它的参数会参与绑定，并且返回一个新的构造函数 -->
-    
-        }else{
-        return self.apply(thisArg,fixedArgs)
-        }
       }
+      return result
     }
+    ```
+
+    array.map(function(){})  对数组的每个元素调用定义的回调函数并返回包含结果的数组
+    mapper 最多可以传递 3 个有效的参数 (arr[i]，索引，数组）
+    map 只有一个参数时，及给出映射关系的处理函数
+    
+    ```js
+    var array = [16,25,36];
+    array.map(Math.sqrt);
+    //array = [4,5,6]
+    var array = [11, 22, 33, 44, 55];
+    console.log(array.map(function (n) { return n % 10 }))
+    //array = [1,2,3,4,5]
+    ```
+    
+  * reduce 函数 返回最终运算的结果
+    * reduce 函数实现
+    ```js
+    function reduce(arr, reducer,initalVal=arr[0] ) {
+      var  i = 0
+      if (argument.length===2){
+        i=1
+      }
+      for (; i < arr.length; i++){
+          initalVal = reducer(initalVal,arr[i]，index,arr)
+      }
+      return initalVal
+    }
+    ```
+    * reduce 可以接受 3 个参数，数组（作为数组的方法时可以省去），reducer 函数，初始值（不设置时默认为数组第一项）； reducer 是必要参数，其它可选
+    * 执行函数 reducer 接受 4 个参数，initalVal（上一次执行结果，第一次为初始值）arr[i] 数组的第 i 项，数组下标，数组本身（作为数组的方法时可以省去）；initalVal 和 arr[i] 是必要参数，其它可选
+    
+    
+    Array 的 reduce() 把一个函数作用在这个 Array 的 [x1, x2, x3...] 上，这个函数必须接收两个参数，reduce() 把结果继续和序列的下一个元素做累积计算，其效果就是：
+    [x1, x2, x3, x4].reduce(f) = f(f(f(x1, x2), x3), x4)
+    ```js
+    var arr = [1, 3, 5, 7, 9];
+    arr.reduce(function (x, y) {
+      return x + y;
+    }); // 25
+    ```
+    
+  * sort 函数
+    用于数组的排序，返回值大于 0 交换位置，其它位置不变
+    array.sort(function(a,b){return a - b})  从小到大排序
+    array.sort(function(a,b){return b - a})  从大到小排序
+  
+  * bind: 绑定 this 和参数 ，参数传多了只接受前面的参数，后面的参数无效；且 this 只能绑定一次，多次绑定不生效
+    apply: 设定 this 和参数，参数以数组形式传入
+    call: 设定 this 和参数，参数不能以数组的形式传入
+    如果只绑定参数而不指定 this, 通常将 this 设置为 null，新的绑定函数不使用 this 即可
+    ```js
+    // thisArg 是 this 要绑定参数，fixedArgs 是其它的参数
+    function myBind(thisArg, ...fixedArgs) {
+      // 谁调用了这个函数谁就是 this
+      let self = this;
+      return function bound(...arguments) {
+        // 合并其它参数
+        fixedArgs.push(...arguments);
+        if (new.target === bound) {
+          // 如果是构造函数调用了 mybind 函数，提供的 this 就会被忽略，thisArg 会被忽略掉；
+          // 其它的参数会参与绑定，并且返回一个新的构造函数
+          return new self(...fixedArgs);
+        } else {
+          return self.apply(thisArg, fixedArgs);
+        }
+      };
+    }
+    ```
+
 
 ## 对象原型
 
@@ -2641,47 +2657,58 @@
     每个函数（且一般只有函数才有）都有一个原型属性指的是 F.prototype（我的实例的原型），称为“原型属性”
 
     函数的原型是函数的构造函数的原型属性
+    ```js
     Function.__proto__ ===Function.prototype
     String.__proto__ ===Function.prototype
     Number.__proto__ ===Function.prototype
     Object.__proto__ ===Function.prototype
+    ```
 
   * 构造函数 var f =  new Function()
     - new 运算符会进行如下的操作：
-        创建一个空的对象 A{}，A 的原型是构造函数 F 的原型属性
-        将 this 绑定到新创建的对象 A，并且用指定的参数调用构造函数修改该对象。
-        如果该函数没有返回值，则返回 this
-        如果该函数有返回值但是返回的不是对象时，还是返回 this
-        如果该函数返回的是对象时，返回该对象
+      
+      > 创建一个空的对象 A{}，A 的原型是构造函数 F 的原型属性
+      > 将 this 绑定到新创建的对象 A，并且用指定的参数调用构造函数修改该对象。
+      > 如果该函数没有返回值，则返回 this
+      > 如果该函数有返回值但是返回的不是对象时，还是返回 this
+      > 如果该函数返回的是对象时，返回该对象
     - new.target === 构造函数
       new.target 属性允许你检测函数或构造方法是否是通过 new 运算符被调用的。在通过 new 运算符被初始化的函数或构造方法中，new.target 返回一个指向构造方法或函数的引用。在普通的函数调用中，new.target 的值是 undefined。
-    - new 的优先级比较高，比。号高
-    - new 后面接一个函数时，如果函数没有参数直接调用，（）可以省去
-
+    - new 的优先级比较高，比.号高
+    - new 后面接一个函数时，如果函数没有参数直接调用，()可以省去
+    
   * 原型
 
       - 每个函数的原型属性默认指向空的对象{}，该空对象的原型是 Object.prototype
         f.prototype -> {} -> Object.prototype -> null
 
       - constructor 属性 ，该属性指向了用于构造此实例对象的构造函数。
-        Foo.prototype.constructor === Foo
-        f1.__proto__.constructor === Foo
+      ```js
+      Foo.prototype.constructor === Foo
+      f1.__proto__.constructor === Foo
+      ```
 
       - 判断一个值的原型是谁就看其本身是什么类型，然后找到其类型的构造函数的原型属性
-        Object.getPrototypeOf([1]) ===  Array.prototype
-        Object.getPrototypeOf({"a":2}) ===  Object.prototype
+      ```js
+      Object.getPrototypeOf([1]) ===  Array.prototype
+      Object.getPrototypeOf({"a":2}) ===  Object.prototype
+      ```
       - null ,undefined 没有原型
       - Object.prototype 的原型是 null, 一般也认为其也没有原型
 
       - JS 原生的几个构造函数的原型属性是其第一个实例，历史遗留问题
-        Object.prototype.toString.call(String.prototype)==="[object String]"
-        Object.prototype.toString.call(Function.prototype) === "[object Function]"
+      ```js
+      Object.prototype.toString.call(Function.prototype) === "[object Function]"
+      Object.prototype.toString.call(String.prototype)==="[object String]"
+      ```
 
-  * 可以通过 Object.prototype.toString.call（类型）判断数据类型，会返回"[object 数据类型】"
+  * 可以通过 Object.prototype.toString.call（类型）判断数据类型，会返回"[object 数据类型]"
     （这种判断方式只能判断原生类型，自己写的构造函数创建的实例都会返回"[object Object]")
+    ```js
     Object.prototype.toString.call([]) ==="[object Array]"
     Object.prototype.toString.call(null) === "[object Null]"
     Object.prototype.toString.call(undefined)==="[object Undefined]"
+    ```
   * instanceof  判断一个对象是不是构造函数的实例  person instanceof Person
     可以在原型中寻找判断
   * typeof 用来判断原始数据类型
@@ -2700,7 +2727,9 @@
     this 指向调用的对象与函数声明的位置无关，只与调用位置有关，如果在调用位置还使用声明位置的 this，this 会丢失；解决方法通过 bind 绑定 this 或者通过箭头函数，箭头函数的 this，总是指向定义时所在的对象，而不是运行时所在的对象。
 
   * 不能通过操作对象来改变对象的原型的属性，可以直接操作对象的原型
-     obj.__proto__. 属性名 = 属性值
+  ```js
+  obj.__proto__. 属性名 = 属性值
+  ```
 
   * Object.getPrototypeOf(obj) == obj.__proto__
     Object.prototype 所有原型对象的根，其没有原型
@@ -2825,7 +2854,7 @@
       (?<=expr) 正回顾零宽断言，这个位置的左边满足 expr（旧版 JS 不支持）
       (?<!expr) 负回顾零宽断言，这个位置的左边不满足 expr（旧版 JS 不支持）
 
-    *单词和字符串边界
+    * 单词和字符串边界
       ^ === /(?<![^])/  字符串的开头  左边不出现任何字符
       $ === /(?![^])/   字符串的结尾   右边不出现任何字符
       \b === /(?<=\w)(?=\W)|(?<=\W)(?=\w)|(?<![^])|(?![^])/   左边是字符右边不是 或者 左边不是字符右边是 或者 字符串开头 或者  字符串结尾
@@ -2834,7 +2863,7 @@
       "bar.baz".match(/\b\.\b/)=>[".", index: 3, input: "bar.baz", groups: undefined]
     
     * 字符串和正则表达式相关的方法
-      -match, 不考虑正则表达式的 lastIndex 属性。
+      - match, 不考虑正则表达式的 lastIndex 属性。
         当正则表达式有 g 标志的时候，匹配出所有能够满足整条正则表达式的内容，不会把分组捕获到的内容也放入结果数组
         当没 g 标志的时候，匹配出第一条能满足的内容，同时把分组捕获到的内容也放入结果数组
     
@@ -2844,12 +2873,12 @@
         次参为字符串，里面的 $&,$1,$2~$9 是特殊内容，表示匹配到匹配到的内容以及各个分组捕获到的内容
         次参为函数，把整个匹配到的内容以及各分组捕获到的内容传给函数做为参数，把函数返回值插入被替换位置，有多少次匹配，函数就会调用多少次
     
-      -re.exec(str) 方法
+      - re.exec(str) 方法
         如果 re 不带 g 标志，则完全等同于 str.match(re)
         如果 re 带有 g 标志，则从 str 的 re.lastIndex 位置开始查找，查找成功后把 re.lastIndex 置为匹配位置的后一个位置
         查找不成功的时候，返回 null，把 lastIndex 置为 0
     
-      -str.split(String|RegExp)
+      - str.split(String|RegExp)
         当参数是字符串时，按字符串把原字符串拆成数组
         当参数为正则时，按正则把原字符串拆成各部分的数组，但是
         当正则里有捕获分组时，分组捕获到的内容也会出现在结果数组的相应位置
@@ -2883,8 +2912,7 @@
     - AMD          define 函数
    
  * require 函数
-   
-   
+  
     ```js
     // 创造 1 个映射来储存缓存
     require.moduleCache = {} 
@@ -2931,20 +2959,19 @@
 ## generator 生成器函数
 
   * 必要构成，1 个*号和 yield 运算符
-    
-    ```js
-    function* gen() {
-      a = yield 1;
-      b = yield 2;
-      c = yield 3;
-      d = yield 4;
-    }
-    var g1 = gen(); //g1 就是 1 个生成器
-    g1.next(); //=>{value: 1, done: false} 此时函数暂停在第一个 = 号右边
-    g1.next(88); //=>{value: 2, done: false} 此时函数暂停在第二个 = 号右边，完成上一个 = 号赋值，a=88
-    g1.next(99); //=>{value: 3, done: false} 此时函数暂停在第三个 = 号右边，完成上一个 = 号赋值，b=99
-    g1.next(77); //=>{value: 4, done: false} 此时函数暂停在第四个 = 号右边，完成上一个 = 号赋值，c=77
-    g1.next(55); //=>{value: undefined, done: true} 此时函数运行完毕，完成上一个 = 号赋值，d=55
+  ```js
+  function* gen() {
+    a = yield 1;
+    b = yield 2;
+    c = yield 3;
+    d = yield 4;
+  }
+  var g1 = gen(); //g1 就是 1 个生成器
+  g1.next(); //=>{value: 1, done: false} 此时函数暂停在第一个 = 号右边
+  g1.next(88); //=>{value: 2, done: false} 此时函数暂停在第二个 = 号右边，完成上一个 = 号赋值，a=88
+  g1.next(99); //=>{value: 3, done: false} 此时函数暂停在第三个 = 号右边，完成上一个 = 号赋值，b=99
+  g1.next(77); //=>{value: 4, done: false} 此时函数暂停在第四个 = 号右边，完成上一个 = 号赋值，c=77
+  g1.next(55); //=>{value: undefined, done: true} 此时函数运行完毕，完成上一个 = 号赋值，d=55
     ```
     
   * next 属性返回一个对象，里面 value 是当前 yield 后面的值，done 表示当前生成器有没有运行完
@@ -2958,9 +2985,14 @@
 
   * 生成器的嵌套
     还是按照顺序执行，遇到嵌套的生成器会进入生成器执行其代码，一步一步执行完该生成器后接着执行外面的代码，直到整个代码执行完毕
-    function * gen(){
-    a = yield 1;b = yield *g2;c = yield *g3;d = yield 4;
+    ```js
+    function* gen() {
+      a = yield 1;
+      b = yield* g2;
+      c = yield* g3;
+      d = yield 4;
     }
+    ```
     
   * ... 可以展开生成器得到一个生成器 value 属性值的数组集合
     [...g1] = [1,2,3,4]
@@ -3011,22 +3043,22 @@
       
       ```js
       (function(){
-          var age = Symbol()
-        
-          window.People = class People {
-            constructor(name, gender, theAge) {
-              this.name = name
-              this.gender = gender
-              this[age] = theAge      
-            }
-            getAge() {
-              if (this.gender = 'f') {
-                return 18
-              } else {
-                return this[age]
-              }
+        var age = Symbol()
+      
+        window.People = class People {
+          constructor(name, gender, theAge) {
+            this.name = name
+            this.gender = gender
+            this[age] = theAge      
+          }
+          getAge() {
+            if (this.gender = 'f') {
+              return 18
+            } else {
+              return this[age]
             }
           }
+        }
         }()) 
       ```
     
